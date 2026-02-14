@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台北 5.5 天深度美食之旅 | 专属手册</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Noto Sans SC', sans-serif; background-color: #f8fafc; }
+        .tab-content { display: none; animation: fadeIn 0.3s ease-in-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .timeline-line { position: absolute; left: 1.25rem; top: 0; bottom: 0; width: 2px; background-color: #cbd5e1; z-index: 0; }
+        .nav-item.active { color: #db2777; border-bottom: 2px solid #db2777; font-weight: 600; }
+        /* 隐藏滚动条但保留功能 */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="text-slate-700 pb-20 md:pb-0">
+
+    <nav class="fixed bottom-0 left-0 w-full bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50 md:top-0 md:bottom-auto md:shadow-sm">
+        <div class="max-w-4xl mx-auto flex justify-around md:justify-center md:gap-12 py-3 md:py-4">
+            <button onclick="switchTab('overview')" class="nav-item active flex flex-col items-center text-xs md:text-sm text-slate-500 transition-colors hover:text-pink-600">
+                <span class="text-xl mb-1">🏠</span> 行程总览
+            </button>
+            <button onclick="switchTab('daily')" class="nav-item flex flex-col items-center text-xs md:text-sm text-slate-500 transition-colors hover:text-pink-600">
+                <span class="text-xl mb-1">📅</span> 每日SOP
+            </button>
+            <button onclick="switchTab('food')" class="nav-item flex flex-col items-center text-xs md:text-sm text-slate-500 transition-colors hover:text-pink-600">
+                <span class="text-xl mb-1">🍜</span> 美食地图
+            </button>
+            <button onclick="switchTab('prep')" class="nav-item flex flex-col items-center text-xs md:text-sm text-slate-500 transition-colors hover:text-pink-600">
+                <span class="text-xl mb-1">🧳</span> 行前必读
+            </button>
+        </div>
+    </nav>
+
+    <main class="max-w-3xl mx-auto p-4 md:pt-20">
+
+        <div id="overview" class="tab-content active space-y-6">
+            <div class="bg-gradient-to-r from-pink-500 to-rose-400 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden">
+                <div class="relative z-10">
+                    <h1 class="text-2xl font-bold mb-2">Taipei Trip 🧋💗🌸</h1>
+                    <p class="opacity-90">2026年5月7日 - 5月12日 (5.5天)</p>
+                    <div class="mt-4 flex items-center gap-2 text-sm bg-white/20 w-fit px-3 py-1 rounded-full backdrop-blur-sm">
+                        <span>🏨 N Hotel (台北车站)</span>
+                    </div>
+                </div>
+                <div class="absolute -right-4 -bottom-8 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-100">
+                    <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">💰 预算预估 (单人/现金)</h3>
+                    <div class="h-48 relative">
+                        <canvas id="budgetChart"></canvas>
+                    </div>
+                    <p class="text-xs text-center text-slate-400 mt-2">*不含机票住宿，仅当地消费</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-100">
+                    <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">🚆 交通方式分布</h3>
+                    <div class="h-48 relative">
+                        <canvas id="transportChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-100">
+                <h3 class="font-bold text-slate-800 mb-4">📝 行程极简摘要 (备忘录版)</h3>
+                <div class="space-y-3 text-sm text-slate-600 bg-slate-50 p-4 rounded-lg font-mono leading-relaxed">
+                    <p><span class="font-bold text-pink-600">Day 1:</span> 机场 → N Hotel → 西门町牛肉面 → 散步红楼</p>
+                    <p><span class="font-bold text-pink-600">Day 2:</span> 炸蛋饼 → 古生物馆 → 大稻埕 → 宁夏夜市</p>
+                    <p><span class="font-bold text-pink-600">Day 3:</span> 九份老街 → 南港买水杯 → 饶河夜市 → 酒吧</p>
+                    <p><span class="font-bold text-pink-600">Day 4:</span> 猫空缆车 → 动物园 → 101/袖珍博物馆 → 南机场夜市</p>
+                    <p><span class="font-bold text-pink-600">Day 5:</span> 中正纪念堂 → 杭州小笼包 → 永康街 → 士林夜市</p>
+                    <p><span class="font-bold text-pink-600">Day 6:</span> 八方云集 → 买伴手礼 → 21:30 去机场</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="daily" class="tab-content space-y-8">
+            
+            <div class="flex overflow-x-auto gap-3 pb-2 no-scrollbar sticky top-0 bg-[#f8fafc] z-40 py-2">
+                <button onclick="scrollToDay('day1')" class="px-4 py-2 bg-white rounded-full border border-slate-200 shadow-sm text-sm whitespace-nowrap hover:border-pink-500 focus:bg-pink-50 focus:text-pink-600 focus:border-pink-500 transition-all">Day 1 抵达</button>
+                <button onclick="scrollToDay('day2')" class="px-4 py-2 bg-white rounded-full border border-slate-200 shadow-sm text-sm whitespace-nowrap hover:border-pink-500 focus:bg-pink-50 focus:text-pink-600 focus:border-pink-500 transition-all">Day 2 老台北</button>
+                <button onclick="scrollToDay('day3')" class="px-4 py-2 bg-white rounded-full border border-slate-200 shadow-sm text-sm whitespace-nowrap hover:border-pink-500 focus:bg-pink-50 focus:text-pink-600 focus:border-pink-500 transition-all">Day 3 九份</button>
+                <button onclick="scrollToDay('day4')" class="px-4 py-2 bg-white rounded-full border border-slate-200 shadow-sm text-sm whitespace-nowrap hover:border-pink-500 focus:bg-pink-50 focus:text-pink-600 focus:border-pink-500 transition-all">Day 4 动物园</button>
+                <button onclick="scrollToDay('day5')" class="px-4 py-2 bg-white rounded-full border border-slate-200 shadow-sm text-sm whitespace-nowrap hover:border-pink-500 focus:bg-pink-50 focus:text-pink-600 focus:border-pink-500 transition-all">Day 5 经典</button>
+                <button onclick="scrollToDay('day6')" class="px-4 py-2 bg-white rounded-full border border-slate-200 shadow-sm text-sm whitespace-nowrap hover:border-pink-500 focus:bg-pink-50 focus:text-pink-600 focus:border-pink-500 transition-all">Day 6 返程</button>
+            </div>
+
+            <div id="day1" class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                <div class="flex justify-between items-start mb-6 border-b border-slate-100 pb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">Day 1: 降落与西门町</h2>
+                        <p class="text-sm text-slate-500 mt-1">5月7日 (周四) | 步行强度: 中</p>
+                    </div>
+                    <div class="text-right text-xs bg-green-50 text-green-700 px-3 py-1 rounded-full">
+                        准备: 悠游卡 + 现金
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 mb-6 text-sm">
+                    <div class="bg-pink-50 p-3 rounded-lg">
+                        <p class="font-bold text-pink-700 mb-1">✅ 必做 3 件事</p>
+                        <ul class="list-disc list-inside text-slate-600 space-y-1">
+                            <li>桃园机场买悠游卡</li>
+                            <li>老山东牛肉面</li>
+                            <li>西门红楼拍照</li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-lg">
+                        <p class="font-bold text-slate-600 mb-1">❌ 可删 2 件事</p>
+                        <ul class="list-disc list-inside text-slate-500 space-y-1">
+                            <li>一甲子餐饮 (若赶不上)</li>
+                            <li>50岚 (到处都有)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="relative pl-8 space-y-8">
+                    <div class="timeline-line"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="absolute -left-10 w-6 h-6 bg-blue-500 rounded-full border-4 border-white shadow-sm"></div>
+                        <span class="text-xs font-bold text-blue-500 bg-blue-50 px-2 py-1 rounded">14:25</span>
+                        <h4 class="font-bold text-slate-800 mt-1">抵达桃园机场 (TPE)</h4>
+                        <p class="text-sm text-slate-500">入境、拿行李、柜台换汇。</p>
+                    </div>
+
+                    <div class="relative z-10">
+                        <div class="absolute -left-10 w-6 h-6 bg-purple-500 rounded-full border-4 border-white shadow-sm"></div>
+                        <span class="text-xs font-bold text-purple-500 bg-purple-50 px-2 py-1 rounded">15:30</span>
+                        <h4 class="font-bold text-slate-800 mt-1">前往市区 (紫色直达车)</h4>
+                        <p class="text-sm text-slate-500">搭乘 <span class="font-bold text-purple-600">桃园机场捷运 Express</span> 至 A1 台北车站。</p>
+                        <div class="text-xs text-slate-400 mt-1">💡 票价 NT$150 | 约 38 分钟</div>
+                    </div>
+
+                    <div class="relative z-10">
+                        <div class="absolute -left-10 w-6 h-6 bg-orange-400 rounded-full border-4 border-white shadow-sm"></div>
+                        <span class="text-xs font-bold text-orange-500 bg-orange-50 px-2 py-1 rounded">18:20</span>
+                        <h4 class="font-bold text-slate-800 mt-1">晚餐：老山东牛肉面</h4>
+                        <p class="text-sm text-slate-500 mb-2">万年大楼 B1，找旧商场下去。</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=老山东牛肉面+西门町" target="_blank" class="text-xs text-white bg-blue-500 px-3 py-1 rounded-full hover:bg-blue-600">📍 导航</a>
+                        <div class="mt-2 text-xs bg-red-50 text-red-500 p-2 rounded border border-red-100">⚠️ 风险提示：如果排队超过 20 分钟，改吃附近的富宏牛肉面。</div>
+                    </div>
+                    
+                     <div class="relative z-10">
+                        <div class="absolute -left-10 w-6 h-6 bg-pink-400 rounded-full border-4 border-white shadow-sm"></div>
+                        <span class="text-xs font-bold text-pink-500 bg-pink-50 px-2 py-1 rounded">20:30</span>
+                        <h4 class="font-bold text-slate-800 mt-1">西门红楼 & 50岚</h4>
+                        <p class="text-sm text-slate-500">散步拍照，顺路买杯“1号”珍波椰。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="day2" class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                <div class="flex justify-between items-start mb-6 border-b border-slate-100 pb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">Day 2: 老台北与恐龙</h2>
+                        <p class="text-sm text-slate-500 mt-1">5月8日 (周五) | 步行强度: 高</p>
+                    </div>
+                </div>
+
+                 <div class="relative pl-8 space-y-8">
+                    <div class="timeline-line"></div>
+                    <div class="relative z-10">
+                        <div class="absolute -left-10 w-6 h-6 bg-yellow-400 rounded-full border-4 border-white shadow-sm"></div>
+                        <span class="text-xs font-bold text-yellow-600 bg-yellow-50 px-2 py-1 rounded">09:00</span>
+                        <h4 class="font-bold text-slate-800 mt-1">早餐：重庆豆浆炸蛋饼</h4>
+                        <p class="text-sm text-slate-500 mb-1">捷运圆山站步行10分钟。必点：招牌炸蛋饼。</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=重庆豆浆炸蛋饼" target="_blank" class="text-xs text-blue-500 underline">📍 导航</a>
+                    </div>
+                    <div class="relative z-10">
+                        <div class="absolute -left-10 w-6 h-6 bg-green-500 rounded-full border-4 border-white shadow-sm"></div>
+                        <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded">11:00</span>
+                        <h4 class="font-bold text-slate-800 mt-1">国立台湾博物馆 (古生物馆)</h4>
+                        <p class="text-sm text-slate-500">金库与恐龙骨架。非常出片。</p>
+                    </div>
+                     <div class="relative z-10">
+                        <div class="absolute -left-10 w-6 h-6 bg-orange-400 rounded-full border-4 border-white shadow-sm"></div>
+                        <span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded">13:30</span>
+                        <h4 class="font-bold text-slate-800 mt-1">午餐：双月食品社</h4>
+                        <p class="text-sm text-slate-500">必点：蛤蜊鸡腿汤。</p>
+                        <div class="mt-2 text-xs bg-red-50 text-red-500 p-2 rounded border border-red-100">⚠️ 阈值：若等待 > 45分钟，改吃隔壁苏杭点心店。</div>
+                    </div>
+                    <div class="relative z-10">
+                        <div class="absolute -left-10 w-6 h-6 bg-gray-600 rounded-full border-4 border-white shadow-sm"></div>
+                        <span class="text-xs font-bold text-gray-600 bg-gray-100 px-2 py-1 rounded">18:00</span>
+                        <h4 class="font-bold text-slate-800 mt-1">晚餐：宁夏夜市</h4>
+                        <p class="text-sm text-slate-500 mb-2">主攻：圆环边蚵仔煎、方家鸡肉饭。</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=宁夏夜市" target="_blank" class="text-xs text-white bg-blue-500 px-3 py-1 rounded-full hover:bg-blue-600">📍 导航</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="day3" class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                <div class="flex justify-between items-start mb-6 border-b border-slate-100 pb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">Day 3: 九份山城与微醺</h2>
+                        <p class="text-sm text-slate-500 mt-1">5月9日 (周六) | ⚠️ 周末人潮预警</p>
+                    </div>
+                </div>
+
+                 <div class="relative pl-8 space-y-8">
+                    <div class="timeline-line"></div>
+                    <div class="relative z-10">
+                        <div class="absolute -left-10 w-6 h-6 bg-red-500 rounded-full border-4 border-white shadow-sm"></div>
+                        <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded">08:30</span>
+                        <h4 class="font-bold text-slate-800 mt-1">前往九份 (火车+Uber)</h4>
+                        <p class="text-sm text-slate-500">台铁至瑞芳站 → <span class="font-bold text-red-500">直接转计程车</span>上山 (约NT$250)。</p>
+                        <div class="text-xs text-slate-400 mt-1">💡 别排公车，花钱买时间。</div>
+                    </div>
+                    <div class="relative z-10">
+                        <div class="absolute -left-10 w-6 h-6 bg-blue-400 rounded-full border-4 border-white shadow-sm"></div>
+                        <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded">14:30</span>
+                        <h4 class="font-bold text-slate-800 mt-1">南港 LaLaPort 购物</h4>
+                        <p class="text-sm text-slate-500">目标：LocknLock 买鱼鱼水杯。</p>
+                    </div>
+                    <div class="relative z-10">
+                        <div class="absolute -left-10 w-6 h-6 bg-purple-600 rounded-full border-4 border-white shadow-sm"></div>
+                        <span class="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded">21:00</span>
+                        <h4 class="font-bold text-slate-800 mt-1">Indulge Bistro</h4>
+                        <p class="text-sm text-slate-500">世界级茶酒。必须提前预约。</p>
+                         <div class="mt-2 text-xs bg-red-50 text-red-500 p-2 rounded border border-red-100">⚠️ 备选：若无位，去 Mood Taipei 或 Draft Land。</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="day4" class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                <div class="flex justify-between items-start mb-6 border-b border-slate-100 pb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">Day 4: 动物园与 101</h2>
+                        <p class="text-sm text-slate-500 mt-1">5月10日 (周日)</p>
+                    </div>
+                </div>
+                <div class="relative pl-8 space-y-8">
+                     <div class="timeline-line"></div>
+                     <div class="relative z-10">
+                        <h4 class="font-bold text-slate-800">09:40 猫空缆车 & 动物园</h4>
+                        <p class="text-sm text-slate-500">排队久就坐普通车厢。看熊猫。</p>
+                     </div>
+                     <div class="relative z-10">
+                        <h4 class="font-bold text-slate-800">14:00 Taipei 101 & 袖珍博物馆</h4>
+                        <p class="text-sm text-slate-500">下午茶推荐 Bonica Pâtisserie。</p>
+                     </div>
+                     <div class="relative z-10">
+                        <h4 class="font-bold text-slate-800">19:30 南机场夜市 (老饕首选)</h4>
+                        <p class="text-sm text-slate-500">山内鸡肉、来来水饺。这里没捷运，建议 Uber。</p>
+                     </div>
+                </div>
+            </div>
+
+            <div id="day5" class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                 <div class="flex justify-between items-start mb-6 border-b border-slate-100 pb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">Day 5: 经典台北</h2>
+                        <p class="text-sm text-slate-500 mt-1">5月11日 (周一)</p>
+                    </div>
+                </div>
+                <div class="relative pl-8 space-y-8">
+                     <div class="timeline-line"></div>
+                     <div class="relative z-10">
+                        <h4 class="font-bold text-slate-800">10:00 中正纪念堂</h4>
+                        <p class="text-sm text-slate-500">看卫兵交接。</p>
+                     </div>
+                     <div class="relative z-10">
+                        <h4 class="font-bold text-slate-800">11:30 杭州小笼汤包</h4>
+                        <p class="text-sm text-slate-500">平价鼎泰丰。</p>
+                     </div>
+                     <div class="relative z-10">
+                        <h4 class="font-bold text-slate-800">14:00 永康街连击</h4>
+                        <p class="text-sm text-slate-500">葱抓饼 → 牛肉面 → 芒果冰。</p>
+                     </div>
+                     <div class="relative z-10">
+                        <h4 class="font-bold text-slate-800">16:40 至善园 (故宫旁)</h4>
+                        <p class="text-sm text-slate-500">清幽的中式园林，看黑天鹅。</p>
+                     </div>
+                </div>
+            </div>
+
+             <div id="day6" class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 mb-12">
+                 <div class="flex justify-between items-start mb-6 border-b border-slate-100 pb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">Day 6: 返程</h2>
+                        <p class="text-sm text-slate-500 mt-1">5月12日 (周二)</p>
+                    </div>
+                    <div class="text-right text-xs bg-red-50 text-red-700 px-3 py-1 rounded-full font-bold">
+                        21:30 必须去机场
+                    </div>
+                </div>
+                <div class="relative pl-8 space-y-8">
+                     <div class="timeline-line"></div>
+                     <div class="relative z-10">
+                        <h4 class="font-bold text-slate-800">09:00 八方云集 (怀宁店)</h4>
+                        <p class="text-sm text-slate-500">锅贴 + 酸辣汤。</p>
+                     </div>
+                     <div class="relative z-10">
+                        <h4 class="font-bold text-slate-800">11:30 北车买伴手礼</h4>
+                        <p class="text-sm text-slate-500">地下街或京站百货，消耗剩余现金。</p>
+                     </div>
+                     <div class="relative z-10">
+                        <h4 class="font-bold text-slate-800">13:00 犁园汤包 / 正豪季</h4>
+                        <p class="text-sm text-slate-500">最后的午餐。</p>
+                     </div>
+                     <div class="relative z-10">
+                        <span class="text-xs font-bold text-white bg-red-500 px-2 py-1 rounded">21:30</span>
+                        <h4 class="font-bold text-slate-800 mt-1">搭乘机场捷运</h4>
+                        <p class="text-sm text-slate-500">紫色直达车往 TPE。22:15 抵达。</p>
+                     </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="food" class="tab-content space-y-4">
+            <div class="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
+                <button onclick="filterFood('all')" class="food-filter active px-4 py-2 bg-pink-600 text-white rounded-full text-sm shadow-md transition-all">全部</button>
+                <button onclick="filterFood('nightmarket')" class="food-filter px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-full text-sm hover:border-pink-500 transition-all">🍢 夜市/小吃</button>
+                <button onclick="filterFood('restaurant')" class="food-filter px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-full text-sm hover:border-pink-500 transition-all">🍜 餐厅/正餐</button>
+                <button onclick="filterFood('sweet')" class="food-filter px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-full text-sm hover:border-pink-500 transition-all">🍰 甜点/饮料</button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="food-item nightmarket bg-white p-4 rounded-xl border border-slate-100 flex justify-between items-center shadow-sm">
+                    <div>
+                        <h4 class="font-bold text-slate-800">重庆豆浆炸蛋饼</h4>
+                        <p class="text-xs text-slate-500">圆山 | 必点: 招牌炸蛋饼</p>
+                    </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=重庆豆浆炸蛋饼" target="_blank" class="text-2xl opacity-80 hover:scale-110 transition-transform">🥞</a>
+                </div>
+
+                <div class="food-item restaurant bg-white p-4 rounded-xl border border-slate-100 flex justify-between items-center shadow-sm">
+                    <div>
+                        <h4 class="font-bold text-slate-800">老山东牛肉面</h4>
+                        <p class="text-xs text-slate-500">西门町 | 必比登推荐</p>
+                    </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=老山东牛肉面" target="_blank" class="text-2xl opacity-80 hover:scale-110 transition-transform">🍜</a>
+                </div>
+
+                <div class="food-item restaurant bg-white p-4 rounded-xl border border-slate-100 flex justify-between items-center shadow-sm">
+                    <div>
+                        <h4 class="font-bold text-slate-800">双月食品社</h4>
+                        <p class="text-xs text-slate-500">善导寺 | 必点: 蛤蜊鸡腿汤</p>
+                    </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=双月食品社青岛店" target="_blank" class="text-2xl opacity-80 hover:scale-110 transition-transform">🥣</a>
+                </div>
+
+                 <div class="food-item sweet bg-white p-4 rounded-xl border border-slate-100 flex justify-between items-center shadow-sm">
+                    <div>
+                        <h4 class="font-bold text-slate-800">50岚 (信阳店)</h4>
+                        <p class="text-xs text-slate-500">台北车站 | 必点: 1号珍波椰</p>
+                    </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=50岚信阳店" target="_blank" class="text-2xl opacity-80 hover:scale-110 transition-transform">🥤</a>
+                </div>
+
+                 <div class="food-item restaurant bg-white p-4 rounded-xl border border-slate-100 flex justify-between items-center shadow-sm">
+                    <div>
+                        <h4 class="font-bold text-slate-800">Indulge Bistro</h4>
+                        <p class="text-xs text-slate-500">东区 | 世界50大酒吧</p>
+                    </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Indulge+Experimental+Bistro" target="_blank" class="text-2xl opacity-80 hover:scale-110 transition-transform">🍸</a>
+                </div>
+
+                <div class="food-item nightmarket bg-white p-4 rounded-xl border border-slate-100 flex justify-between items-center shadow-sm">
+                    <div>
+                        <h4 class="font-bold text-slate-800">宁夏夜市</h4>
+                        <p class="text-xs text-slate-500">大同区 | 蚵仔煎, 鸡肉饭</p>
+                    </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=宁夏夜市" target="_blank" class="text-2xl opacity-80 hover:scale-110 transition-transform">🍢</a>
+                </div>
+                 <div class="food-item restaurant bg-white p-4 rounded-xl border border-slate-100 flex justify-between items-center shadow-sm">
+                    <div>
+                        <h4 class="font-bold text-slate-800">杭州小笼汤包</h4>
+                        <p class="text-xs text-slate-500">中正纪念堂 | 丝瓜虾仁汤包</p>
+                    </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=杭州小笼汤包" target="_blank" class="text-2xl opacity-80 hover:scale-110 transition-transform">🥟</a>
+                </div>
+            </div>
+            <p class="text-center text-xs text-slate-400 mt-4">点击图标直接跳转 Google Maps 导航</p>
+        </div>
+
+        <div id="prep" class="tab-content">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-6">
+                <h3 class="font-bold text-lg border-b pb-2">🧳 必备清单</h3>
+                <div class="space-y-3">
+                    <div class="flex items-start gap-3">
+                        <span class="text-2xl">💳</span>
+                        <div>
+                            <h4 class="font-bold text-sm">悠游卡 (EasyCard)</h4>
+                            <p class="text-xs text-slate-500">桃园机场捷运柜台购买。建议充值 NT$1000/人。</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-2xl">💵</span>
+                        <div>
+                            <h4 class="font-bold text-sm">现金 (Cash Only!)</h4>
+                            <p class="text-xs text-slate-500">夜市/早餐店只收现金。随身带 NT$3000，准备大量百元钞。</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-2xl">📱</span>
+                        <div>
+                            <h4 class="font-bold text-sm">必备 App</h4>
+                            <p class="text-xs text-slate-500">Google Maps (找路), Uber (叫车), Bus+ (查公车)。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="font-bold text-lg border-b pb-2 pt-4">🏨 住宿信息</h3>
+                <div class="bg-slate-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-slate-700">N Hotel</h4>
+                    <p class="text-sm text-slate-600 mt-1">📍 台北市中正区开封街一段</p>
+                    <p class="text-xs text-slate-500 mt-2">交通：从台北车站 Z4 或 Z6 出口步行约 5-8 分钟。</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // 1. Tab Switching Logic
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            // Show selected tab
+            document.getElementById(tabId).classList.add('active');
+            
+            // Update Nav visual state (Simple implementation)
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('active', 'text-pink-600', 'font-bold');
+                item.classList.add('text-slate-500');
+            });
+            // Highlight current (Finding by index matches simplistic order here)
+            const index = ['overview', 'daily', 'food', 'prep'].indexOf(tabId);
+            if(index !== -1 && navItems[index]) {
+                navItems[index].classList.add('active', 'text-pink-600', 'font-bold');
+                navItems[index].classList.remove('text-slate-500');
+            }
+
+            // Re-render chart if switching to overview (fix chart.js resizing bugs sometimes)
+            if(tabId === 'overview') {
+                // optional: updateCharts(); 
+            }
+        }
+
+        // 2. Scroll to Day Logic
+        function scrollToDay(dayId) {
+            const element = document.getElementById(dayId);
+            const offset = 80; // Header offset
+            const bodyRect = document.body.getBoundingClientRect().top;
+            const elementRect = element.getBoundingClientRect().top;
+            const elementPosition = elementRect - bodyRect;
+            const offsetPosition = elementPosition - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth"
+            });
+        }
+
+        // 3. Food Filter Logic
+        function filterFood(category) {
+            const items = document.querySelectorAll('.food-item');
+            const buttons = document.querySelectorAll('.food-filter');
+
+            // Button Styles
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-pink-600', 'text-white', 'shadow-md');
+                btn.classList.add('bg-white', 'text-slate-600');
+                if(btn.textContent.includes(category === 'all' ? '全部' : 
+                   category === 'nightmarket' ? '夜市' : 
+                   category === 'restaurant' ? '餐厅' : '甜点')) {
+                    btn.classList.remove('bg-white', 'text-slate-600');
+                    btn.classList.add('bg-pink-600', 'text-white', 'shadow-md');
+                }
+            });
+
+            // Item Visibility
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // 4. Chart.js Initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            // Budget Chart
+            const ctxBudget = document.getElementById('budgetChart').getContext('2d');
+            new Chart(ctxBudget, {
+                type: 'doughnut',
+                data: {
+                    labels: ['餐饮 (吃)', '交通 (行)', '门票/玩', '购物/其他'],
+                    datasets: [{
+                        data: [5000, 1500, 1000, 2500],
+                        backgroundColor: ['#f472b6', '#60a5fa', '#fbbf24', '#a78bfa'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'right', labels: { boxWidth: 10, font: { size: 10 } } }
+                    }
+                }
+            });
+
+            // Transport Chart
+            const ctxTransport = document.getElementById('transportChart').getContext('2d');
+            new Chart(ctxTransport, {
+                type: 'bar',
+                data: {
+                    labels: ['捷运 (MRT)', 'Uber/计程车', '步行', '火车/公车'],
+                    datasets: [{
+                        label: '预估使用频次',
+                        data: [15, 6, 20, 4],
+                        backgroundColor: ['#60a5fa', '#34d399', '#f87171', '#fbbf24'],
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true, display: false }, x: { grid: { display: false } } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
