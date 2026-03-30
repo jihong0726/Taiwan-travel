@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -6,6 +7,7 @@
 <title>台北 6 天深度行程 · 5/7 – 5/12</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   :root {
     --bg:#faf9f7;--card:#fff;--text:#1a1a2e;--muted:#7f8c8d;
@@ -13,17 +15,21 @@
     --day1:#e74c3c;--day2:#e67e22;--day3:#2ecc71;--day4:#3498db;--day5:#9b59b6;--day6:#1abc9c;
     --food:#ff6b35;--see:#0077b6;--shop:#f4a261;--hotel:#7209b7;--transport:#38b000;--local:#e63946;
     --crowd-low:#27ae60;--crowd-mid:#f39c12;--crowd-high:#e74c3c;
+    --accent:#e74c3c;--accent2:#2c3e50;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+  body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.65;padding-bottom:70px}
 
-  .hero{background:linear-gradient(135deg,#e74c3c 0%,#c0392b 40%,#2c3e50 100%);color:#fff;padding:48px 20px 32px;text-align:center;position:relative;overflow:hidden}
+  /* HERO */
+  .hero{background:linear-gradient(135deg,#e74c3c 0%,#c0392b 40%,#2c3e50 100%);color:#fff;padding:48px 20px 36px;text-align:center;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-50%;right:-30%;width:60%;height:200%;background:radial-gradient(circle,rgba(255,255,255,0.06) 0%,transparent 70%);pointer-events:none}
   .hero::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:30px;background:var(--bg);border-radius:50% 50% 0 0}
   .hero h1{font-size:2em;font-weight:800;letter-spacing:-.5px}
   .hero .sub{opacity:.92;font-size:.95em;margin-top:4px}
   .hero .chips{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:14px}
   .hero .chip{background:rgba(255,255,255,.18);backdrop-filter:blur(4px);padding:5px 14px;border-radius:20px;font-size:.82em}
 
+  /* TOP TAB BAR */
   .tabs{display:flex;overflow-x:auto;background:#fff;position:sticky;top:0;z-index:1000;box-shadow:0 2px 8px rgba(0,0,0,.07);-webkit-overflow-scrolling:touch}
   .tabs button{flex:1;min-width:52px;padding:10px 4px 8px;border:none;background:#fff;font-size:.75em;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap}
   .tabs button.active{border-bottom-color:var(--day1)}
@@ -46,18 +52,56 @@
   .day-header .theme{color:var(--muted);font-size:.85em;margin-top:2px}
   .day-header .route-tag{display:inline-block;font-size:.72em;padding:2px 10px;border-radius:12px;font-weight:600;margin-top:6px}
 
+  /* UBER ALTERNATIVE */
+  .uber-alt{display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px;margin-top:6px;padding:7px 12px;background:linear-gradient(135deg,#1a1a2e,#2c3e50);border-radius:8px;font-size:.78em;color:#fff;line-height:1.6}
+  .uber-alt .uber-logo{font-weight:800;letter-spacing:-.5px;margin-right:2px;background:#fff;color:#1a1a2e;padding:1px 6px;border-radius:4px;font-size:.85em}
+  .uber-alt .uber-info{color:#aaa;font-size:.9em}
+  .uber-alt .uber-price{color:#2ecc71;font-weight:700}
+  .uber-alt .uber-time{color:#f1c40f;font-weight:600}
+
+
+  /* NEARBY ALTERNATIVES SECTION */
+  .nearby-alts{background:#f0f7ff;border-radius:12px;padding:10px 12px;margin:8px 0;border:1px solid #d0e4f7}
+  .nearby-alts .na-title{font-weight:700;color:#2980b9;font-size:.8em;margin-bottom:6px;display:flex;align-items:center;gap:4px}
+  .nearby-alts .na-grid{display:grid;grid-template-columns:1fr;gap:3px}
+  .nearby-alts .na-item{display:flex;align-items:baseline;gap:5px;padding:3px 8px;background:#fff;border-radius:8px;font-size:.76em;line-height:1.45}
+  .nearby-alts .na-item .na-cat{font-size:.7em;padding:1px 5px;border-radius:6px;font-weight:600;flex-shrink:0;white-space:nowrap}
+  .nearby-alts .na-item .na-cat.food{background:#fff3ee;color:#ff6b35}
+  .nearby-alts .na-item .na-cat.cafe{background:#f3e8ff;color:#7209b7}
+  .nearby-alts .na-item .na-cat.see{background:#e8f4fd;color:#0077b6}
+  .nearby-alts .na-item .na-cat.shop{background:#fef3e2;color:#b87333}
+  .nearby-alts .na-item .na-cat.bar{background:#1a1a2e;color:#f1c40f}
+  .nearby-alts .na-item .na-name{font-weight:600;white-space:nowrap;flex-shrink:0}
+  .nearby-alts .na-item .na-desc{color:#888;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .nearby-alts .na-item a{color:#2980b9;text-decoration:none;font-size:.9em;margin-left:auto;flex-shrink:0}
+
+  /* PRIORITY BADGES */
+  .priority-section{margin:10px 0 14px;padding:12px 14px;border-radius:12px;font-size:.84em;line-height:1.7}
+  .priority-section.must{background:linear-gradient(135deg,#fef9e7,#fef3cd);border-left:4px solid #f1c40f}
+  .priority-section.skip{background:#f8f8f8;border-left:4px solid #bdc3c7}
+  .priority-section h4{font-size:.9em;margin-bottom:4px}
+  .must-badge{display:inline-block;background:#e74c3c;color:#fff;font-size:.68em;padding:1px 7px;border-radius:8px;font-weight:700;vertical-align:middle;margin-right:3px}
+  .skip-badge{display:inline-block;background:#bdc3c7;color:#fff;font-size:.68em;padding:1px 7px;border-radius:8px;font-weight:700;vertical-align:middle;margin-right:3px}
+
+  /* BACKUP BOX */
+  .backup-box{background:linear-gradient(135deg,#fde8e8,#fef0f0);border-radius:10px;padding:10px 14px;margin:6px 0 10px;font-size:.8em;border:1px dashed #e74c3c44}
+  .backup-box .backup-title{font-weight:700;color:#e74c3c;margin-bottom:3px}
+  .backup-box .backup-item{color:#555;line-height:1.6}
+
   .timeline{position:relative;padding-left:30px}
   .timeline::before{content:'';position:absolute;left:9px;top:0;bottom:0;width:2px;background:var(--border)}
 
-  /* ---- TRAVEL CONNECTOR ---- */
-  .travel-connector{position:relative;display:flex;align-items:flex-start;gap:8px;padding:8px 8px 8px 8px;margin:4px 0;font-size:.74em;color:var(--muted);background:linear-gradient(90deg,#f9f9f9,transparent);border-radius:8px;border:1px dashed #e0e0e0}
+  /* TRAVEL CONNECTOR */
+  .travel-connector{position:relative;display:flex;align-items:flex-start;gap:8px;padding:8px 8px 8px 8px;margin:4px 0;font-size:.74em;color:var(--muted);background:linear-gradient(90deg,#f9f9f9,transparent);border-radius:8px;border:1px dashed #e0e0e0;flex-wrap:wrap}
   .travel-connector::before{content:'';position:absolute;left:-21px;top:0;bottom:0;width:2px;border-left:2px dashed #d5d5d5}
   .tc-icon{font-size:1.1em;flex-shrink:0;margin-top:1px}
   .tc-pill{background:#e8e8e8;padding:3px 10px;border-radius:12px;font-weight:700;color:#444;white-space:nowrap;flex-shrink:0}
-  .tc-label{color:#666;line-height:1.5}
+  .tc-label{color:#666;line-height:1.5;flex:1 1 60%}
   .tc-label strong{color:#333}
+  .travel-connector>.uber-alt{flex:0 0 100%}
+  .travel-connector>.nearby-alts{flex:0 0 100%}
 
-  /* ---- ITEM CARD ---- */
+  /* ITEM CARD */
   .item{position:relative;background:var(--card);border-radius:14px;padding:14px 16px;margin-bottom:2px;box-shadow:var(--shadow);border-left:3px solid transparent;transition:transform .15s}
   .item:active{transform:scale(.98)}
   .item::before{content:'';position:absolute;left:-25px;top:18px;width:12px;height:12px;border-radius:50%;border:2.5px solid var(--muted);background:#fff}
@@ -71,6 +115,9 @@
   .item .top-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px}
   .item .time{font-size:.76em;font-weight:700;color:var(--muted)}
   .item .name{font-size:1.05em;font-weight:700;margin:3px 0 2px}
+  .item .name a.gmap{color:inherit;text-decoration:none;border-bottom:1px dashed #ccc}
+  .item .name a.gmap:hover{border-bottom-color:var(--accent)}
+  .item .name .gmap-icon{font-size:.75em;opacity:.5;margin-left:4px;vertical-align:middle}
   .item .desc{font-size:.84em;color:#444;margin-bottom:6px}
   .item .meta{display:flex;flex-wrap:wrap;gap:5px;font-size:.73em}
   .item .detail{font-size:.8em;color:var(--muted);margin-top:6px;line-height:1.55}
@@ -100,6 +147,7 @@
   .tag.t-time{background:#f0f0f0;color:#555}
   .tag.t-tip{background:#fef9e7;color:#b8860b}
   .local-badge{display:inline-flex;align-items:center;gap:3px;background:linear-gradient(135deg,#e63946,#d62828);color:#fff;font-size:.68em;padding:2px 8px;border-radius:10px;font-weight:700}
+  .new-badge{display:inline-flex;align-items:center;gap:3px;background:linear-gradient(135deg,#3498db,#2980b9);color:#fff;font-size:.68em;padding:2px 8px;border-radius:10px;font-weight:700}
 
   .tip{background:#fef9e7;border-left:3px solid #f1c40f;padding:12px 14px;border-radius:0 10px 10px 0;margin:12px 0;font-size:.84em;line-height:1.6}
   .tip.green{background:#e8fce8;border-left-color:#2ecc71}
@@ -113,20 +161,49 @@
   .dts-stat span{display:flex;align-items:center;gap:4px}
   .dts-stat .num{font-weight:700;color:var(--text)}
 
+  /* Overview & Charts */
   .overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
   .ov-card{background:#fff;border-radius:12px;padding:14px;box-shadow:var(--shadow);text-align:center}
   .ov-card .num{font-size:1.8em;font-weight:800}
   .ov-card .label{font-size:.78em;color:var(--muted)}
+  .chart-container{background:#fff;border-radius:12px;padding:16px;box-shadow:var(--shadow);margin:12px 0}
+  .chart-container h3{font-size:1em;margin-bottom:12px}
+  .chart-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .chart-box{position:relative;height:220px}
+
   .checklist{background:#fff;border-radius:12px;padding:16px;box-shadow:var(--shadow);margin:12px 0}
   .checklist h3{font-size:1em;margin-bottom:10px}
   .checklist .row{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:.85em}
   .checklist .row:last-child{border:none}
   .checklist .icon{font-size:1.1em;flex-shrink:0}
 
+  /* FOOD FILTER (overview tab) */
+  .food-filter{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+  .food-filter button{padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:.78em;font-weight:600;cursor:pointer;transition:all .2s}
+  .food-filter button.active{background:var(--food);color:#fff;border-color:var(--food)}
+  .food-grid{display:grid;grid-template-columns:1fr;gap:8px;margin:8px 0}
+  .food-card{background:#fff;border-radius:10px;padding:12px 14px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;font-size:.85em;transition:all .2s}
+  .food-card:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,0,0,.1)}
+  .food-card .fc-left{display:flex;flex-direction:column;gap:2px}
+  .food-card .fc-name{font-weight:700}
+  .food-card .fc-meta{font-size:.8em;color:var(--muted)}
+  .food-card .fc-right{display:flex;gap:6px;align-items:center}
+  .food-card .fc-day{font-size:.7em;font-weight:700;padding:2px 8px;border-radius:10px;color:#fff}
+  .food-card .fc-nav{width:32px;height:32px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:.9em;transition:background .2s}
+  .food-card .fc-nav:hover{background:#e74c3c;color:#fff}
+
+  /* BOTTOM NAV */
+  .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;align-items:center;padding:8px 0 env(safe-area-inset-bottom,8px);box-shadow:0 -2px 12px rgba(0,0,0,.08);z-index:2000;border-top:1px solid var(--border)}
+  .bottom-nav button{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;font-size:.65em;color:var(--muted);cursor:pointer;padding:4px 12px;transition:color .2s}
+  .bottom-nav button.active{color:var(--accent)}
+  .bottom-nav button .bn-icon{font-size:1.6em}
+
   @media(max-width:480px){
     .hero h1{font-size:1.5em}
     #map{height:220px}
     .overview-grid{grid-template-columns:1fr}
+    .chart-row{grid-template-columns:1fr}
+    .chart-box{height:200px}
     .hours-bar{flex-wrap:wrap}
     .travel-connector{flex-wrap:wrap;gap:6px}
     .tc-label{font-size:.72em}
@@ -139,12 +216,12 @@
 
 <div class="hero">
   <h1>台北深度 6 天</h1>
-  <div class="sub">Ji Hong & Mabel · 避峰策略 · 含交通时间</div>
+  <div class="sub">Ji Hong & +1 · 避峰策略 · 含交通时间 · Google Maps 导航</div>
   <div class="chips">
     <span class="chip">✈️ 5/7 14:30 抵达</span>
     <span class="chip">🏨 N Hotel 西门</span>
     <span class="chip">✈️ 5/13 00:20 回马</span>
-    <span class="chip">📍 37+15 个地点</span>
+    <span class="chip">📍 47+15 个地点</span>
   </div>
 </div>
 
@@ -179,6 +256,15 @@
     <div class="route-tag" style="background:#fde8e8;color:var(--day1)">🚶 步行为主 · 所有点步行可达</div>
   </div>
 
+  <div class="priority-section must">
+    <h4>⭐ 必做 3 件事</h4>
+    1. 一甲子焢肉饭（50年经典）<br>2. 龙山寺黄昏参拜<br>3. 南机场夜市（在地人最爱）
+  </div>
+  <div class="priority-section skip">
+    <h4>✂️ 时间不够可删</h4>
+    西门红楼内部（外观拍照即可）· 阿宗面线（排队太长时跳过）
+  </div>
+
   <div class="day-travel-summary">
     <span class="dts-icon">🗺</span>
     <div class="dts-stat">
@@ -206,11 +292,12 @@
       <span class="tc-icon">🚃</span>
       <span class="tc-pill">70 min</span>
       <span class="tc-label">机捷紫线「直达车」→ 台北车站A1站（35min）→ 出站走地下街往「捷运蓝线(板南线)」方向 → 搭往南港方向列车 → 西门站（1站2min）→ <strong>6号出口</strong>出站 → 右转步行3min到酒店</span>
+      <div class="uber-alt"><span class="uber-logo">UBER</span> <span class="uber-info">替代方案：</span><span class="uber-price">~NT$1,100/车</span><span class="uber-time">40-50min</span> · 行李多推荐</div>
     </div>
 
     <div class="item hotel">
       <div class="top-row"><span class="time">16:00 – 16:40</span></div>
-      <div class="name">🏨 N Hotel 入住</div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0425,121.508" target="_blank">🏨 N Hotel 入住<span class="gmap-icon">📍</span></a></div>
       <div class="desc">放行李、换轻便衣服、充个电。请前台确认 Day6 退房后寄放行李服务。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -230,7 +317,7 @@
         <span class="time">16:45 – 17:25</span>
         <span class="crowd low">🟢 平日下午人少</span>
       </div>
-      <div class="name">西门町商圈</div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.042,121.5075" target="_blank">西门町商圈<span class="gmap-icon">📍</span></a></div>
       <div class="desc">台北最热闹的徒步区。药妆店（松本清/屈臣氏）、潮牌店、街头涂鸦墙。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -239,6 +326,42 @@
       </div>
       <div class="crowd-tip">✅ 避峰策略：平日下午比周末人潮少 60%，今天是周三，最佳时机</div>
       <div class="detail"><strong>推荐逛：</strong>武昌街（电影院街）、峨嵋街（潮牌）、汉中街（药妆比价）<br><strong>📸 涂鸦墙</strong>在电影街巷子内</div>
+    </div>
+      <div class="nearby-alts">
+        <div class="na-title">🔄 西门町附近还可以逛</div>
+        <div class="na-grid">
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">鸭肉扁</span><span class="na-desc">— 60年卤鸭肉，免排队</span><a href="https://www.google.com/maps/search/?api=1&query=25.043,121.5072" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">成都杨桃冰</span><span class="na-desc">— 60年古早味杨桃冰 NT$30</span><a href="https://www.google.com/maps/search/?api=1&query=25.0428,121.506" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat cafe">☕</span><span class="na-name">CAFE!N 硬咖啡</span><span class="na-desc">— 西门町精品咖啡</span><a href="https://www.google.com/maps/search/?api=1&query=25.0418,121.5072" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">阿义鲁肉饭</span><span class="na-desc">— 巷弄隐藏卤肉饭</span><a href="https://www.google.com/maps/search/?api=1&query=25.0415,121.5078" target="_blank">📍</a></div>
+        </div>
+      </div>
+
+    <div class="travel-connector">
+      <span class="tc-icon">🚶</span>
+      <span class="tc-pill">2 min</span>
+      <span class="tc-label">沿峨嵋街走 → 阿宗面线在峨嵋街8-1号（西门町步行区内，很好找）</span>
+    </div>
+
+    <div class="item food">
+      <div class="top-row">
+        <span class="time">17:25 – 17:45</span>
+        <span class="crowd mid">🟡 常有排队</span>
+        <span class="new-badge">🆕 新增</span>
+      </div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0425,121.5068" target="_blank">阿宗面线<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">西门町地标小吃，大肠面线只要NT$60。站着吃才是正宗style！红面线+卤大肠+柴鱼汤头。</div>
+      <div class="hours-bar">
+        <span class="h-icon">🕐</span>
+        <span class="h-time">10:30 – 22:30</span>
+        <span class="h-rest">全年无休</span>
+      </div>
+      <div class="crowd-tip">✅ 避峰策略：17:30前到排5分钟，18:30后排15-20分钟</div>
+      <div class="meta"><span class="tag t-food">🍜 小吃</span><span class="tag t-cost">💰 NT$60/碗</span></div>
+      <div class="backup-box">
+        <div class="backup-title">⚠️ 排队超过15分钟？</div>
+        <div class="backup-item">→ 改吃旁边 <strong>鸭肉扁</strong>（中华路一段98-2号），卤鸭肉+当归鸭汤，60年老店无需排队</div>
+      </div>
     </div>
 
     <div class="travel-connector">
@@ -249,17 +372,17 @@
 
     <div class="item see">
       <div class="top-row">
-        <span class="time">17:30 – 18:00</span>
+        <span class="time">17:50 – 18:15</span>
         <span class="crowd low">🟢 平日傍晚清静</span>
       </div>
-      <div class="name">西门红楼</div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0428,121.5065" target="_blank">西门红楼<span class="gmap-icon">📍</span></a></div>
       <div class="desc">1908年八角楼建筑。一楼文创市集+二楼剧场空间。旁边十字楼有独立品牌咖啡。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
         <span class="h-time">周二至周日 11:00 – 21:30</span>
         <span class="h-rest">⚠️ 周一休</span>
       </div>
-      <div class="meta"><span class="tag t-see">🏛 历史建筑</span><span class="tag t-cost">💰 免费</span><span class="tag t-time">⏱ 30min</span></div>
+      <div class="meta"><span class="tag t-see">🏛 历史建筑</span><span class="tag t-cost">💰 免费</span><span class="tag t-time">⏱ 25min</span></div>
       <div class="crowd-tip">✅ 避峰策略：周五晚有创意市集会很挤，周三晚上悠闲</div>
     </div>
 
@@ -271,10 +394,10 @@
 
     <div class="item food">
       <div class="top-row">
-        <span class="time">18:15 – 18:50</span>
+        <span class="time">18:30 – 19:05</span>
         <span class="crowd mid">🟡 晚餐时段稍排队</span>
       </div>
-      <div class="name">一甲子餐饮</div>
+      <div class="name"><span class="must-badge">必吃</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.037,121.4995" target="_blank">一甲子餐饮<span class="gmap-icon">📍</span></a></div>
       <div class="desc">龙山寺旁50年老店。招牌<strong>焢肉饭</strong>（猪肉入口即化）+<strong>碗粿</strong>（南部古早味）+排骨酥汤。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -284,6 +407,10 @@
       <div class="crowd-tip">✅ 避峰策略：18:00前到排队约5分钟，18:30后要等15-20分钟</div>
       <div class="meta"><span class="tag t-food">🍚 台式古早味</span><span class="tag t-cost">💰 ~NT$120/人</span></div>
       <div class="detail"><strong>地址：</strong>万华区康定路79号</div>
+      <div class="backup-box">
+        <div class="backup-title">⚠️ 已售完/排队太长？</div>
+        <div class="backup-item">→ 旁边 <strong>两喜号鱿鱼羹</strong>（广州街250号），80年老店，鱿鱼羹+米粉一样经典</div>
+      </div>
     </div>
 
     <div class="travel-connector">
@@ -293,30 +420,40 @@
     </div>
 
     <div class="item local">
-      <div class="top-row"><span class="time">18:55 – 19:15</span><span class="local-badge">🔥 口袋名单</span></div>
-      <div class="name">龙山寺</div>
+      <div class="top-row"><span class="time">19:10 – 19:30</span><span class="local-badge">🔥 口袋名单</span></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0372,121.4998" target="_blank">龙山寺<span class="gmap-icon">📍</span></a></div>
       <div class="desc">270年历史，台北最灵验的妈祖庙。黄昏灯火渐亮最美。可以抽签问旅途平安。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
         <span class="h-time">06:00 – 22:00</span>
         <span class="h-rest">全年无休</span>
       </div>
-      <div class="meta"><span class="tag t-see">🏛 古迹</span><span class="tag t-cost">💰 免费</span><span class="tag t-time">⏱ 20min</span></div>
+      <div class="meta"><span class="tag t-local">🏛 古迹</span><span class="tag t-cost">💰 免费</span></div>
     </div>
 
     <div class="travel-connector">
       <span class="tc-icon">🚶</span>
       <span class="tc-pill">5 min</span>
-      <span class="tc-label">龙山寺出来 → 沿广州街往东走回康定路方向 → 老山东在广州街旁巷内</span>
+      <span class="tc-label">龙山寺沿广州街继续往东走 → 左转康定路 → 老山东在康定路 old-town 巷弄内</span>
+      <div class="nearby-alts">
+        <div class="na-title">🔄 龙山寺/万华一带替代</div>
+        <div class="na-grid">
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">周记肉粥</span><span class="na-desc">— 龙山寺旁清粥小菜</span><a href="https://www.google.com/maps/search/?api=1&query=25.0374,121.5" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">三六圆仔汤</span><span class="na-desc">— 70年甜汤，花生汤圆</span><a href="https://www.google.com/maps/search/?api=1&query=25.0375,121.4997" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">万华林家猪脚</span><span class="na-desc">— 卤猪脚+蒜泥白肉</span><a href="https://www.google.com/maps/search/?api=1&query=25.036,121.4988" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">剥皮寮历史街区</span><span class="na-desc">— 清代老街免费逛，好拍</span><a href="https://www.google.com/maps/search/?api=1&query=25.037,121.5005" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat bar">🍷</span><span class="na-name">Hanko 60</span><span class="na-desc">— 日式老屋酒吧 NT$350起</span><a href="https://www.google.com/maps/search/?api=1&query=25.0373,121.4996" target="_blank">📍</a></div>
+        </div>
+      </div>
     </div>
 
     <div class="item food">
       <div class="top-row">
-        <span class="time">19:20 – 19:50</span>
-        <span class="crowd low">🟢 晚间不排队</span>
+        <span class="time">19:35 – 20:00</span>
+        <span class="crowd low">🟢 19:00后客人渐少</span>
       </div>
-      <div class="name">老山东家常面</div>
-      <div class="desc">手擀面有嚼劲，<strong>炸酱面</strong>是招牌。份量大，两人可点一碗面+小菜共享。</div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0385,121.501" target="_blank">老山东家常面<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">手擀面条+酱烧牛腩，万华隐藏巷弄美食。在地人的家常面馆。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
         <span class="h-time">11:00 – 20:30</span>
@@ -326,33 +463,37 @@
     </div>
 
     <div class="travel-connector">
-      <span class="tc-icon">🚌</span>
-      <span class="tc-pill">10 min</span>
-      <span class="tc-label">走回捷运龙山寺站<strong>1号出口</strong>旁公车站 → 搭<strong>12路/205路</strong>公车（往景美方向）→ 在「南机场夜市」站下车（约4站）→ 下车即到夜市入口</span>
+      <span class="tc-icon">🚶</span>
+      <span class="tc-pill">12 min</span>
+      <span class="tc-label">沿中华路二段往南步行 → 经过捷运龙山寺站 → 右转南宁路 → 再左转中华路二段307巷 → 进入南机场夜市（巷子入口不显眼，认「南机场公寓」招牌）</span>
     </div>
 
     <div class="item food">
       <div class="top-row">
-        <span class="time">20:00 – 21:30</span>
-        <span class="crowd low">🟢 平日人潮稀</span>
+        <span class="time">20:15 – 21:00</span>
+        <span class="crowd low">🟢 平日无需排队</span>
       </div>
-      <div class="name">南机场夜市</div>
-      <div class="desc">台北最在地的夜市，观光客极少。<strong>必吃：</strong>来来水饺（一颗NT$5）、好佳蚵嗲、彰化肉圆、山内鸡肉饭。</div>
+      <div class="name"><span class="must-badge">必吃</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.032,121.508" target="_blank">南机场夜市<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">台北人的秘密夜市，没有观光客！南机场水饺、来来水饺、山内鸡肉饭、彰化肉圆。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
         <span class="h-time">17:00 – 00:00</span>
-        <span class="h-rest">各摊位不一</span>
+        <span class="h-rest">各摊位不同</span>
       </div>
-      <div class="crowd-tip">✅ 避峰策略：这是本地人夜市，平日20:00后人最少。周末才稍挤</div>
-      <div class="meta"><span class="tag t-food">🌙 夜市</span><span class="tag t-cost">💰 ~NT$150/人</span></div>
+      <div class="crowd-tip">✅ 避峰策略：平日20:00后人潮最少，可以悠哉逛</div>
+      <div class="detail">
+        <strong>🍽 必吃清单：</strong><br>
+        • 山内鸡肉饭 ⭐ — 台北最强鸡肉饭之一<br>
+        • 来来水饺 — 一颗NT$5，皮薄馅多<br>
+        • 臭老板现蒸臭豆腐 — 外酥内嫩，不臭<br>
+        • 松青润饼 — 春卷里包了整个世界
+      </div>
+      <div class="meta"><span class="tag t-food">🌙 在地夜市</span><span class="tag t-cost">💰 ~NT$150/人</span></div>
     </div>
-
-    <div class="item local">
-      <div class="top-row"><span class="time">夜市内</span><span class="local-badge">🔥 口袋名单</span></div>
-      <div class="name">阿伯蛋包瓜仔肉汤</div>
-      <div class="desc">南机场隐藏版，蛋包裹瓜仔肉汤，极独特。当地人排队的才是正确选择。</div>
-      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">17:30 – 售完</span><span class="h-rest">约21:00前</span></div>
-      <div class="meta"><span class="tag t-local">📍 夜市内</span><span class="tag t-cost">💰 ~NT$50</span></div>
+    <div class="travel-connector">
+      <span class="tc-icon">🚶</span>
+      <span class="tc-pill">15 min</span>
+      <span class="tc-label">原路返回中华路 → 往北走至捷运西门站<strong>6号出口</strong> → 步行3min回N Hotel<br>（或在南机场叫Uber/计程车回酒店约NT$85，5min）</span>
     </div>
   </div>
 </div>
@@ -361,258 +502,263 @@
 <div class="day-panel" id="day1">
   <div class="day-header">
     <h2>Day 2 · 5月8日（四）</h2>
-    <div class="theme">📍 大稻埕 / 中正区 — 老城人文巡礼 + 宁夏夜市</div>
-    <div class="route-tag" style="background:#fef3e2;color:var(--day2)">🚃 捷运1次 + 步行为主</div>
+    <div class="theme">📍 大稻埕 / 中正区 — 老台北文化巡礼 + 宁夏夜市</div>
+    <div class="route-tag" style="background:#fef3e2;color:var(--day2)">🚃 U形路线 · 步行+捷运</div>
+  </div>
+
+  <div class="priority-section must">
+    <h4>⭐ 必做 3 件事</h4>
+    1. 大稻埕迪化街漫步（最美老街）<br>2. 中正纪念堂整点卫兵交接<br>3. 宁夏夜市蚵仔煎+天津葱抓饼
+  </div>
+  <div class="priority-section skip">
+    <h4>✂️ 时间不够可删</h4>
+    国立台湾博物馆（30min快逛外观）· 50岚（任何便利店都能买饮料）
   </div>
 
   <div class="day-travel-summary">
     <span class="dts-icon">🗺</span>
     <div class="dts-stat">
       <span>总移动 <span class="num">~95 min</span></span>
-      <span>步行 <span class="num">~50 min</span></span>
-      <span>捷运 <span class="num">~45 min</span></span>
+      <span>步行 <span class="num">~55 min</span></span>
+      <span>捷运 <span class="num">~40 min</span></span>
     </div>
   </div>
 
-  <div class="tip blue">📍 <strong>路线逻辑：</strong>大稻埕区（北）走完 → 捷运南下到中正区 → 傍晚再搭捷运/步行回宁夏夜市（北）。U形路线，同区域集中逛。</div>
-
   <div class="timeline">
     <div class="travel-connector">
-      <span class="tc-icon">🚃</span>
+      <span class="tc-icon">🏨</span>
       <span class="tc-pill">15 min</span>
-      <span class="tc-label">🏨 N Hotel出发 → 步行到捷运<strong>西门站6号出口</strong>进站 → 搭板南线(蓝线)往南港方向 → 在「台北车站」换中和新芦线(橘线)往迴龙方向 → 在「大桥头站」下车（2站约5min）→ <strong>1号出口</strong>出站 → 沿重庆北路步行到重庆豆浆</span>
+      <span class="tc-label">🏨 N Hotel出发 → 步行到捷运<strong>西门站6号出口</strong>进站（3min）→ 搭板南线(蓝线)往南港方向 → 在「北门站」下车（1站2min）→ <strong>3号出口</strong>出站 → 步行往延平北路（10min）</span>
     </div>
 
     <div class="item food">
       <div class="top-row">
-        <span class="time">08:00 – 08:40</span>
-        <span class="crowd mid">🟡 热门店</span>
+        <span class="time">08:30 – 09:10</span>
+        <span class="crowd low">🟢 平日早上不排</span>
       </div>
-      <div class="name">重庆豆浆炸蛋饼</div>
-      <div class="desc"><strong>必点：炸蛋饼</strong>——整颗蛋裹饼皮下锅炸，外酥内嫩。配一杯冰豆浆，标准台北早餐。可加点烧饼油条。</div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.053,121.51" target="_blank">重庆豆浆炸蛋饼<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">在地人早餐！炸蛋饼外酥内嫩+现磨咸豆浆（加油条碎）。每桌必点蛋饼+小笼包组合。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
-        <span class="h-time">05:30 – 12:00</span>
-        <span class="h-rest">⚠️ 周日休</span>
+        <span class="h-time">06:00 – 11:30</span>
+        <span class="h-rest">售完为止</span>
       </div>
-      <div class="crowd-tip">✅ 避峰策略：08:00前到等5分钟。08:30后排队15-20分钟。你们是周四去，比周末好很多</div>
-      <div class="meta"><span class="tag t-food">🥚 早餐</span><span class="tag t-cost">💰 ~NT$70/人</span></div>
+      <div class="meta"><span class="tag t-food">🥞 早餐</span><span class="tag t-cost">💰 ~NT$80/人</span></div>
     </div>
 
     <div class="travel-connector">
       <span class="tc-icon">🚶</span>
-      <span class="tc-pill">10 min</span>
-      <span class="tc-label">沿重庆北路往北走 → 左转民生西路 → 右转迪化街一段 → 进入大稻埕老街区（沿路两侧都是老建筑和店铺）</span>
+      <span class="tc-pill">5 min</span>
+      <span class="tc-label">出店左转 → 沿延平北路二段往北走 → 进入迪化街一段（大稻埕老街入口）</span>
     </div>
 
     <div class="item see">
       <div class="top-row">
-        <span class="time">09:00 – 09:45</span>
-        <span class="crowd low">🟢 早上店家刚开</span>
+        <span class="time">09:15 – 10:45</span>
+        <span class="crowd low">🟢 平日上午游客少</span>
       </div>
-      <div class="name">大稻埕手摇饮 + 老街散步</div>
-      <div class="desc">迪化街巴洛克老建筑超好拍。来杯手摇茶，感受百年商街新旧交融。</div>
+      <div class="name"><span class="must-badge">必逛</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0555,121.5095" target="_blank">大稻埕 · 迪化街<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">台北最美老街。百年巴洛克骑楼、南北货行、文创小店。每栋老屋都有故事。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
-        <span class="h-time">迪化街店铺约 09:00 – 18:00</span>
+        <span class="h-time">店铺约 10:00 – 18:00</span>
         <span class="h-rest">部分周一休</span>
       </div>
-      <div class="crowd-tip">✅ 避峰策略：09:00-10:30 是迪化街的黄金时段——店家开了但游客还没来</div>
-      <div class="detail"><strong>推荐路线：</strong>迪化街一段（南北货+布庄+文创店）→ 永乐市场</div>
+      <div class="crowd-tip">✅ 避峰策略：平日上午几乎包场，周末下午人山人海</div>
+      <div class="detail">
+        <strong>推荐路线：</strong>从南端永乐市场开始 → 民艺埕 → 小艺埕 → 众艺埕 → 往北走到霞海城隍庙<br>
+        <strong>📸 最佳拍照点：</strong>迪化街一段155号（十连栋立面）
+      </div>
+    </div>
+      <div class="nearby-alts">
+        <div class="na-title">🔄 大稻埕一带还可以逛/吃</div>
+        <div class="na-grid">
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">慈圣宫庙口美食</span><span class="na-desc">— 最在地的庙口小吃群</span><a href="https://www.google.com/maps/search/?api=1&query=25.0565,121.5105" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">妙口四神汤</span><span class="na-desc">— 60年，四神汤+肉粽</span><a href="https://www.google.com/maps/search/?api=1&query=25.0558,121.51" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat cafe">☕</span><span class="na-name">森高砂咖啡</span><span class="na-desc">— 老屋咖啡，自烘豆</span><a href="https://www.google.com/maps/search/?api=1&query=25.057,121.5093" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat shop">🛍</span><span class="na-name">小器生活</span><span class="na-desc">— 日系生活道具选物</span><a href="https://www.google.com/maps/search/?api=1&query=25.056,121.5095" target="_blank">📍</a></div>
+        </div>
+      </div>
+
+    <div class="item local">
+      <div class="top-row"><span class="time">大稻埕内</span><span class="local-badge">🔥 口袋名单</span></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0565,121.5092" target="_blank">迪化街十连栋<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">10栋连续巴洛克式洋楼，是迪化街最壮观的立面。现为南北货、中药行、文创商店。</div>
+      <div class="meta"><span class="tag t-local">📸 必拍</span><span class="tag t-cost">💰 免费</span></div>
+    </div>
+
+    <div class="item food">
+      <div class="top-row"><span class="time">10:45 – 11:10</span></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.055,121.5098" target="_blank">永乐鸡卷大王<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">永乐市场2楼的古早味。鸡卷（其实是猪肉卷）+鱼翅肉羹。</div>
+      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">08:00 – 14:00</span><span class="h-rest">下午就没了</span></div>
+      <div class="meta"><span class="tag t-food">🍜 古早味</span><span class="tag t-cost">💰 ~NT$80/人</span></div>
     </div>
 
     <div class="travel-connector">
       <span class="tc-icon">🚶</span>
       <span class="tc-pill">3 min</span>
-      <span class="tc-label">迪化街继续往北走 → 到迪化街一段21号永乐市场大楼 → 鸡卷摊位在市场旁骑楼下</span>
+      <span class="tc-label">永乐市场出来 → 迪化街一段往北走2分钟 → 和盛1947在迪化街一段197号</span>
     </div>
 
     <div class="item food">
       <div class="top-row">
-        <span class="time">09:50 – 10:15</span>
-        <span class="crowd low">🟢 早上没人排</span>
+        <span class="time">11:10 – 11:50</span>
+        <span class="crowd low">🟢 11:00开门即到</span>
       </div>
-      <div class="name">永乐鸡卷大王</div>
-      <div class="desc">台式「鸡卷」不是鸡肉——是猪肉+蔬菜裹腐皮油炸，沾甜辣酱。外酥内鲜。</div>
-      <div class="hours-bar">
-        <span class="h-icon">🕐</span>
-        <span class="h-time">08:00 – 17:00</span>
-        <span class="h-rest">周一休</span>
-      </div>
-      <div class="meta"><span class="tag t-food">🍢 小吃</span><span class="tag t-cost">💰 ~NT$50</span></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.056,121.509" target="_blank">和盛 1947<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">百年老屋改造咖啡厅。红砖墙+木梁+自然光，喝杯台湾茶很惬意。</div>
+      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">11:00 – 19:00</span><span class="h-rest">周一休</span></div>
+      <div class="meta"><span class="tag t-food">☕ 咖啡厅</span><span class="tag t-cost">💰 ~NT$200/人</span></div>
     </div>
 
-    <div class="travel-connector">
-      <span class="tc-icon">🚶</span>
-      <span class="tc-pill">5 min</span>
-      <span class="tc-label">永乐市场出来 → 沿迪化街一段继续往北走 → 留意门牌156-176号（十连栋就在这段）</span>
+    <div class="item food">
+      <div class="top-row"><span class="time">11:50 – 12:10</span></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0545,121.5085" target="_blank">永富冰淇淋<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">大稻埕老字号。芋头冰淇淋+花生冰淇淋，古早味浓郁。NT$40一球。</div>
+      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">10:00 – 18:00</span></div>
+      <div class="meta"><span class="tag t-food">🍦 甜品</span><span class="tag t-cost">💰 NT$40/球</span></div>
     </div>
 
     <div class="item local">
-      <div class="top-row"><span class="time">散步途中</span><span class="local-badge">🔥 口袋名单</span></div>
-      <div class="name">迪化街十连栋</div>
-      <div class="desc">迪化街一段156-176号，10栋连续巴洛克街屋。二楼精雕门面每栋不同，台北保存最完整的历史街屋群。</div>
-      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">户外，24小时可观赏</span></div>
-      <div class="meta"><span class="tag t-see">🏛 建筑</span><span class="tag t-cost">💰 免费</span></div>
-    </div>
-
-    <div class="travel-connector">
-      <span class="tc-icon">🚶</span>
-      <span class="tc-pill">3 min</span>
-      <span class="tc-label">继续沿迪化街一段走 → 和盛1947在迪化街一段282号（老宅门面很好认）</span>
+      <div class="top-row"><span class="time">12:15 – 12:35</span><span class="local-badge">🔥 口袋名单</span></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.054,121.505" target="_blank">大稻埕码头<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">淡水河畔最美夕阳点。白天也舒服，有货柜市集和自行车道。拍河景很出片。</div>
+      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">全天开放</span></div>
+      <div class="meta"><span class="tag t-local">🌅 河景</span><span class="tag t-cost">💰 免费</span></div>
     </div>
 
     <div class="item food">
       <div class="top-row">
-        <span class="time">10:30 – 11:45</span>
-        <span class="crowd low">🟢 平日午前清闲</span>
+        <span class="time">12:40 – 13:10</span>
+        <span class="new-badge">🆕 新增</span>
       </div>
-      <div class="name">和盛 1947</div>
-      <div class="desc">日式老宅改造餐厅。75年老房子，窗花、磨石子地板、旧式楼梯。创意台菜。</div>
-      <div class="hours-bar">
-        <span class="h-icon">🕐</span>
-        <span class="h-time">11:00 – 21:00</span>
-        <span class="h-rest">周一休</span>
-      </div>
-      <div class="crowd-tip">✅ 避峰策略：11:00开门就进，不用等位。12:00后周末要等30分钟+</div>
-      <div class="meta"><span class="tag t-food">🍽 早午餐</span><span class="tag t-cost">💰 ~NT$400/人</span><span class="tag t-tip">📸 2楼靠窗最美</span></div>
-    </div>
-
-    <div class="travel-connector">
-      <span class="tc-icon">🚶</span>
-      <span class="tc-pill">5 min</span>
-      <span class="tc-label">和盛出来 → 沿迪化街原路往南走回永乐市场方向 → 永富冰淇淋在迪化街一段近南京西路段</span>
-    </div>
-
-    <div class="item food">
-      <div class="top-row"><span class="time">11:50 – 12:15</span></div>
-      <div class="name">永富冰淇淋</div>
-      <div class="desc">古早味冰店。三球NT$45起，芋头/花生/百香果最受欢迎。</div>
-      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">10:00 – 19:00</span><span class="h-rest">周一休</span></div>
-      <div class="meta"><span class="tag t-food">🍦 甜品</span><span class="tag t-cost">💰 ~NT$50</span></div>
-    </div>
-
-    <div class="item local">
-      <div class="top-row"><span class="time">推荐</span><span class="local-badge">🔥 口袋名单</span></div>
-      <div class="name">保安捌肆 Boan 84</div>
-      <div class="desc">大稻埕隐藏咖啡厅，百年老屋二楼。铁窗花+天井采光，只有当地人知道的秘密空间。</div>
-      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">12:00 – 18:00</span><span class="h-rest">周一二休</span></div>
-      <div class="meta"><span class="tag t-local">☕ 咖啡</span><span class="tag t-cost">💰 ~NT$150</span></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0575,121.5115" target="_blank">林华泰茶行<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">1883年创立，台北最老茶行。可以试喝再买，高山乌龙茶/东方美人茶伴手礼首选。比观光区便宜30-50%。</div>
+      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">07:30 – 21:00</span><span class="h-rest">全年无休</span></div>
+      <div class="meta"><span class="tag t-shop">🍵 伴手礼</span><span class="tag t-cost">💰 ~NT$300起/150g</span></div>
     </div>
 
     <div class="travel-connector">
       <span class="tc-icon">🚃</span>
-      <span class="tc-pill">15 min</span>
-      <span class="tc-label">步行到捷运<strong>北门站3号出口</strong>进站（沿塔城街往南走约8min）→ 搭松山新店线(绿线)往新店方向 → 在「中正纪念堂站」下车（3站约7min）→ <strong>5号出口</strong>出站面对自由广场牌坊</span>
+      <span class="tc-pill">25 min</span>
+      <span class="tc-label">步行回捷运<strong>北门站3号出口</strong>（10min）→ 搭板南线(蓝线)往南港方向 → 在「台北车站」换淡水信义线(红线)往象山方向 → 在「中正纪念堂站」下车 → <strong>5号出口</strong>出站即到广场</span>
+      <div class="uber-alt"><span class="uber-logo">UBER</span> <span class="uber-info">替代方案：</span><span class="uber-price">~NT$200/车</span><span class="uber-time">12min</span> · 从大稻埕直达</div>
     </div>
 
     <div class="item see">
       <div class="top-row">
-        <span class="time">13:00 – 14:15</span>
-        <span class="crowd low">🟢 平日午后人少</span>
+        <span class="time">13:40 – 14:50</span>
+        <span class="crowd low">🟢 平日下午宽敞</span>
       </div>
-      <div class="name">中正纪念堂</div>
-      <div class="desc">台北地标。<strong>整点仪仗队交接</strong>必看（每小时一次，约15分钟）。广场两侧是国家音乐厅和戏剧院。</div>
+      <div class="name"><span class="must-badge">必看</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0348,121.5217" target="_blank">中正纪念堂<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">台湾最具代表性地标。89阶白色阶梯+蓝瓦白墙。<strong>整点卫兵交接仪式</strong>不可错过。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
         <span class="h-time">堂内 09:00 – 18:00</span>
-        <span class="h-rest">广场 24h · 仪队交接最后一场 17:00</span>
+        <span class="h-rest">园区 05:00 – 24:00</span>
       </div>
-      <div class="crowd-tip">✅ 避峰策略：13:00整点仪仗交接比10:00那场人少一半。平日比假日好非常多</div>
-      <div class="meta"><span class="tag t-see">🏛 地标</span><span class="tag t-cost">💰 免费</span><span class="tag t-time">⏱ 1-1.5h</span></div>
+      <div class="crowd-tip">✅ 避峰策略：14:00交接仪式比10:00场人少一半</div>
+      <div class="meta"><span class="tag t-see">🏛 地标</span><span class="tag t-cost">💰 免费</span><span class="tag t-time">⏱ 60min</span></div>
+      <div class="detail"><strong>交接仪式时间：</strong>每整点（09:00-17:00）<br><strong>建议：</strong>13:50到堂内占好位置看14:00场</div>
     </div>
+      <div class="nearby-alts">
+        <div class="na-title">🔄 中正纪念堂附近替代</div>
+        <div class="na-grid">
+          <div class="na-item"><span class="na-cat cafe">☕</span><span class="na-name">保安捌肆 Boan 84</span><span class="na-desc">— 百年古宅咖啡厅</span><a href="https://www.google.com/maps/search/?api=1&query=25.043,121.5145" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">黄记卤肉饭</span><span class="na-desc">— 中正区隐藏卤肉饭之王</span><a href="https://www.google.com/maps/search/?api=1&query=25.038,121.518" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">猪肝荣仔</span><span class="na-desc">— 在地人最爱猪肝汤</span><a href="https://www.google.com/maps/search/?api=1&query=25.0445,121.5148" target="_blank">📍</a></div>
+        </div>
+      </div>
 
     <div class="travel-connector">
       <span class="tc-icon">🚶</span>
-      <span class="tc-pill">12 min</span>
-      <span class="tc-label">中正纪念堂 → 沿信义路往东走到杭州南路 → 左转北行 → 穿过228和平公园 → 博物馆在公园内正中央（希腊式白色建筑很显眼）</span>
+      <span class="tc-pill">15 min</span>
+      <span class="tc-label">中正纪念堂<strong>大忠门</strong>出 → 沿信义路往西走 → 左转重庆南路 → 台湾博物馆在228公园内（重庆南路与襄阳路口）</span>
     </div>
 
     <div class="item see">
       <div class="top-row">
-        <span class="time">14:30 – 15:45</span>
-        <span class="crowd low">🟢 冷门但优质</span>
+        <span class="time">15:10 – 15:50</span>
+        <span class="crowd low">🟢 非假日几乎包场</span>
       </div>
-      <div class="name">国立台湾博物馆</div>
-      <div class="desc">台湾最古老博物馆（1908年），228公园内。希腊式建筑。常设台湾自然史+原住民文化。</div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0427,121.5148" target="_blank">国立台湾博物馆<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">台湾最老的博物馆（1908）。希腊式圆柱建筑很壮观。自然史+台湾原住民文化常设展。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
         <span class="h-time">周二至周日 09:30 – 17:00</span>
-        <span class="h-rest">⚠️ 周一休 · 16:30停止入馆</span>
+        <span class="h-rest">⚠️ 周一休</span>
       </div>
-      <div class="meta"><span class="tag t-see">🏛 博物馆</span><span class="tag t-cost">💰 NT$30</span><span class="tag t-time">⏱ 1h</span></div>
-      <div class="detail"><strong>Bonus：</strong>对面土银展示馆有恐龙化石展，同一张票可入</div>
+      <div class="meta"><span class="tag t-see">🏛 博物馆</span><span class="tag t-cost">💰 NT$30</span><span class="tag t-time">⏱ 40min</span></div>
     </div>
 
     <div class="travel-connector">
       <span class="tc-icon">🚶</span>
       <span class="tc-pill">5 min</span>
-      <span class="tc-label">博物馆出来 → 228公园旁馆前路/襄阳路上即有50岚门市 → 边走边买</span>
+      <span class="tc-label">228公园内沿步道走 → 往衡阳路方向出公园 → 50岚就在衡阳路上</span>
     </div>
 
     <div class="item food">
-      <div class="top-row"><span class="time">15:50</span></div>
-      <div class="name">50岚</div>
-      <div class="desc">台湾国民手摇。<strong>推荐：</strong>四季春茶（清香不苦）、波霸奶茶（微糖少冰）。</div>
-      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">09:00 – 22:30</span><span class="h-rest">各门市略有差异</span></div>
-      <div class="meta"><span class="tag t-food">🧋 饮品</span><span class="tag t-cost">💰 ~NT$45</span></div>
+      <div class="top-row"><span class="time">15:55 – 16:10</span></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.044,121.515" target="_blank">50岚<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">台湾本土手摇茶连锁。推荐「四季春+珍珠」或「冰淇淋红茶」。比CoCo更在地。</div>
+      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">09:00 – 22:00</span></div>
+      <div class="meta"><span class="tag t-food">🧋 手摇饮</span><span class="tag t-cost">💰 ~NT$50</span></div>
     </div>
 
     <div class="travel-connector">
       <span class="tc-icon">🚃</span>
       <span class="tc-pill">15 min</span>
-      <span class="tc-label">步行到捷运<strong>台大医院站4号出口</strong>进站 → 搭淡水信义线(红线)往淡水方向 → 在「中山站」下车（2站4min）→ <strong>1号出口</strong>出站 → 沿南京西路往西走 → 右转宁夏路 → 步行5min到夜市入口</span>
+      <span class="tc-label">步行到捷运<strong>台大医院站</strong>（3min）→ 搭淡水信义线(红线)往淡水方向 → 在「中山站」下车（2站4min）→ <strong>1号出口</strong>出站 → 沿南京西路往西走5min → 右转入宁夏路</span>
     </div>
 
     <div class="item food">
       <div class="top-row">
         <span class="time">17:30 – 19:00</span>
-        <span class="crowd mid">🟡 提早去避高峰</span>
+        <span class="crowd mid">🟡 18:30后开始排队</span>
       </div>
-      <div class="name">宁夏夜市</div>
-      <div class="desc">台北最「好吃」的夜市。规模适中不会逛到腿断。</div>
+      <div class="name"><span class="must-badge">必吃</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0558,121.5155" target="_blank">宁夏夜市<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">台北最强小吃夜市，米其林指南常客。单一条街，密度极高，不走冤枉路。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
         <span class="h-time">17:00 – 01:00</span>
-        <span class="h-rest">各摊位不一</span>
+        <span class="h-rest">天天营业</span>
       </div>
-      <div class="crowd-tip">✅ 避峰策略：<strong>17:30到</strong>是黄金时段——大部分摊位已开但人潮尚未涌入。19:00后是尖峰要排队。平日比周末好30%</div>
+      <div class="crowd-tip">✅ 避峰策略：<strong>17:30到</strong>几乎不排队！19:00后每摊排10-15分钟</div>
       <div class="detail">
-        <strong>🍽 必吃清单（按排队程度排序）：</strong><br>
-        • <strong>刘芋仔</strong>：芋头球+蛋黄芋饼（⚡ 最多人排，建议先排这摊，等待时另一人去买别的）<br>
-        • <strong>圆环边蚵仔煎</strong>：蚵仔大颗饱满<br>
-        • <strong>猪肝荣仔</strong>：猪肝汤鲜嫩无腥味<br>
-        • <strong>方家鸡肉饭</strong>：当地人的深夜食堂
+        <strong>🍽 必吃清单：</strong><br>
+        • 蚵仔煎 — 刘芋仔（排队王，先排这摊！）<br>
+        • 圆环边蚵仔煎 ⭐ — 米其林必比登<br>
+        • 猪肝汤 — 方家鸡肉饭旁<br>
+        • 芋头球 — 刘芋仔（和蚵仔煎同一摊）<br>
+        • 烧麻糬 ⭐ — 冰火交融
       </div>
-      <div class="meta"><span class="tag t-food">🌙 夜市</span><span class="tag t-cost">💰 ~NT$200/人</span></div>
-    </div>
-
-    <div class="travel-connector">
-      <span class="tc-icon">🚶</span>
-      <span class="tc-pill">3 min</span>
-      <span class="tc-label">宁夏夜市走到底（民生西路端）→ 天津葱抓饼摊位在夜市尾段靠路口处</span>
+      <div class="meta"><span class="tag t-food">🌙 夜市</span><span class="tag t-cost">💰 ~NT$250/人吃到撑</span></div>
+      <div class="backup-box">
+        <div class="backup-title">⚠️ 刘芋仔排队超过30分钟？</div>
+        <div class="backup-item">→ 先吃 <strong>圆环边蚵仔煎</strong>（宁夏路中段），同是米其林必比登，排队较短<br>→ 或改吃 <strong>方家鸡肉饭</strong>（宁夏路44号），鸡肉饭+猪肝汤，在地人首选</div>
+      </div>
+      <div class="nearby-alts">
+        <div class="na-title">🔄 宁夏附近更多选择</div>
+        <div class="na-grid">
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">呷二嘴米苔目</span><span class="na-desc">— 古早味米苔目</span><a href="https://www.google.com/maps/search/?api=1&query=25.0555,121.5152" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">阿桐阿宝四神汤</span><span class="na-desc">— 必比登推荐</span><a href="https://www.google.com/maps/search/?api=1&query=25.056,121.5153" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">老阿伯胖鱿焿</span><span class="na-desc">— 铁板鱿鱼+肉羹</span><a href="https://www.google.com/maps/search/?api=1&query=25.0558,121.5155" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">台北当代艺术馆</span><span class="na-desc">— 当代艺术（如有时间）</span><a href="https://www.google.com/maps/search/?api=1&query=25.05,121.519" target="_blank">📍</a></div>
+        </div>
+      </div>
     </div>
 
     <div class="item food">
-      <div class="top-row"><span class="time">19:00 – 19:20</span></div>
-      <div class="name">天津葱抓饼</div>
-      <div class="desc">层层酥脆+加蛋加起司，看老板现场拍打甩面。</div>
-      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">15:00 – 00:30</span></div>
-      <div class="meta"><span class="tag t-food">🥞 小吃</span><span class="tag t-cost">💰 ~NT$55</span></div>
+      <div class="top-row"><span class="time">宁夏内</span></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.056,121.5158" target="_blank">天津葱抓饼<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">宁夏夜市入口处。葱抓饼+蛋+起司，层层酥脆。NT$45起。</div>
+      <div class="meta"><span class="tag t-food">🥞 小吃</span><span class="tag t-cost">💰 NT$45</span></div>
     </div>
-
     <div class="travel-connector">
-      <span class="tc-icon">🚶</span>
+      <span class="tc-icon">🚃</span>
       <span class="tc-pill">15 min</span>
-      <span class="tc-label">宁夏路走回南京西路 → 沿南京西路往西走 → 过环河北路 → 右转沿河岸步道往南 → 大稻埕码头广场（5号水门进入）</span>
-    </div>
-
-    <div class="item local">
-      <div class="top-row"><span class="time">19:40</span><span class="local-badge">🔥 口袋名单</span></div>
-      <div class="name">大稻埕码头日落广场</div>
-      <div class="desc">河岸散步消食。5月日落约18:30，去的时候虽已天黑但河岸夜景也很美，有咖啡车和街头艺人。</div>
-      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">户外，24小时</span></div>
-      <div class="meta"><span class="tag t-see">🌃 河岸</span><span class="tag t-cost">💰 免费</span></div>
+      <span class="tc-label">宁夏路走回捷运<strong>中山站1号出口</strong>进站 → 搭淡水信义线(红线)往象山方向 → 在「台北车站」换板南线(蓝线)往顶埔方向 → 在「西门站」下车（1站）→ <strong>6号出口</strong>出站 → 步行3min回N Hotel</span>
     </div>
   </div>
 </div>
@@ -621,8 +767,17 @@
 <div class="day-panel" id="day2">
   <div class="day-header">
     <h2>Day 3 · 5月9日（五）</h2>
-    <div class="theme">📍 九份 + 松山 — 山城一日游 + 饶河夜市</div>
-    <div class="route-tag" style="background:#d5f5e3;color:#1e8449">🚌 公车来回 · 预留交通时间</div>
+    <div class="theme">📍 九份 / 松山 — 山城远足 + 松山烟火</div>
+    <div class="route-tag" style="background:#e8fce8;color:var(--day3)">🚌 交通最重日 · 公车+捷运</div>
+  </div>
+
+  <div class="priority-section must">
+    <h4>⭐ 必做 3 件事</h4>
+    1. 九份竖崎路阶梯（千与千寻场景）<br>2. 叶家小笼包（在地早餐王）<br>3. 饶河夜市胡椒饼
+  </div>
+  <div class="priority-section skip">
+    <h4>✂️ 时间不够可删</h4>
+    黄金博物馆（需额外1.5h）· 红茶屋（可改松山车站内饮料）
   </div>
 
   <div class="day-travel-summary">
@@ -630,144 +785,158 @@
     <div class="dts-stat">
       <span>总移动 <span class="num">~240 min</span></span>
       <span>公车 <span class="num">~180 min</span></span>
-      <span>捷运 <span class="num">~35 min</span></span>
-      <span>步行 <span class="num">~25 min</span></span>
+      <span>捷运 <span class="num">~20 min</span></span>
     </div>
   </div>
 
-  <div class="tip red">⚠️ <strong>九份交通：</strong>忠孝复兴站2号出口 → <strong>1062公车</strong>直达（NT$101，刷悠游卡），单程约90分钟。<br>回程下车「忠孝复兴站」→ 转捷运10min到松山站 → 饶河夜市。路线很顺。</div>
+  <div class="tip red">⚠️ <strong>交通最重日！</strong>九份来回公车约180分钟（单程80-90min）。风景值得，但请做好心理准备。<strong>备案：</strong>如果前一晚太累，可Uber到瑞芳（NT$1,200/车，40min），省体力但多花钱。</div>
 
   <div class="timeline">
     <div class="travel-connector">
-      <span class="tc-icon">🚃</span>
-      <span class="tc-pill">20 min</span>
-      <span class="tc-label">🏨 N Hotel出发 → 捷运<strong>西门站6号出口</strong>进站 → 搭板南线(蓝线)往南港方向 → 在「忠孝复兴站」下车（4站10min）→ 站内换中和新芦线(橘线)往芦洲方向 → 在「三民高中站」下车（约8min）→ <strong>1号出口</strong>出站步行到叶家小笼包</span>
+      <span class="tc-icon">🏨</span>
+      <span class="tc-pill">12 min</span>
+      <span class="tc-label">🏨 N Hotel出发 → 步行到捷运<strong>西门站6号出口</strong>进站（3min）→ 搭板南线(蓝线)往南港方向 → 在「忠孝复兴站」下车（4站8min）→ <strong>1号出口</strong>出站</span>
     </div>
 
     <div class="item food">
       <div class="top-row">
-        <span class="time">07:30 – 08:15</span>
-        <span class="crowd mid">🟡 要排队但快</span>
+        <span class="time">07:30 – 08:10</span>
+        <span class="crowd low">🟢 平日早上免排</span>
       </div>
-      <div class="name">叶家芦洲手工小笼包</div>
-      <div class="desc">手工现包现蒸，皮薄汁多。小笼包+酸辣汤完美组合。</div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0845,121.4725" target="_blank">叶家小笼包<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">在地人排队早餐。小笼包皮薄汤多+酸辣汤，比鼎泰丰便宜10倍。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
-        <span class="h-time">06:00 – 13:00</span>
-        <span class="h-rest">售完提早关</span>
+        <span class="h-time">06:30 – 13:00</span>
+        <span class="h-rest">售完为止</span>
       </div>
-      <div class="crowd-tip">✅ 避峰策略：07:30前到排一轮约10分钟。08:30后周末要等30分钟+</div>
       <div class="meta"><span class="tag t-food">🥟 早餐</span><span class="tag t-cost">💰 ~NT$100/人</span></div>
-    </div>
-
-    <div class="travel-connector">
-      <span class="tc-icon">🚃</span>
-      <span class="tc-pill">25 min</span>
-      <span class="tc-label">捷运西门站搭板南线(蓝线)往南港方向 → 在「忠孝复兴站」下车（4站约10min）→ <strong>2号出口</strong>出站 → 出口右手边即是1062公车站牌（复兴南路一段旁）</span>
-    </div>
-
-    <div class="item transport">
-      <div class="top-row"><span class="time">08:45</span></div>
-      <div class="name">🚌 忠孝复兴站 → 九份</div>
-      <div class="desc">2号出口搭1062公车。坐右侧靠窗看东北角海岸线。</div>
-      <div class="meta"><span class="tag t-go">🚌 1062公车</span><span class="tag t-cost">💰 NT$101/人</span><span class="tag t-time">⏱ ~90min</span></div>
+      <div class="backup-box">
+        <div class="backup-title">⚠️ 太早还没开/卖完了？</div>
+        <div class="backup-item">→ 附近 <strong>阜杭豆浆</strong>（忠孝东路一段108号2楼），厚烧饼+咸豆浆，CNN推荐。但要排30min+</div>
+      </div>
     </div>
 
     <div class="travel-connector">
       <span class="tc-icon">🚌</span>
-      <span class="tc-pill">90 min</span>
-      <span class="tc-label">1062公车上车 → 经国道/62快速道路 → 瑞芳 → 沿山路上九份 → 在「九份老街站」（旧道口）下车 → 下车处即是基山街入口牌坊。💡 坐右侧靠窗看海景</span>
+      <span class="tc-pill">80-90 min</span>
+      <span class="tc-label">步行至捷运「忠孝复兴站」→ 搭板南线到「忠孝复兴站」1号出口 → 步行至<strong>基隆客运1062站牌</strong>（复兴南路一段/忠孝东路口）→ 搭往金瓜石方向 → 在「九份老街站」下车（约80-90min）→ 票价NT$101<br><strong>⚡ Tips：</strong>上车刷悠游卡，回程同站牌对面等车</span>
+      <div class="uber-alt"><span class="uber-logo">UBER</span> <span class="uber-info">替代方案：</span><span class="uber-price">~NT$1,200/车</span><span class="uber-time">40min</span> · 2人分摊每人NT$600，省40min+免塞公车</div>
     </div>
 
     <div class="item see">
       <div class="top-row">
-        <span class="time">10:15 – 14:30</span>
+        <span class="time">09:40 – 12:00</span>
         <span class="crowd mid">🟡 周五比周末好</span>
       </div>
-      <div class="name">九份老街</div>
-      <div class="desc">依山矿城老街，石阶红灯笼。《千与千寻》灵感争议地。</div>
+      <div class="name"><span class="must-badge">必逛</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.109,121.8445" target="_blank">九份老街<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">宫崎骏灵感来源。红灯笼、石阶、山城海景。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
-        <span class="h-time">店铺约 09:00 – 19:00（假日到20:00）</span>
-        <span class="h-rest">平日部分摊位休息</span>
+        <span class="h-time">店铺约 09:00 – 19:00（假日延长）</span>
+        <span class="h-rest">全年无休</span>
       </div>
-      <div class="crowd-tip">✅ 避峰策略：<strong>10:00-12:00是九份最舒服的时段</strong>——团客通常13:00后到。你们10:15抵达正好踩在空窗期。竖崎路拍照趁这时候！</div>
+      <div class="crowd-tip">✅ 避峰策略：<strong>先走竖崎路</strong>（团客先逛基山街）→ 再回基山街购物</div>
       <div class="detail">
-        <strong>🗺 建议路线（按人流规避）：</strong><br>
-        1️⃣ 先走竖崎路石阶（10:15，人少拍照）<br>
-        2️⃣ 阿妹茶楼外拍照<br>
-        3️⃣ 基山街逛吃（11:00，摊位全开）<br>
-        4️⃣ 轻便路观景台看海（12:30，避正午人群）<br>
-        5️⃣ 升平戏院坐一下（免费冷气歇脚）<br><br>
-        <strong>🍽 必吃：</strong><br>
-        • <strong>阿柑姨芋圆</strong>：山景第一排吃热芋圆 ⏰ 09:00-20:00<br>
-        • <strong>鱼丸伯仔</strong>：手工鱼丸 ⏰ 10:00-19:00<br>
-        • <strong>阿兰草仔粿</strong>：传统糕点 ⏰ 08:30-20:00<br>
-        • <strong>护理长的店</strong>：卤味拼盘 ⏰ 11:00-19:00
+        <strong>推荐路线（逆向避团客）：</strong><br>
+        1. 先下竖崎路阶梯（📸 最佳拍照）→ 阿妹茶楼外观<br>
+        2. 回基山街逛芋圆店/花生卷冰淇淋<br>
+        3. 升平戏院（免费参观）<br>
+        <strong>🍽 九份必吃：</strong>阿柑姨芋圆 > 赖阿婆芋圆 > 鱼丸伯仔<br>
+        <strong>📸 拍照tips：</strong>竖崎路面向海的角度最美
       </div>
-      <div class="meta"><span class="tag t-see">🏔 山城</span><span class="tag t-cost">💰 午餐~NT$200/人</span><span class="tag t-time">⏱ 4h</span></div>
-    </div>
-
-    <div class="item local">
-      <div class="top-row"><span class="time">九份内</span><span class="local-badge">🔥 口袋名单</span></div>
-      <div class="name">阿妹茶楼 · 二楼包厢</div>
-      <div class="desc">不只拍照——二楼点一壶茶（NT$300起），坐木窗前看山看海。在地人的享受方式，比挤人群好太多。</div>
-      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">08:30 – 21:00</span></div>
-      <div class="meta"><span class="tag t-local">🍵 茶馆</span><span class="tag t-cost">💰 ~NT$300/壶</span></div>
-    </div>
-
-    <div class="travel-connector">
-      <span class="tc-icon">🚌</span>
-      <span class="tc-pill">90 min</span>
-      <span class="tc-label">💡 回程技巧：不要在「九份老街站」等（人多没座位）→ 往上坡走5min到「九份派出所站」（旧道路顶端）→ 这里是始发站有座位 → 搭1062回「忠孝复兴站」（约90min）</span>
+      <div class="meta"><span class="tag t-see">🏔 山城</span><span class="tag t-cost">💰 吃逛约NT$200/人</span><span class="tag t-time">⏱ 2-2.5h</span></div>
+      <div class="nearby-alts">
+        <div class="na-title">🔄 九份老街内更多选择</div>
+        <div class="na-grid">
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">赖阿婆芋圆</span><span class="na-desc">— 另一芋圆名店，人较少</span><a href="https://www.google.com/maps/search/?api=1&query=25.1088,121.8443" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">九份茶坊</span><span class="na-desc">— 百年老屋品茶看海景</span><a href="https://www.google.com/maps/search/?api=1&query=25.1085,121.8448" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">护理长的店</span><span class="na-desc">— 隐藏手作蛋糕</span><a href="https://www.google.com/maps/search/?api=1&query=25.1087,121.844" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">升平戏院</span><span class="na-desc">— 免费，日治戏院复刻</span><a href="https://www.google.com/maps/search/?api=1&query=25.1089,121.8442" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">金瓜石黄金博物馆</span><span class="na-desc">— 淘金体验（需额外1.5h）</span><a href="https://www.google.com/maps/search/?api=1&query=25.108,121.857" target="_blank">📍</a></div>
+        </div>
+      </div>
     </div>
 
     <div class="item food">
       <div class="top-row">
-        <span class="time">16:30 – 17:00</span>
-        <span class="crowd low">🟢 不排队</span>
+        <span class="time">九份内</span>
+        <span class="new-badge">🆕 新增</span>
       </div>
-      <div class="name">红茶屋</div>
-      <div class="desc">回到市区喝杯古早味红茶休息。茶香浓郁不涩。</div>
-      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">07:00 – 22:00</span></div>
-      <div class="meta"><span class="tag t-food">🍵 饮品</span><span class="tag t-cost">💰 ~NT$40</span></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.1092,121.845" target="_blank">阿柑姨芋圆<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">九份最强芋圆！面向山海景的座位，一边吃芋圆一边看基隆山。芋圆+地瓜圆+红豆汤底。</div>
+      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">09:00 – 20:00</span></div>
+      <div class="meta"><span class="tag t-food">🍧 甜品</span><span class="tag t-cost">💰 NT$50</span></div>
+    </div>
+
+    <div class="travel-connector">
+      <span class="tc-icon">🚌</span>
+      <span class="tc-pill">80-90 min</span>
+      <span class="tc-label">九份老街站牌等<strong>1062公车</strong>返回台北（往台北方向，认「基隆客运」）→ 在「忠孝复兴站」下车 → 转搭捷运板南线往南港方向</span>
+      <div class="uber-alt"><span class="uber-logo">UBER</span> <span class="uber-info">替代方案：</span><span class="uber-price">~NT$1,200/车</span><span class="uber-time">40min</span> · 回程在九份7-11门口叫车，比等公车省力</div>
+    </div>
+
+    <div class="item food">
+      <div class="top-row">
+        <span class="time">14:00 – 14:30</span>
+      </div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.048,121.544" target="_blank">红茶屋<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">松山区老牌红茶店。红茶NT$20起，坐下来歇歇脚。</div>
+      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">10:00 – 22:00</span></div>
+      <div class="meta"><span class="tag t-food">🍵 饮品</span><span class="tag t-cost">💰 NT$20起</span></div>
     </div>
 
     <div class="travel-connector">
       <span class="tc-icon">🚃</span>
       <span class="tc-pill">10 min</span>
-      <span class="tc-label">下公车后进捷运「忠孝复兴站」→ 搭板南线(蓝线)往南港方向 → 在「松山站」下车（4站约8min）→ <strong>5号出口</strong>出站 → 出来就是饶河夜市入口（看到慈祐宫牌坊）</span>
+      <span class="tc-label">捷运板南线继续搭到「松山站」→ <strong>5号出口</strong>出站即到饶河街夜市入口（慈祐宫牌坊）</span>
     </div>
 
     <div class="item food">
       <div class="top-row">
-        <span class="time">17:30 – 19:30</span>
-        <span class="crowd mid">🟡 提早去更好</span>
+        <span class="time">17:30 – 19:00</span>
+        <span class="crowd mid">🟡 周五傍晚渐多</span>
       </div>
-      <div class="name">饶河夜市</div>
-      <div class="desc">松山站旁，一条直线从头吃到尾。</div>
+      <div class="name"><span class="must-badge">必吃</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.051,121.577" target="_blank">饶河夜市<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">松山代表夜市。入口的胡椒饼是台北No.1小吃！</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
         <span class="h-time">17:00 – 00:00</span>
-        <span class="h-rest">周一至周日</span>
+        <span class="h-rest">天天营业</span>
       </div>
-      <div class="crowd-tip">✅ 避峰策略：<strong>17:30到</strong>胡椒饼等5分钟，19:00后要等20分钟+。周五晚比周末略好</div>
+      <div class="crowd-tip">✅ 避峰策略：17:30到，胡椒饼排5分钟。19:00后排30分钟起跳</div>
       <div class="detail">
-        <strong>🍽 必吃（按位置顺序）：</strong><br>
-        • 🔥 <strong>福州世祖胡椒饼</strong>（入口处第一摊）⏰ 15:30-00:00<br>
-        • <strong>陈董药炖排骨</strong>（中段）⏰ 17:00-01:00<br>
-        • <strong>蚵仔面线</strong>（中段）⏰ 17:00-00:00<br>
-        • <strong>东发号蚵仔煎</strong>（后段）⏰ 17:00-00:00
+        <strong>🍽 必吃清单：</strong><br>
+        • 福州世祖胡椒饼 ⭐ — 入口第一摊，先排！<br>
+        • 陈董药炖排骨 — 冬令进补不二之选<br>
+        • 蚵仔面线 — 巷子中段<br>
+        • 东发号蚵仔面线 — 50年老店
       </div>
-      <div class="meta"><span class="tag t-food">🌙 夜市</span><span class="tag t-cost">💰 ~NT$250/人</span></div>
+      <div class="meta"><span class="tag t-food">🌙 夜市</span><span class="tag t-cost">💰 ~NT$200/人</span></div>
+      <div class="backup-box">
+        <div class="backup-title">⚠️ 胡椒饼排队超过20分钟？</div>
+        <div class="backup-item">→ 先逛里面，回程再排（通常20:30后队伍变短）<br>→ 或改吃 <strong>陈董药炖排骨</strong>（中段），药膳汤头暖胃不排队</div>
+      </div>
+      <div class="nearby-alts">
+        <div class="na-title">🔄 饶河夜市更多必吃</div>
+        <div class="na-grid">
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">施老板麻辣臭豆腐</span><span class="na-desc">— 隐藏版外酥内嫩</span><a href="https://www.google.com/maps/search/?api=1&query=25.0512,121.5775" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">红豆饼</span><span class="na-desc">— 入口车轮饼</span><a href="https://www.google.com/maps/search/?api=1&query=25.0509,121.5769" target="_blank">📍</a></div>
+        </div>
+      </div>
     </div>
 
     <div class="item local">
-      <div class="top-row"><span class="time">夜市出口</span><span class="local-badge">🔥 口袋名单</span></div>
-      <div class="name">松山慈祐宫</div>
-      <div class="desc">饶河夜市正门就是这座260年妈祖庙。晚上灯火通明金碧辉煌。吃完拍个夜景。</div>
+      <div class="top-row"><span class="time">饶河旁</span><span class="local-badge">🔥 口袋名单</span></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0512,121.5778" target="_blank">松山慈祐宫<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">260年历史妈祖庙，就在饶河夜市入口。金碧辉煌的屋顶剪粘工艺值得抬头看。</div>
       <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">06:00 – 22:00</span></div>
-      <div class="meta"><span class="tag t-see">🏛 庙宇</span><span class="tag t-cost">💰 免费</span></div>
+      <div class="meta"><span class="tag t-local">🏛 古迹</span><span class="tag t-cost">💰 免费</span></div>
+    </div>
+    <div class="travel-connector">
+      <span class="tc-icon">🚃</span>
+      <span class="tc-pill">20 min</span>
+      <span class="tc-label">捷运<strong>松山站</strong>进站 → 搭松山新店线(绿线)往新店方向 → 在「西门站」下车 → <strong>6号出口</strong>出站 → 步行3min回N Hotel</span>
     </div>
   </div>
 </div>
@@ -776,192 +945,247 @@
 <div class="day-panel" id="day3">
   <div class="day-header">
     <h2>Day 4 · 5月10日（六）</h2>
-    <div class="theme">📍 永康 / 大安 / 华山 — 美食文青日 ⚠️ 周六人多</div>
-    <div class="route-tag" style="background:#d6eaf8;color:var(--day4)">🚃 捷运2次 + 步行 · 文青路线</div>
+    <div class="theme">📍 永康 / 大安 / 华山 — 文青美食满载日</div>
+    <div class="route-tag" style="background:#e8f4fd;color:var(--day4)">🚶 步行为主 · 同区域高效移动</div>
+  </div>
+
+  <div class="priority-section must">
+    <h4>⭐ 必做 3 件事</h4>
+    1. 永康牛肉面（台北之光）<br>2. 华山1914文创园区<br>3. Indulge Bistro 晚餐（提前订位！）
+  </div>
+  <div class="priority-section skip">
+    <h4>✂️ 时间不够可删</h4>
+    袖珍博物馆（小众兴趣）· 师大夜市（已吃很饱时跳过）
   </div>
 
   <div class="day-travel-summary">
     <span class="dts-icon">🗺</span>
     <div class="dts-stat">
       <span>总移动 <span class="num">~75 min</span></span>
-      <span>步行 <span class="num">~35 min</span></span>
-      <span>捷运 <span class="num">~25 min</span></span>
-      <span>计程车 <span class="num">~15 min</span></span>
+      <span>步行 <span class="num">~45 min</span></span>
+      <span>捷运/计程车 <span class="num">~30 min</span></span>
     </div>
   </div>
 
-  <div class="tip">💡 <strong>今天是周六</strong>，热门餐厅会排队。策略：<strong>开门前到位</strong>抢第一轮。Indulge Bistro 是今晚重头戏，<strong>请提前3-5天线上订位</strong>。</div>
+  <div class="tip blue">📞 <strong>提醒：</strong>Indulge Bistro 今晚的位子，请<strong>3-5天前</strong>打电话或Instagram订位！假日晚餐几乎必订。电话 02-2773-0080</div>
 
   <div class="timeline">
     <div class="travel-connector">
-      <span class="tc-icon">🚃</span>
+      <span class="tc-icon">🏨</span>
       <span class="tc-pill">15 min</span>
-      <span class="tc-label">🏨 N Hotel出发 → 捷运<strong>西门站6号出口</strong>进站 → 搭板南线(蓝线)往南港方向 → 在「忠孝复兴站」换文湖线(棕线)或继续板南线到「忠孝新生站」→ 换中和新芦线(橘线)→「东门站」下车 → <strong>5号出口</strong>出站 → 沿永康街步行5min到Bonica</span>
+      <span class="tc-label">🏨 N Hotel出发 → 步行到捷运<strong>西门站6号出口</strong>进站（3min）→ 搭板南线(蓝线)往南港方向 → 在「忠孝新生站」下车（3站6min）→ 换中和新芦线(橘线)往南势角方向 → 在「东门站」下车（1站2min）→ <strong>5号出口</strong>出站</span>
     </div>
 
     <div class="item food">
       <div class="top-row">
-        <span class="time">09:30 – 10:30</span>
-        <span class="crowd low">🟢 周末早午餐时段前</span>
+        <span class="time">10:00 – 10:40</span>
+        <span class="crowd low">🟢 10:00开门抢头批</span>
       </div>
-      <div class="name">Bonica Pâtisserie & Café</div>
-      <div class="desc">法式甜点工作室。千层蛋糕和可丽露是招牌。空间小巧精致，很适合两人。</div>
-      <div class="hours-bar">
-        <span class="h-icon">🕐</span>
-        <span class="h-time">周二至周日 10:00 – 19:00</span>
-        <span class="h-rest">⚠️ 周一休</span>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.031,121.53" target="_blank">Bonica Café<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">永康街最美咖啡厅。澳式brunch+手冲咖啡。ins风装潢。</div>
+      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">10:00 – 18:00</span><span class="h-rest">周二休</span></div>
+      <div class="meta"><span class="tag t-food">☕ 早午餐</span><span class="tag t-cost">💰 ~NT$350/人</span></div>
+      <div class="backup-box">
+        <div class="backup-title">⚠️ 周六客满/等位太久？</div>
+        <div class="backup-item">→ 改去 <strong>Fika Fika Café</strong>（伊通街33号），北欧风自烘咖啡，永康区步行10min<br>→ 或 <strong>Cafe Junkies</strong>（永康街41巷2号），澳式brunch平替</div>
       </div>
-      <div class="crowd-tip">✅ 避峰策略：10:00开门就进。11:00后周末要候位</div>
-      <div class="meta"><span class="tag t-food">🥐 早午餐</span><span class="tag t-cost">💰 ~NT$350/人</span><span class="tag t-tip">📸 甜点超好拍</span></div>
     </div>
 
     <div class="travel-connector">
       <span class="tc-icon">🚶</span>
-      <span class="tc-pill">8 min</span>
-      <span class="tc-label">Bonica出来 → 沿信义路二段往东走 → 左转永康街 → 往北走到金山南路二段31巷 → 右转进巷内17号即是永康牛肉面（看到排队人龙就对了）</span>
+      <span class="tc-pill">3 min</span>
+      <span class="tc-label">Bonica出门 → 沿永康街往北走3分钟 → 永康牛肉面在金华街/永康街口（金华街31巷17号）</span>
     </div>
 
     <div class="item food">
       <div class="top-row">
-        <span class="time">11:00 – 12:00</span>
-        <span class="crowd high">🔴 排队名店</span>
+        <span class="time">10:50 – 11:40</span>
+        <span class="crowd mid">🟡 周六午前需排</span>
       </div>
-      <div class="name">永康牛肉面</div>
-      <div class="desc">台北牛肉面标杆。<strong>半筋半肉</strong>必点，牛筋入口即化。小菜粉蒸排骨也出名。</div>
+      <div class="name"><span class="must-badge">必吃</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0335,121.5285" target="_blank">永康牛肉面<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">CNN评选全球最好吃牛肉面。红烧半筋半肉面，汤头浓郁。粉蒸排骨也必点。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
-        <span class="h-time">11:00 – 21:00</span>
-        <span class="h-rest">无休</span>
+        <span class="h-time">11:00 – 21:00（周六提前至10:30）</span>
+        <span class="h-rest">全年无休</span>
       </div>
-      <div class="crowd-tip">✅ 避峰策略：<strong>10:50到门口等开门</strong>第一轮入座免排。11:30后周六排队30-45分钟。14:00-15:00也是空档但可能售完</div>
-      <div class="meta"><span class="tag t-food">🍜 午餐</span><span class="tag t-cost">💰 ~NT$250/人</span></div>
-      <div class="detail"><strong>地址：</strong>大安区金山南路二段31巷17号</div>
+      <div class="crowd-tip">✅ 避峰策略：<strong>10:50到排队等11:00开门</strong>，第一批入座不用等。12:00后要排30-60分钟</div>
+      <div class="meta"><span class="tag t-food">🍜 牛肉面</span><span class="tag t-cost">💰 ~NT$250/人</span></div>
+      <div class="backup-box">
+        <div class="backup-title">⚠️ 排队超过30分钟？</div>
+        <div class="backup-item">→ 走2分钟到 <strong>老张牛肉面</strong>（大安路一段49巷2号），在地人心中的No.1，红烧清炖都强</div>
+      </div>
+      <div class="nearby-alts">
+        <div class="na-title">🔄 永康街一带更多选择</div>
+        <div class="na-grid">
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">鼎泰丰(永康)</span><span class="na-desc">— 世界级小笼包（排30-60min）</span><a href="https://www.google.com/maps/search/?api=1&query=25.033,121.5295" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">金锅贴</span><span class="na-desc">— 隐藏锅贴，脆底</span><a href="https://www.google.com/maps/search/?api=1&query=25.0328,121.528" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">吕家巷口麻辣面</span><span class="na-desc">— 巷弄麻辣干拌面</span><a href="https://www.google.com/maps/search/?api=1&query=25.0333,121.5278" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">好公道金鸡园</span><span class="na-desc">— 老牌小笼包+酸辣汤</span><a href="https://www.google.com/maps/search/?api=1&query=25.0332,121.5282" target="_blank">📍</a></div>
+        </div>
+      </div>
     </div>
 
     <div class="travel-connector">
       <span class="tc-icon">🚶</span>
-      <span class="tc-pill">5 min</span>
-      <span class="tc-label">永康牛肉面出来 → 巷子走回金山南路 → 往北走到杭州南路二段近信义路口 → 杭州小笼汤包在杭州南路二段（排队认店）</span>
+      <span class="tc-pill">2 min</span>
+      <span class="tc-label">永康牛肉面出来 → 沿永康街走100米 → 杭州小笼汤包在永康街/信义路口附近</span>
     </div>
 
     <div class="item food">
       <div class="top-row">
-        <span class="time">12:15 – 12:45</span>
-        <span class="crowd mid">🟡 午餐排一轮</span>
+        <span class="time">11:45 – 12:05</span>
       </div>
-      <div class="name">杭州小笼汤包（大安）</div>
-      <div class="desc">铜板价（10颗NT$110）。皮不算最薄但汤汁饱满，加辣油和醋更对味。</div>
-      <div class="hours-bar">
-        <span class="h-icon">🕐</span>
-        <span class="h-time">11:00 – 21:00（周一至六）</span>
-        <span class="h-rest">周日 11:00 – 14:30</span>
-      </div>
-      <div class="meta"><span class="tag t-food">🥟 小吃</span><span class="tag t-cost">💰 ~NT$120/人</span></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.034,121.5275" target="_blank">杭州小笼汤包<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">永康街小笼包名店。蟹黄汤包是招牌。价格只有鼎泰丰的1/3。</div>
+      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">11:00 – 21:00</span><span class="h-rest">周一休</span></div>
+      <div class="meta"><span class="tag t-food">🥟 小笼包</span><span class="tag t-cost">💰 ~NT$150/人</span></div>
     </div>
 
-    <div class="item local">
-      <div class="top-row"><span class="time">散步</span><span class="local-badge">🔥 口袋名单</span></div>
-      <div class="name">永康街散步</div>
-      <div class="desc">不只牛肉面！巷子里藏着宝：鼎泰丰创始店、思慕昔芒果冰、度小月担仔面、独立书店和选物店。</div>
-      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">店铺约 10:00 – 21:00</span></div>
-    </div>
-
-    <div class="travel-connector">
-      <span class="tc-icon">🚃</span>
-      <span class="tc-pill">12 min</span>
-      <span class="tc-label">步行到捷运<strong>东门站5号出口</strong>进站（沿信义路走约5min）→ 搭中和新芦线(橘线)往迴龙方向 → 在「忠孝新生站」下车（1站3min）→ <strong>1号出口</strong>出站 → 右转直走3min即到华山文创园区</span>
+    <div class="item food">
+      <div class="top-row">
+        <span class="time">12:10 – 12:25</span>
+        <span class="new-badge">🆕 新增</span>
+      </div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0332,121.529" target="_blank">思慕昔 Smoothie House<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">永康街芒果冰传奇。超大碗新鲜芒果雪花冰，夏天到台北必吃。5月正当季！</div>
+      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">10:00 – 23:00</span></div>
+      <div class="meta"><span class="tag t-food">🍧 冰品</span><span class="tag t-cost">💰 ~NT$200</span></div>
     </div>
 
     <div class="item see">
       <div class="top-row">
-        <span class="time">13:30 – 15:00</span>
-        <span class="crowd mid">🟡 周末有展览人潮</span>
+        <span class="time">12:30 – 12:50</span>
+        <span class="new-badge">🆕 新增</span>
       </div>
-      <div class="name">华山 1914 文创园区</div>
-      <div class="desc">旧酒厂改造文创基地。常有高质量展览（需购票NT$200-400），户外草地+老厂房咖啡。</div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0305,121.5318" target="_blank">青田七六<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">日治时期台大教授宿舍群。青田街整条都是老树+日式平房，台北最美散步街道。免费逛外观即可。</div>
+      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">外观全天 · 内部 11:30 – 21:00</span></div>
+      <div class="meta"><span class="tag t-see">🏡 日式老屋</span><span class="tag t-cost">💰 免费（外观）</span></div>
+    </div>
+
+    <div class="travel-connector">
+      <span class="tc-icon">🚃</span>
+      <span class="tc-pill">15 min</span>
+      <span class="tc-label">步行至捷运<strong>东门站5号出口</strong>进站 → 搭中和新芦线(橘线)往迴龙方向 → 在「忠孝新生站」下车（1站2min）→ <strong>1号出口</strong>出站 → 往八德路方向步行5min → 华山1914在八德路一段1号</span>
+    </div>
+
+    <div class="item see">
+      <div class="top-row">
+        <span class="time">13:10 – 14:30</span>
+        <span class="crowd mid">🟡 周六下午文青多</span>
+      </div>
+      <div class="name"><span class="must-badge">必逛</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.044,121.5295" target="_blank">华山1914 文创园区<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">日治酒厂改造的文创基地。展览+独立书店+设计商店+咖啡厅。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
         <span class="h-time">园区 09:30 – 21:00</span>
-        <span class="h-rest">展览各自不同</span>
+        <span class="h-rest">各展览时间不同</span>
       </div>
-      <div class="crowd-tip">✅ 避峰策略：周六下午13:00-14:00人较少（午餐时间）。避开15:00-17:00亲子高峰段</div>
-      <div class="meta"><span class="tag t-see">🏛 文创</span><span class="tag t-cost">💰 园区免费·展另计</span><span class="tag t-time">⏱ 1.5h</span></div>
-      <div class="detail"><strong>推荐：</strong>中4A-4B馆（主展区）、红砖六合院（拍照）、好样思维书店<br><strong>交通：</strong>捷运忠孝新生站1号出口步行3分钟</div>
-    </div>
-
-    <div class="item local">
-      <div class="top-row"><span class="time">歇脚</span><span class="local-badge">🔥 口袋名单</span></div>
-      <div class="name">Cafe de Gear 转转咖啡</div>
-      <div class="desc">华山旁隐藏咖啡厅。机械风装潢+手冲精品咖啡。老板是咖啡冠军选手。</div>
-      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">10:00 – 19:00</span><span class="h-rest">周一休</span></div>
-      <div class="meta"><span class="tag t-local">☕ 精品咖啡</span><span class="tag t-cost">💰 ~NT$180</span></div>
+      <div class="detail">
+        <strong>推荐：</strong>好样本事（亚洲最美书店之一）、光点华山电影馆、草地区拍照<br>
+        <strong>📸 最佳拍照：</strong>红砖墙+大烟囱+绿草地
+      </div>
+      <div class="meta"><span class="tag t-see">🎨 文创</span><span class="tag t-cost">💰 免费入园</span><span class="tag t-time">⏱ 1.5h</span></div>
+      <div class="nearby-alts">
+        <div class="na-title">🔄 华山/忠孝一带替代</div>
+        <div class="na-grid">
+          <div class="na-item"><span class="na-cat cafe">☕</span><span class="na-name">兴波 Simple Kaffa</span><span class="na-desc">— 世界咖啡冠军，华山内</span><a href="https://www.google.com/maps/search/?api=1&query=25.0438,121.5292" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat cafe">☕</span><span class="na-name">Luguo Cafe 炉锅</span><span class="na-desc">— 华山旁自烘咖啡</span><a href="https://www.google.com/maps/search/?api=1&query=25.0442,121.53" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">松烟文创园区</span><span class="na-desc">— 日治烟厂+诚品生活</span><a href="https://www.google.com/maps/search/?api=1&query=25.0442,121.56" target="_blank">📍</a></div>
+        </div>
+      </div>
     </div>
 
     <div class="travel-connector">
       <span class="tc-icon">🚃</span>
       <span class="tc-pill">10 min</span>
-      <span class="tc-label">回到捷运<strong>忠孝新生站</strong> → 搭中和新芦线(橘线)往芦洲方向 → 在「松江南京站」下车（1站3min）→ <strong>4号出口</strong>出站 → 沿建国北路往南走2min → 96号B1楼即是袖珍博物馆</span>
+      <span class="tc-label">步行回捷运<strong>忠孝新生站1号出口</strong>进站 → 搭板南线(蓝线)往南港方向 → 在「忠孝敦化站」下车（2站4min）→ <strong>4号出口</strong>出站 → 往建国北路方向步行3min</span>
     </div>
 
     <div class="item see">
       <div class="top-row">
-        <span class="time">15:30 – 16:30</span>
-        <span class="crowd low">🟢 冷门精品馆</span>
+        <span class="time">14:45 – 15:45</span>
+        <span class="crowd mid">🟡 周末人稍多</span>
       </div>
-      <div class="name">袖珍博物馆</div>
-      <div class="desc">亚洲唯一微缩艺术博物馆。200+件精密作品，从欧洲古堡到日式旅馆。</div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.051,121.5315" target="_blank">袖珍博物馆<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">亚洲第一座微缩模型博物馆。200多件精密作品。值得慢慢看。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
         <span class="h-time">周二至周日 10:00 – 18:00</span>
-        <span class="h-rest">⚠️ 周一休 · 17:00停售</span>
+        <span class="h-rest">⚠️ 周一休</span>
       </div>
       <div class="meta"><span class="tag t-see">🏛 博物馆</span><span class="tag t-cost">💰 NT$200/人</span><span class="tag t-time">⏱ 1h</span></div>
-      <div class="detail"><strong>地址：</strong>中山区建国北路一段96号B1</div>
     </div>
 
     <div class="travel-connector">
       <span class="tc-icon">🚕</span>
-      <span class="tc-pill">15 min</span>
-      <span class="tc-label">建议在建国北路上招<strong>计程车</strong>（约NT$120）→ 直接报地址：大安区忠孝东路四段101巷14号。💡 台北计程车起跳NT$85，很划算。或者用 Uber/LINE TAXI app叫车</span>
+      <span class="tc-pill">12 min</span>
+      <span class="tc-label">建议搭<strong>计程车/Uber</strong>到Indulge Bistro（仁爱路四段345巷4弄36号）→ 费用约NT$120 → 或步行25min穿过仁爱路林荫大道（也很美）</span>
     </div>
 
     <div class="item food">
       <div class="top-row">
-        <span class="time">18:30 – 20:30</span>
-        <span class="crowd mid">🟡 已订位免等</span>
+        <span class="time">18:00 – 19:30</span>
+        <span class="crowd high">🔴 周六晚必订位</span>
       </div>
-      <div class="name">⭐ Indulge Experimental Bistro</div>
-      <div class="desc">连续多年入选亚洲50大酒吧。创意调酒+实验性餐点，台湾食材×法式技法。</div>
+      <div class="name"><span class="must-badge">必吃</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.038,121.546" target="_blank">Indulge Bistro ⭐<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">亚洲50最佳酒吧。实验性调酒+创意料理。台北fine dining的性价比之王。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
-        <span class="h-time">周二至周六 18:00 – 01:00</span>
+        <span class="h-time">18:00 – 01:00</span>
         <span class="h-rest">⚠️ 周日一休</span>
       </div>
-      <div class="meta"><span class="tag t-food">🍷 晚餐</span><span class="tag t-cost">💰 ~NT$1500-2000/人</span></div>
-      <div class="detail"><strong>推荐：</strong>Tasting menu 最能体验主厨创意<br><strong>Dress code：</strong>Smart casual<br><strong>订位电话：</strong>02-2773-0080 或官网</div>
+      <div class="crowd-tip">⚠️ 周六晚必须提前3-5天订位！Instagram DM 或电话 02-2773-0080</div>
+      <div class="meta"><span class="tag t-food">🍷 餐酒馆</span><span class="tag t-cost">💰 ~NT$1,200/人（含酒）</span></div>
+      <div class="backup-box">
+        <div class="backup-title">⚠️ 订不到位？</div>
+        <div class="backup-item">→ <strong>Draft Land</strong>（忠孝东路四段248巷3号），同样创意调酒，氛围轻松<br>→ <strong>Longtail</strong>（敦化南路二段174号），亚洲50最佳餐厅，需提前1周订<br>→ <strong>MUME</strong>（四维路28号），北欧x台湾创意料理，米其林一星</div>
+      </div>
+      <div class="nearby-alts">
+        <div class="na-title">🔄 大安区餐酒替代</div>
+        <div class="na-grid">
+          <div class="na-item"><span class="na-cat bar">🍷</span><span class="na-name">Aha Saloon</span><span class="na-desc">— 精酿啤酒吧 50+龙头</span><a href="https://www.google.com/maps/search/?api=1&query=25.031,121.544" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">Ice Monster</span><span class="na-desc">— 芒果冰始祖（忠孝店）</span><a href="https://www.google.com/maps/search/?api=1&query=25.042,121.549" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat cafe">☕</span><span class="na-name">Cafe de Lugano</span><span class="na-desc">— 老牌义式咖啡</span><a href="https://www.google.com/maps/search/?api=1&query=25.03,121.531" target="_blank">📍</a></div>
+        </div>
+      </div>
     </div>
 
     <div class="travel-connector">
       <span class="tc-icon">🚕</span>
       <span class="tc-pill">10 min</span>
-      <span class="tc-label">Indulge出来招<strong>计程车</strong>（约NT$120）→ 报地址：师大路夜市。或步行到捷运<strong>忠孝敦化站4号出口</strong>→ 搭板南线往顶埔方向 → 在「古亭站」换松山新店线(绿线)→「台电大楼站」下车 → <strong>2号出口</strong>出站即是师大夜市入口</span>
+      <span class="tc-label">搭<strong>计程车/Uber</strong>到师大夜市（师大路/龙泉街口）→ 费用约NT$120<br>（或捷运「台电大楼站」3号出口步行5min）</span>
     </div>
 
     <div class="item food">
       <div class="top-row">
-        <span class="time">21:00 – 22:00</span>
-        <span class="crowd mid">🟡 周六夜市人多</span>
+        <span class="time">20:30 – 21:30</span>
+        <span class="crowd mid">🟡 21:00后人散</span>
       </div>
-      <div class="name">师大夜市</div>
-      <div class="desc">大学城夜市，年轻人多、价格亲民。规模小但精致。</div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.027,121.5265" target="_blank">师大夜市<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">师大学生区，平价小吃集中。灯笼卤味、许记生煎包、师大卤味。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
         <span class="h-time">17:00 – 00:00</span>
-        <span class="h-rest">各摊位不一</span>
+        <span class="h-rest">天天营业</span>
       </div>
-      <div class="crowd-tip">✅ 避峰策略：21:00后人潮散去一半，反而是舒服的逛街时间</div>
-      <div class="detail"><strong>推荐：</strong>灯笼卤味（自选）、许记生煎包、师大湖南粉</div>
+      <div class="crowd-tip">✅ 避峰策略：21:00后学生散去，逛起来舒服</div>
+      <div class="detail">
+        <strong>🍽 推荐：</strong>灯笼卤味（想吃什么自己夹）、许记生煎包（NT$60/4个）、阿诺可丽饼
+      </div>
       <div class="meta"><span class="tag t-food">🌙 夜市</span><span class="tag t-cost">💰 ~NT$150/人</span></div>
+      <div class="nearby-alts">
+        <div class="na-title">🔄 师大一带更多小吃</div>
+        <div class="na-grid">
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">师园盐酥鸡</span><span class="na-desc">— 师大入口盐酥鸡</span><a href="https://www.google.com/maps/search/?api=1&query=25.0275,121.5262" target="_blank">📍</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="travel-connector">
+      <span class="tc-icon">🚃</span>
+      <span class="tc-pill">15 min</span>
+      <span class="tc-label">步行到捷运<strong>台电大楼站3号出口</strong>进站 → 搭松山新店线(绿线)往松山方向 → 在「西门站」下车 → <strong>6号出口</strong>出站 → 步行3min回N Hotel</span>
     </div>
   </div>
 </div>
@@ -970,8 +1194,17 @@
 <div class="day-panel" id="day4">
   <div class="day-header">
     <h2>Day 5 · 5月11日（日）</h2>
-    <div class="theme">📍 猫空 / 南港 — 山景茶香 + 购物</div>
-    <div class="route-tag" style="background:#f3e8ff;color:var(--day5)">🚡 缆车+捷运 · 半日山上半日逛</div>
+    <div class="theme">📍 猫空 / 南港 / 信义 — 茶山缆车 + 购物日</div>
+    <div class="route-tag" style="background:#f3e8ff;color:var(--day5)">🚡 缆车+捷运 · 半日山上半日购物</div>
+  </div>
+
+  <div class="priority-section must">
+    <h4>⭐ 必做 3 件事</h4>
+    1. 猫空缆车水晶车厢（透明地板！）<br>2. 猫空茶园品茶<br>3. 象山步道看101夕阳
+  </div>
+  <div class="priority-section skip">
+    <h4>✂️ 时间不够可删</h4>
+    Your Curve（改线上买）· 双月食品社（改 Day6 吃）
   </div>
 
   <div class="day-travel-summary">
@@ -980,165 +1213,153 @@
       <span>总移动 <span class="num">~130 min</span></span>
       <span>缆车 <span class="num">~50 min</span></span>
       <span>捷运 <span class="num">~65 min</span></span>
-      <span>步行 <span class="num">~15 min</span></span>
     </div>
   </div>
 
-  <div class="tip green">🚡 <strong>猫空缆车：</strong>普通/水晶车厢均NT$120。水晶车厢（透明底）排更久。建议<strong>普通上山，水晶下山</strong>。<br>⏰ 周日 09:00-21:00 ｜ <strong>周一公休</strong></div>
+  <div class="tip green">🚡 <strong>猫空缆车水晶车厢：</strong>排专用队伍（标示「Crystal Cabin」），等时多10-15分钟但值得！地板全透明看茶园山景。<strong>09:00 开放，第一班最不用等。</strong></div>
 
   <div class="timeline">
     <div class="travel-connector">
-      <span class="tc-icon">🚶</span>
-      <span class="tc-pill">3 min</span>
-      <span class="tc-label">🏨 N Hotel出发 → 西门町附近任一麦当劳（汉中街/武昌街上都有）</span>
-    </div>
-
-    <div class="item food">
-      <div class="top-row"><span class="time">08:00 – 08:30</span></div>
-      <div class="name">麦当劳</div>
-      <div class="desc">台湾限定：满福堡+薯饼+冰咖啡。试试台湾独有的玉米浓汤。</div>
-      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">06:00 – 24:00（多数门市）</span></div>
-      <div class="meta"><span class="tag t-food">🍔 早餐</span><span class="tag t-cost">💰 ~NT$100/人</span></div>
-    </div>
-
-    <div class="travel-connector">
-      <span class="tc-icon">🚃</span>
-      <span class="tc-pill">30 min</span>
-      <span class="tc-label">步行回捷运<strong>西门站6号出口</strong>进站 → 搭板南线(蓝线)往南港方向 → 在「忠孝复兴站」下车 → 站内换乘文湖线(棕线)往动物园方向 → 搭到终点站「动物园站」（约20min）→ <strong>1号出口</strong>出站 → 右手边即是猫空缆车站入口（跟着指标走2min）</span>
+      <span class="tc-icon">🏨</span>
+      <span class="tc-pill">35 min</span>
+      <span class="tc-label">🏨 N Hotel出发 → 步行到捷运<strong>西门站6号出口</strong>进站 → 搭板南线(蓝线)往南港方向 → 在「忠孝复兴站」换文湖线(棕线)往动物园方向 → 在「动物园站」下车 → 出站步行5min到猫空缆车站</span>
+      <div class="uber-alt"><span class="uber-logo">UBER</span> <span class="uber-info">替代方案：</span><span class="uber-price">~NT$350/车</span><span class="uber-time">20min</span> · 直达动物园站缆车入口</div>
     </div>
 
     <div class="item see">
       <div class="top-row">
-        <span class="time">09:15 – 11:00</span>
-        <span class="crowd mid">🟡 周日有家庭客</span>
+        <span class="time">09:00 – 09:25</span>
+        <span class="crowd low">🟢 开门第一班</span>
       </div>
-      <div class="name">台北动物园站 → 猫空缆车</div>
-      <div class="desc">从捷运站出来缆车站在旁边。沿途看茶园、山景、台北盆地。</div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=24.9982,121.5762" target="_blank">猫空缆车 · 动物园站<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">全程4.03km，约25-30分钟。选水晶车厢（排Crystal Cabin队伍）。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
-        <span class="h-time">缆车周日 09:00 – 21:00</span>
-        <span class="h-rest">⚠️ 周一公休 · 动物园 09:00–17:00</span>
+        <span class="h-time">周二至周日 09:00 – 21:00（假日至22:00）</span>
+        <span class="h-rest">⚠️ 周一休</span>
       </div>
-      <div class="crowd-tip">✅ 避峰策略：<strong>09:00开门直接排</strong>，第一班缆车等10分钟。10:30后周日排队30-60分钟。下山建议14:00前，避开15:00下山潮</div>
-      <div class="meta"><span class="tag t-see">🚡 缆车</span><span class="tag t-cost">💰 缆车NT$120 + 动物园NT$60</span></div>
-      <div class="detail"><strong>Tips：</strong>如果想逛动物园，提早到08:30入园看企鹅馆+熊猫馆（各30min）再搭缆车</div>
+      <div class="crowd-tip">✅ 避峰策略：09:00开门排水晶车厢约等10min，下午等30-60min</div>
+      <div class="meta"><span class="tag t-see">🚡 缆车</span><span class="tag t-cost">💰 NT$120/单程</span><span class="tag t-time">⏱ 25min</span></div>
+    </div>
+
+    <div class="item food">
+      <div class="top-row">
+        <span class="time">10:00 – 11:30</span>
+        <span class="crowd low">🟢 假日早场清幽</span>
+      </div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=24.969,121.587" target="_blank">猫空茶园 · 猓玀苑<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">猫空山上看台北盆地全景。品铁观音茶+茶油面线。坐户外区吹山风。</div>
+      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">假日 10:00 – 21:00（平日 11:00起）</span></div>
+      <div class="crowd-tip">✅ 假日10:00开门，搭缆车约20min，提前在动物园站搭09:30首班猫缆</div>
+      <div class="meta"><span class="tag t-food">🍵 茶餐厅</span><span class="tag t-cost">💰 ~NT$300/人</span></div>
+      <div class="backup-box">
+        <div class="backup-title">⚠️ 猓玀苑客满/还没开？</div>
+        <div class="backup-item">→ <strong>邀月茶坊</strong>（猫空指南路三段40巷6号），山景露台+铁观音套餐<br>→ <strong>猫空大茶壶</strong>（指南路三段38巷内），铁观音鸡汤也好吃</div>
+      </div>
+      <div class="nearby-alts">
+        <div class="na-title">🔄 猫空山上更多茶馆</div>
+        <div class="na-grid">
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">六季香茶坊</span><span class="na-desc">— 在地人推荐茶油鸡</span><a href="https://www.google.com/maps/search/?api=1&query=24.9695,121.5875" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">台北动物园</span><span class="na-desc">— 亚洲最大，大猫熊馆</span><a href="https://www.google.com/maps/search/?api=1&query=24.9985,121.581" target="_blank">📍</a></div>
+        </div>
+      </div>
+      <div class="detail"><strong>推荐点：</strong>铁观音茶鸡 + 茶油面线 + 一壶铁观音<br><strong>📸 拍照：</strong>面向台北盆地的露台座位</div>
     </div>
 
     <div class="travel-connector">
       <span class="tc-icon">🚡</span>
       <span class="tc-pill">25 min</span>
-      <span class="tc-label">排队搭缆车（共4站：动物园站→动物园内站→指南宫站→猫空站）→ 在终点「猫空站」下车 → 出站后右转沿指标走约5min到猓玀苑。💡 上山搭普通车厢（排队较快），下山再搭水晶车厢</span>
-    </div>
-
-    <div class="item food">
-      <div class="top-row">
-        <span class="time">11:30 – 13:00</span>
-        <span class="crowd low">🟢 11:30到免等</span>
-      </div>
-      <div class="name">猓玀苑</div>
-      <div class="desc">猫空山上茶餐厅，露天茶座俯瞰台北盆地。茶油面线+铁观音茶叶料理。</div>
-      <div class="hours-bar">
-        <span class="h-icon">🕐</span>
-        <span class="h-time">周一至周五 11:30 – 21:00</span>
-        <span class="h-rest">周六日 11:00 – 22:00</span>
-      </div>
-      <div class="crowd-tip">✅ 避峰策略：周日12:30后开始排位。<strong>11:30开门直接入座</strong>最轻松</div>
-      <div class="meta"><span class="tag t-food">🍽 午餐</span><span class="tag t-cost">💰 ~NT$400/人</span><span class="tag t-tip">📸 天气好看得到101</span></div>
-      <div class="detail"><strong>推荐：</strong>茶油面线、茶香鸡、凤梨虾球</div>
-    </div>
-
-    <div class="item local">
-      <div class="top-row"><span class="time">饭后</span><span class="local-badge">🔥 口袋名单</span></div>
-      <div class="name">猫空樟树步道</div>
-      <div class="desc">缆车站出来5分钟。平坦环形步道约40分钟。穿过茶园和相思树林，5月有鲁冰花金黄花海。</div>
-      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">户外，24小时</span></div>
-      <div class="meta"><span class="tag t-see">🌿 步道</span><span class="tag t-cost">💰 免费</span><span class="tag t-time">⏱ 40min</span></div>
-    </div>
-
-    <div class="travel-connector">
-      <span class="tc-icon">🚡+🚃</span>
-      <span class="tc-pill">55 min</span>
-      <span class="tc-label">猫空站搭缆车下山到动物园站（25min）→ 进捷运「动物园站」搭文湖线(棕线)往南港展览馆方向 → 在「南港展览馆站」下车（终点站约25min）→ 站内换乘板南线(蓝线)往顶埔方向 → 在「南港站」下车（1站）→ <strong>1A出口</strong>直通 LaLaport 商场</span>
+      <span class="tc-label">搭缆车原路返回「动物园站」（25min）→ 转搭捷运文湖线(棕线)往南港方向 → 在「南港展览馆站」下车（终点站）</span>
     </div>
 
     <div class="item shop">
       <div class="top-row">
-        <span class="time">14:45 – 15:45</span>
-        <span class="crowd mid">🟡 周日商场人多</span>
+        <span class="time">12:00 – 14:00</span>
+        <span class="crowd mid">🟡 周日人多但可逛</span>
       </div>
-      <div class="name">乐扣乐扣台北南港 LaLaport 店</div>
-      <div class="desc">LaLaport日系购物中心。乐扣乐扣保鲜盒/水壶很适合当实用伴手礼。</div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0548,121.6065" target="_blank">三井LaLaport 南港<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">2024年开幕的大型购物中心。日系品牌+美食街+亲子设施。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
-        <span class="h-time">11:00 – 21:30（周日到21:00）</span>
+        <span class="h-time">11:00 – 21:30（假日至22:00）</span>
       </div>
-      <div class="meta"><span class="tag t-shop">🛍 购物</span></div>
-    </div>
-
-    <div class="travel-connector">
-      <span class="tc-icon">🚶</span>
-      <span class="tc-pill">5 min</span>
-      <span class="tc-label">LaLaport商场内移动 / 从乐扣乐扣楼层走到Your Curve所在区域</span>
+      <div class="meta"><span class="tag t-shop">🛍 购物</span><span class="tag t-time">⏱ 2h</span></div>
     </div>
 
     <div class="item shop">
-      <div class="top-row"><span class="time">15:45 – 16:30</span></div>
-      <div class="name">Your Curve</div>
-      <div class="desc">LaLaport 附近。</div>
-      <div class="meta"><span class="tag t-shop">🛍 购物</span></div>
-    </div>
-
-    <div class="item local">
-      <div class="top-row"><span class="time">顺便</span><span class="local-badge">🔥 口袋名单</span></div>
-      <div class="name">南港 LaLaport 屋顶花园</div>
-      <div class="desc">顶楼日式空中花园。看南港展览馆全景，台北人遛小孩约会的隐藏点。</div>
-      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">同商场营业时间</span></div>
-      <div class="meta"><span class="tag t-see">🌿 空中花园</span><span class="tag t-cost">💰 免费</span></div>
+      <div class="top-row"><span class="time">LaLaport内</span></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.055,121.606" target="_blank">Your Curve<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">台湾设计师品牌选物店。极简风格服饰/配件。独特的裁剪设计。</div>
+      <div class="meta"><span class="tag t-shop">👗 设计师品牌</span></div>
     </div>
 
     <div class="travel-connector">
       <span class="tc-icon">🚃</span>
       <span class="tc-pill">20 min</span>
-      <span class="tc-label">回到捷运「南港站」→ 搭板南线(蓝线)往顶埔方向 → 在「善导寺站」下车（5站约12min）→ <strong>5号出口</strong>出站 → 双月食品社(善导寺店)在华山市场2楼（忠孝东路一段108号2楼，出口步行3min）</span>
+      <span class="tc-label">捷运「南港展览馆站」进站 → 搭板南线(蓝线)往顶埔方向 → 在「市政府站」下车 → <strong>2号出口</strong>出站</span>
+      <div class="nearby-alts">
+        <div class="na-title">🔄 南港购物更多选择</div>
+        <div class="na-grid">
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">南港CITYLINK美食</span><span class="na-desc">— 车站商场拉面/火锅</span><a href="https://www.google.com/maps/search/?api=1&query=25.053,121.607" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat shop">🛍</span><span class="na-name">Mitsui Outlet 南港</span><span class="na-desc">— 旁边outlet折扣品牌</span><a href="https://www.google.com/maps/search/?api=1&query=25.0545,121.606" target="_blank">📍</a></div>
+        </div>
+      </div>
+      <div class="uber-alt"><span class="uber-logo">UBER</span> <span class="uber-info">替代方案：</span><span class="uber-price">~NT$250/车</span><span class="uber-time">15min</span> · 从LaLaport直达象山登山口</div>
+    </div>
+
+    <div class="item see">
+      <div class="top-row">
+        <span class="time">16:30 – 17:45</span>
+        <span class="crowd mid">🟡 黄昏热门时段</span>
+        <span class="local-badge">🔥 口袋名单</span>
+      </div>
+      <div class="name"><span class="must-badge">必去</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.027,121.571" target="_blank">象山步道<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">台北看101最佳角度。约20分钟登顶，夕阳+101合照绝美。</div>
+      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">全天开放（建议日落前1h上山）</span></div>
+      <div class="crowd-tip">✅ 避峰策略：16:30上山，占好拍照位等日落。太晚上去好位置被占</div>
+      <div class="detail"><strong>路线：</strong>捷运象山站2号出口 → 步行10min到登山口 → 六巨石观景台约20min<br><strong>📸 拍照tips：</strong>六巨石是最经典角度，101+台北市景</div>
+      <div class="meta"><span class="tag t-see">🏔 步道</span><span class="tag t-cost">💰 免费</span><span class="tag t-time">⏱ 1h来回</span></div>
+      <div class="nearby-alts">
+        <div class="na-title">🔄 信义区顺道去</div>
+        <div class="na-grid">
+          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">四四南村</span><span class="na-desc">— 眷村遗址+假日市集</span><a href="https://www.google.com/maps/search/?api=1&query=25.031,121.562" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">台北101观景台</span><span class="na-desc">— 89F NT$600 看日落</span><a href="https://www.google.com/maps/search/?api=1&query=25.0339,121.5645" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat cafe">☕</span><span class="na-name">Starbucks 101 35F</span><span class="na-desc">— 旗舰店看夜景</span><a href="https://www.google.com/maps/search/?api=1&query=25.0339,121.5645" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">ATT 4 FUN美食</span><span class="na-desc">— 日韩料理楼层</span><a href="https://www.google.com/maps/search/?api=1&query=25.036,121.567" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat bar">🍷</span><span class="na-name">Sidebar</span><span class="na-desc">— 精品鸡尾酒吧</span><a href="https://www.google.com/maps/search/?api=1&query=25.0365,121.565" target="_blank">📍</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="travel-connector">
+      <span class="tc-icon">🚃</span>
+      <span class="tc-pill">15 min</span>
+      <span class="tc-label">捷运<strong>象山站</strong>进站 → 搭淡水信义线(红线)往淡水方向 → 在「信义安和站」下车 → <strong>3号出口</strong>步行5min → 双月食品社（信义路四段389号）</span>
     </div>
 
     <div class="item food">
       <div class="top-row">
-        <span class="time">17:15 – 18:15</span>
-        <span class="crowd mid">🟡 晚餐排一轮</span>
+        <span class="time">18:30 – 19:30</span>
+        <span class="crowd mid">🟡 晚餐时段需等</span>
       </div>
-      <div class="name">双月食品社</div>
-      <div class="desc">米其林必比登推荐。<strong>必点：</strong>油鸡切盘（皮Q肉嫩）+ 蛤蜊鸡汤（鲜到升天）。</div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.047,121.544" target="_blank">双月食品社<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">米其林必比登推荐。招牌<strong>香油鸡汤</strong>（整只乌骨鸡！）+烫青菜+卤肉饭。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
         <span class="h-time">11:00 – 14:00 / 17:00 – 21:00</span>
-        <span class="h-rest">中间休息</span>
+        <span class="h-rest">⚠️ 周一休</span>
       </div>
-      <div class="crowd-tip">✅ 避峰策略：<strong>17:00开门就到</strong>。17:30后周日等20-30分钟。也可用 inline 候位系统线上排</div>
-      <div class="meta"><span class="tag t-food">🍲 晚餐</span><span class="tag t-cost">💰 ~NT$400/人</span><span class="tag t-tip">⭐ 必比登</span></div>
+      <div class="meta"><span class="tag t-food">🍲 台式汤品</span><span class="tag t-cost">💰 ~NT$400/人</span></div>      <div class="backup-box">
+        <div class="backup-title">⚠️ 排队太长/周日已满？</div>
+        <div class="backup-item">→ 附近 <strong>好记担仔面</strong>（信义路四段60-66号），台南担仔面+虾卷+蒸蛋，也是老台北味</div>
+      </div>
+
     </div>
 
     <div class="travel-connector">
-      <span class="tc-icon">🚶</span>
-      <span class="tc-pill">5 min</span>
-      <span class="tc-label">双月出来 → 沿忠孝东路走 → 八方云集在附近街区即有门市（连锁店，Google Maps搜最近门市）</span>
-    </div>
-
-    <div class="item food">
-      <div class="top-row"><span class="time">19:00</span></div>
-      <div class="name">八方云集</div>
-      <div class="desc">台湾国民锅贴。锅贴+水饺+酸辣汤，三样不到NT$100。</div>
-      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">10:30 – 21:30（各门市不一）</span></div>
-      <div class="meta"><span class="tag t-food">🥟 宵夜</span><span class="tag t-cost">💰 ~NT$90/人</span></div>
-    </div>
-
-    <div class="item local">
-      <div class="top-row"><span class="time">夜间</span><span class="local-badge">🔥 口袋名单</span></div>
-      <div class="name">象山步道看夜景</div>
-      <div class="desc">如果还有体力！捷运象山站步行15min到六巨石观景台。拍台北101夜景的经典免费角度。</div>
-      <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">户外，24小时（建议天黑前上山）</span></div>
-      <div class="crowd-tip">✅ 避峰策略：周日19:00-20:00最多人。<strong>20:30后</strong>上山人少夜景依然美</div>
-      <div class="meta"><span class="tag t-see">🌃 夜景</span><span class="tag t-cost">💰 免费</span><span class="tag t-time">⏱ 上下山40min</span></div>
+      <span class="tc-icon">🚃</span>
+      <span class="tc-pill">15 min</span>
+      <span class="tc-label">步行回捷运<strong>信义安和站</strong>进站 → 搭淡水信义线(红线)往淡水方向 → 在「台北车站」换板南线(蓝线)往顶埔方向 → 在「西门站」下车 → <strong>6号出口</strong>出站回N Hotel</span>
     </div>
   </div>
 </div>
@@ -1147,59 +1368,76 @@
 <div class="day-panel" id="day5">
   <div class="day-header">
     <h2>Day 6 · 5月12日（二）</h2>
-    <div class="theme">📍 士林 / 故宫 → 机场 — 最终日</div>
-    <div class="route-tag" style="background:#d1f2eb;color:var(--day6)">✈️ 19:30前须离开酒店</div>
+    <div class="theme">📍 士林 / 故宫 / 西门 — 最后日：文化+采购+赶飞机</div>
+    <div class="route-tag" style="background:#e0f7f5;color:var(--day6)">🚃 捷运+公车 · 注意时间控制</div>
   </div>
+
+  <div class="priority-section must">
+    <h4>⭐ 必做 3 件事</h4>
+    1. 故宫博物院三宝（翠玉白菜/肉形石/毛公鼎）<br>2. 士林夜市白天版<br>3. 西门町最后伴手礼采购
+  </div>
+  <div class="priority-section skip">
+    <h4>✂️ 时间不够可删</h4>
+    故宫晶华午餐（改吃士林小吃更省时）· 好丘贝果（机场也买得到）
+  </div>
+
+  <div class="tip red">⚠️ <strong>今晚 00:20 飞机！</strong>倒推：21:00到机场 → 19:30从N Hotel出发 → 18:30前回到酒店拿行李。<strong>绝对不要晚于19:00回酒店！</strong></div>
 
   <div class="day-travel-summary">
     <span class="dts-icon">🗺</span>
     <div class="dts-stat">
       <span>总移动 <span class="num">~135 min</span></span>
-      <span>捷运 <span class="num">~50 min</span></span>
       <span>公车 <span class="num">~30 min</span></span>
-      <span>机捷 <span class="num">~40 min</span></span>
-      <span>步行 <span class="num">~15 min</span></span>
+      <span>捷运+机捷 <span class="num">~60 min</span></span>
+      <span>步行 <span class="num">~45 min</span></span>
     </div>
   </div>
 
-  <div class="tip red">⚠️ <strong>赶飞机倒推时间表：</strong><br>
-  ✈️ 00:20 航班 → 🏢 21:00到机场 → 🚃 20:00台北车站搭机捷 → 🏨 <strong>19:30前离开酒店</strong><br>
-  今天所有行程必须在19:00前结束！</div>
-
   <div class="timeline">
     <div class="travel-connector">
-      <span class="tc-icon">🚃</span>
-      <span class="tc-pill">15 min</span>
-      <span class="tc-label">🏨 N Hotel出发（记得先退房/寄行李！）→ 捷运<strong>西门站6号出口</strong>进站 → 搭板南线(蓝线)往南港方向 → 在「台北车站」换淡水信义线(红线)往淡水方向 → 在「士林站」下车 → <strong>1号出口</strong>出站 → 步行到正豪季</span>
+      <span class="tc-icon">🏨</span>
+      <span class="tc-pill">20 min</span>
+      <span class="tc-label">🏨 N Hotel出发（退房，寄放行李）→ 步行到捷运<strong>西门站6号出口</strong>进站 → 搭板南线(蓝线)往南港方向 → 在「台北车站」换淡水信义线(红线)往淡水方向 → 在「士林站」下车 → <strong>1号出口</strong>出站</span>
+      <div class="uber-alt"><span class="uber-logo">UBER</span> <span class="uber-info">替代方案：</span><span class="uber-price">~NT$200/车</span><span class="uber-time">15min</span></div>
     </div>
 
     <div class="item food">
       <div class="top-row">
-        <span class="time">08:30 – 09:15</span>
-        <span class="crowd low">🟢 平日早上不排</span>
+        <span class="time">08:30 – 09:10</span>
+        <span class="crowd low">🟢 早上客人少</span>
       </div>
-      <div class="name">正豪季水饺专卖店</div>
-      <div class="desc">手工水饺皮薄馅满。招牌韭菜水饺+酸辣汤。</div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.088,121.524" target="_blank">正豪季水饺<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">士林在地早餐。手工水饺皮薄馅多+酸辣汤。点韭菜+高丽菜各10颗。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
-        <span class="h-time">11:00 – 21:00</span>
-        <span class="h-rest">无休</span>
+        <span class="h-time">06:30 – 13:00</span>
+        <span class="h-rest">售完为止</span>
       </div>
-      <div class="meta"><span class="tag t-food">🥟 早餐</span><span class="tag t-cost">💰 ~NT$100/人</span></div>
+      <div class="meta"><span class="tag t-food">🥟 水饺</span><span class="tag t-cost">💰 ~NT$90/人</span></div>
+      <div class="backup-box">
+        <div class="backup-title">⚠️ 太早没开/卖完？</div>
+        <div class="backup-item">→ <strong>士林大饼</strong>（文林路101号），酥脆大饼+豆浆<br>→ 7-11/全家便利店买 <strong>御饭团+关东煮</strong>，快速解决上路</div>
+      </div>
+      <div class="nearby-alts">
+        <div class="na-title">🔄 士林早餐替代</div>
+        <div class="na-grid">
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">阿亮面线</span><span class="na-desc">— 在地人面线+卤大肠</span><a href="https://www.google.com/maps/search/?api=1&query=25.0878,121.5242" target="_blank">📍</a></div>
+        </div>
+      </div>
     </div>
 
     <div class="travel-connector">
-      <span class="tc-icon">🚃+🚌</span>
-      <span class="tc-pill">30 min</span>
-      <span class="tc-label">捷运西门站搭板南线(蓝线)往南港方向 → 在「台北车站」换淡水信义线(红线)往淡水方向 → 在「士林站」下车（5站约12min）→ <strong>1号出口</strong>出站 → 往前走到中正路公车站 → 搭<strong>红30/小18/255公车</strong>（约15min）→ 在「故宫博物院站」下车 → 正门就在眼前</span>
+      <span class="tc-icon">🚌</span>
+      <span class="tc-pill">15 min</span>
+      <span class="tc-label">士林站<strong>1号出口</strong>出站 → 右转到中正路「士林站」公车站 → 搭<strong>红30</strong>或<strong>255</strong>或<strong>小18</strong>→ 在「故宫博物院站」下车（约15min）</span>
     </div>
 
     <div class="item see">
       <div class="top-row">
-        <span class="time">10:00 – 12:30</span>
+        <span class="time">09:30 – 12:00</span>
         <span class="crowd low">🟢 周二平日最佳</span>
       </div>
-      <div class="name">至善区（故宫博物院）</div>
+      <div class="name"><span class="must-badge">必看</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.1024,121.5485" target="_blank">故宫博物院<span class="gmap-icon">📍</span></a></div>
       <div class="desc">世界四大博物馆之一，近70万件文物。<strong>必看三宝：</strong>翠玉白菜、肉形石、毛公鼎。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -1214,10 +1452,16 @@
         <strong>交通：</strong>士林站1号出口转红30/小18/255公车，约15分钟
       </div>
     </div>
+      <div class="nearby-alts">
+        <div class="na-title">🔄 故宫附近补充</div>
+        <div class="na-grid">
+          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">顺益原住民博物馆</span><span class="na-desc">— 台湾原住民文化</span><a href="https://www.google.com/maps/search/?api=1&query=25.1018,121.5475" target="_blank">📍</a></div>
+        </div>
+      </div>
 
     <div class="item local">
       <div class="top-row"><span class="time">故宫内</span><span class="local-badge">🔥 口袋名单</span></div>
-      <div class="name">故宫晶华 · 国宝宴</div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.1024,121.5485" target="_blank">故宫晶华 · 国宝宴<span class="gmap-icon">📍</span></a></div>
       <div class="desc">故宫B1餐厅。把国宝做成菜！「翠玉白菜」→翡翠虾松、「肉形石」→东坡肉。</div>
       <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">11:30 – 14:30 / 17:30 – 21:00</span></div>
       <div class="meta"><span class="tag t-local">🍽 主题餐厅</span><span class="tag t-cost">💰 ~NT$600/人</span></div>
@@ -1226,7 +1470,7 @@
     <div class="travel-connector">
       <span class="tc-icon">🚌</span>
       <span class="tc-pill">15 min</span>
-      <span class="tc-label">故宫门口搭<strong>红30公车</strong>原路返回 → 在「剑潭站(基河)」下车（约15min）→ 或搭到「士林站」→ <strong>剑潭站1号出口</strong>出站直走即到士林夜市入口（基河路上的大牌坊）</span>
+      <span class="tc-label">故宫门口搭<strong>红30公车</strong>原路返回 → 在「剑潭站(基河)」下车（约15min）→ <strong>剑潭站1号出口</strong>出站直走即到士林夜市入口（基河路上的大牌坊）</span>
     </div>
 
     <div class="item food">
@@ -1234,7 +1478,7 @@
         <span class="time">13:00 – 14:30</span>
         <span class="crowd low">🟢 周二+非晚间=几乎没人</span>
       </div>
-      <div class="name">士林夜市</div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.088,121.5245" target="_blank">士林夜市<span class="gmap-icon">📍</span></a></div>
       <div class="desc">台北最大夜市。白天地下美食区也有营业。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -1250,6 +1494,17 @@
         • 豪大大鸡排 ⏰ 15:00起
       </div>
       <div class="meta"><span class="tag t-food">🌙 夜市（日间）</span><span class="tag t-cost">💰 ~NT$200/人</span><span class="tag t-go">🚃 捷运剑潭站</span></div>
+      <div class="backup-box">
+        <div class="backup-title">⚠️ 地下美食区选择障碍？推荐点单顺序</div>
+        <div class="backup-item">1. <strong>蚵仔煎</strong> → 2. <strong>大饼包小饼</strong> → 3. <strong>生炒花枝</strong> → 4. <strong>盐水鸡</strong><br>吃不下就到地面买 <strong>豪大大鸡排</strong> 外带路上啃</div>
+      </div>
+      <div class="nearby-alts">
+        <div class="na-title">🔄 士林夜市更多推荐</div>
+        <div class="na-grid">
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">士林大香肠</span><span class="na-desc">— 地标大肠包小肠</span><a href="https://www.google.com/maps/search/?api=1&query=25.0882,121.5248" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">家湘涵骨</span><span class="na-desc">— 旁边东北麻辣烫</span><a href="https://www.google.com/maps/search/?api=1&query=25.0885,121.525" target="_blank">📍</a></div>
+        </div>
+      </div>
     </div>
 
     <div class="item local">
@@ -1264,6 +1519,7 @@
       <span class="tc-icon">🚃</span>
       <span class="tc-pill">20 min</span>
       <span class="tc-label">捷运<strong>剑潭站</strong>进站 → 搭淡水信义线(红线)往象山方向 → 在「台北车站」换板南线(蓝线)往顶埔方向 → 在「西门站」下车（1站）→ <strong>6号出口</strong>出站 → 步行3min回N Hotel</span>
+      <div class="uber-alt"><span class="uber-logo">UBER</span> <span class="uber-info">替代方案：</span><span class="uber-price">~NT$250/车</span><span class="uber-time">15min</span> · 带战利品搭车更方便</div>
     </div>
 
     <div class="item hotel">
@@ -1291,15 +1547,25 @@
         • 微热山丘凤梨酥（土凤梨，酸甜）<br>
         • 佳德糕饼（原味凤梨酥，不酸）<br>
         • 药妆（面膜/彩妆比马来西亚便宜30%）<br>
-        • 茶叶（林华泰茶行）
+        • 茶叶（Day2在林华泰买更便宜）
       </div>
       <div class="meta"><span class="tag t-shop">🛍 采购</span></div>
+      <div class="nearby-alts">
+        <div class="na-title">🔄 西门町伴手礼/最后一吃</div>
+        <div class="na-grid">
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">老天禄卤味</span><span class="na-desc">— 70年卤味伴手礼</span><a href="https://www.google.com/maps/search/?api=1&query=25.0425,121.507" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">阿宗面线(外带)</span><span class="na-desc">— 最后机会！外带路上吃</span><a href="https://www.google.com/maps/search/?api=1&query=25.0425,121.5068" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat shop">🛍</span><span class="na-name">日药本铺</span><span class="na-desc">— 最便宜日本药妆</span><a href="https://www.google.com/maps/search/?api=1&query=25.0422,121.5072" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">微热山丘(民生)</span><span class="na-desc">— 凤梨酥试吃整块+奉茶</span><a href="https://www.google.com/maps/search/?api=1&query=25.058,121.558" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">佳德糕饼</span><span class="na-desc">— 凤梨酥名店（要排队）</span><a href="https://www.google.com/maps/search/?api=1&query=25.0475,121.5445" target="_blank">📍</a></div>
+        </div>
+      </div>
     </div>
-
     <div class="travel-connector">
       <span class="tc-icon">🚃</span>
       <span class="tc-pill">40 min</span>
       <span class="tc-label">N Hotel拿行李 → 步行到捷运<strong>西门站6号出口</strong>进站 → 搭板南线(蓝线)往南港方向 → 在「台北车站」下车（1站2min）→ 跟指标走地下街往「桃园机场捷运 A1站」（步行约5min）→ 搭机捷<strong>紫线直达车</strong>→ 桃园机场第一/第二航厦（35min）→ 确认你的航厦再下车</span>
+      <div class="uber-alt"><span class="uber-logo">UBER</span> <span class="uber-info">替代方案：</span><span class="uber-price">~NT$1,100/车</span><span class="uber-time">40-50min</span> · 拖行李推荐！免转车免走地下街。但尖峰时段可能塞车</div>
     </div>
 
     <div class="item transport">
@@ -1312,7 +1578,7 @@
     <div class="item transport">
       <div class="top-row"><span class="time">21:00</span></div>
       <div class="name">抵达桃园机场</div>
-      <div class="desc">登机→退悠游卡余额（机捷服务台）→免税店最后购物</div>
+      <div class="desc">办登机→退悠游卡余额（机捷服务台）→免税店最后购物</div>
       <div class="detail"><strong>免税店推荐：</strong>凤梨酥/牛轧糖（比市区便宜）、台湾高粱酒</div>
     </div>
 
@@ -1328,20 +1594,45 @@
 <div class="day-panel" id="day6">
   <div class="day-header">
     <h2>🗺 行程总览</h2>
-    <div class="theme">37 指定地点 + 15 口袋名单 · 含交通时间 · 避峰策略</div>
+    <div class="theme">37 指定地点 + 10 新增推荐 + 15 口袋名单 · 含交通时间 · 避峰策略</div>
   </div>
 
   <div class="overview-grid">
     <div class="ov-card"><div class="num" style="color:var(--day1)">6</div><div class="label">天</div></div>
-    <div class="ov-card"><div class="num" style="color:var(--food)">52</div><div class="label">总地点数</div></div>
+    <div class="ov-card"><div class="num" style="color:var(--food)">62</div><div class="label">总地点数</div></div>
     <div class="ov-card"><div class="num" style="color:var(--transport)">~765 min</div><div class="label">总交通时间</div></div>
     <div class="ov-card"><div class="num" style="color:var(--local)">15</div><div class="label">🔥口袋名单</div></div>
+  </div>
+
+  <!-- CHARTS -->
+  <div class="chart-container">
+    <h3>📊 预算 & 交通分析</h3>
+    <div class="chart-row">
+      <div class="chart-box"><canvas id="budgetChart"></canvas></div>
+      <div class="chart-box"><canvas id="transportChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- FOOD FILTER -->
+  <div class="chart-container">
+    <h3>🍽 美食总表（点击分类筛选）</h3>
+    <div class="food-filter" id="foodFilter">
+      <button class="active" data-cat="all">全部</button>
+      <button data-cat="breakfast">🥞 早餐</button>
+      <button data-cat="noodle">🍜 面食</button>
+      <button data-cat="nightmarket">🌙 夜市</button>
+      <button data-cat="cafe">☕ 咖啡</button>
+      <button data-cat="dessert">🍧 甜品</button>
+      <button data-cat="fine">🍷 餐厅</button>
+      <button data-cat="snack">🧆 小吃</button>
+    </div>
+    <div class="food-grid" id="foodGrid"></div>
   </div>
 
   <div class="checklist">
     <h3>📊 每日交通时间对比</h3>
     <div class="row"><span class="icon">🔴</span><div><strong>Day1 · 西门/万华</strong> — 移动 ~105min（含机场70min）<br>🟢 最轻松日，步行为主</div></div>
-    <div class="row"><span class="icon">🟠</span><div><strong>Day2 · 大稻埕/中正</strong> — 移动 ~80min<br>🟢 高效U形路线，步行50min+捷运30min</div></div>
+    <div class="row"><span class="icon">🟠</span><div><strong>Day2 · 大稻埕/中正</strong> — 移动 ~95min<br>🟢 高效U形路线，步行55min+捷运40min</div></div>
     <div class="row"><span class="icon">🟢</span><div><strong>Day3 · 九份/松山</strong> — 移动 ~240min<br>🟡 交通最重日！公车来回180min。但风景值得</div></div>
     <div class="row"><span class="icon">🔵</span><div><strong>Day4 · 永康/大安</strong> — 移动 ~75min<br>🟢 最高效日，同街区步行为主</div></div>
     <div class="row"><span class="icon">🟣</span><div><strong>Day5 · 猫空/南港</strong> — 移动 ~130min<br>🟡 缆车50min+捷运65min，节奏适中</div></div>
@@ -1383,6 +1674,7 @@
 const locations = [
   {day:1,name:"N Hotel",lat:25.0425,lng:121.5080,type:"hotel"},
   {day:1,name:"西门町商圈",lat:25.0420,lng:121.5075,type:"see"},
+  {day:1,name:"阿宗面线",lat:25.0425,lng:121.5068,type:"food"},
   {day:1,name:"西门红楼",lat:25.0428,lng:121.5065,type:"see"},
   {day:1,name:"一甲子餐饮",lat:25.0370,lng:121.4995,type:"food"},
   {day:1,name:"老山东家常面",lat:25.0385,lng:121.5010,type:"food"},
@@ -1393,6 +1685,7 @@ const locations = [
   {day:2,name:"永乐鸡卷大王",lat:25.0550,lng:121.5098,type:"food"},
   {day:2,name:"和盛 1947",lat:25.0560,lng:121.5090,type:"food"},
   {day:2,name:"永富冰淇淋",lat:25.0545,lng:121.5085,type:"food"},
+  {day:2,name:"林华泰茶行",lat:25.0575,lng:121.5115,type:"shop"},
   {day:2,name:"中正纪念堂",lat:25.0348,lng:121.5217,type:"see"},
   {day:2,name:"国立台湾博物馆",lat:25.0427,lng:121.5148,type:"see"},
   {day:2,name:"宁夏夜市",lat:25.0558,lng:121.5155,type:"food"},
@@ -1402,12 +1695,15 @@ const locations = [
   {day:2,name:"大稻埕码头 🔥",lat:25.0540,lng:121.5050,type:"local"},
   {day:3,name:"叶家小笼包",lat:25.0845,lng:121.4725,type:"food"},
   {day:3,name:"九份老街",lat:25.1090,lng:121.8445,type:"see"},
+  {day:3,name:"阿柑姨芋圆",lat:25.1092,lng:121.8450,type:"food"},
   {day:3,name:"红茶屋",lat:25.0480,lng:121.5440,type:"food"},
   {day:3,name:"饶河夜市",lat:25.0510,lng:121.5770,type:"food"},
   {day:3,name:"松山慈祐宫 🔥",lat:25.0512,lng:121.5778,type:"local"},
   {day:4,name:"Bonica Café",lat:25.0310,lng:121.5300,type:"food"},
   {day:4,name:"永康牛肉面",lat:25.0335,lng:121.5285,type:"food"},
   {day:4,name:"杭州小笼汤包",lat:25.0340,lng:121.5275,type:"food"},
+  {day:4,name:"思慕昔",lat:25.0332,lng:121.5290,type:"food"},
+  {day:4,name:"青田七六",lat:25.0305,lng:121.5318,type:"see"},
   {day:4,name:"华山1914",lat:25.0440,lng:121.5295,type:"see"},
   {day:4,name:"袖珍博物馆",lat:25.0510,lng:121.5315,type:"see"},
   {day:4,name:"Indulge Bistro ⭐",lat:25.0380,lng:121.5460,type:"food"},
@@ -1428,16 +1724,14 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r
 const dayLayers={};
 for(let d=1;d<=6;d++)dayLayers[d]=L.layerGroup().addTo(map);
 
-// Route order for polylines (non-local stops in visit order)
 const routes={
-  1:["N Hotel","西门町商圈","西门红楼","一甲子餐饮","老山东家常面","南机场夜市"],
-  2:["重庆豆浆炸蛋饼","大稻埕","永乐鸡卷大王","和盛 1947","永富冰淇淋","中正纪念堂","国立台湾博物馆","50岚","宁夏夜市","天津葱抓饼"],
-  3:["叶家小笼包","九份老街","红茶屋","饶河夜市"],
-  4:["Bonica Café","永康牛肉面","杭州小笼汤包","华山1914","袖珍博物馆","Indulge Bistro ⭐","师大夜市"],
+  1:["N Hotel","西门町商圈","阿宗面线","西门红楼","一甲子餐饮","老山东家常面","南机场夜市"],
+  2:["重庆豆浆炸蛋饼","大稻埕","永乐鸡卷大王","和盛 1947","永富冰淇淋","林华泰茶行","中正纪念堂","国立台湾博物馆","50岚","宁夏夜市","天津葱抓饼"],
+  3:["叶家小笼包","九份老街","阿柑姨芋圆","红茶屋","饶河夜市"],
+  4:["Bonica Café","永康牛肉面","杭州小笼汤包","思慕昔","青田七六","华山1914","袖珍博物馆","Indulge Bistro ⭐","师大夜市"],
   5:["台北动物园站","猓玀苑","乐扣乐扣 LaLaport","Your Curve","双月食品社"],
   6:["正豪季水饺","至善区（故宫）","士林夜市"]
 };
-// Draw route polylines
 Object.keys(routes).forEach(d=>{
   const names=routes[d];
   const pts=names.map(n=>locations.find(l=>l.name===n)).filter(Boolean).map(l=>[l.lat,l.lng]);
@@ -1450,7 +1744,7 @@ locations.forEach(loc=>{
   const isLocal=loc.type==='local';
   const color=isLocal?'#e63946':(dayColors[loc.day]||'#999');
   const icon=L.divIcon({className:'',html:`<div style="width:${isLocal?10:12}px;height:${isLocal?10:12}px;background:${color};border:2px solid white;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.3)"></div>`,iconSize:[12,12],iconAnchor:[6,6]});
-  L.marker([loc.lat,loc.lng],{icon}).bindPopup(`<strong>${loc.name}</strong><br><small style="color:${color}">Day ${loc.day}</small>`,{closeButton:false}).addTo(dayLayers[loc.day]);
+  L.marker([loc.lat,loc.lng],{icon}).bindPopup(`<strong>${loc.name}</strong><br><small style="color:${color}">Day ${loc.day}</small><br><a href="https://www.google.com/maps/search/?api=1&query=${loc.lat},${loc.lng}" target="_blank" style="font-size:.8em">Google Maps 导航 →</a>`,{closeButton:false}).addTo(dayLayers[loc.day]);
 });
 let currentDay=-1;
 function fitMapToDay(i){
@@ -1463,10 +1757,141 @@ function fitMapToDay(i){
 function showDay(i){
   document.querySelectorAll('.day-panel').forEach((p,idx)=>p.classList.toggle('active',idx===i));
   document.querySelectorAll('.tabs button').forEach((b,idx)=>b.classList.toggle('active',idx===i));
+  // Update bottom nav
+  document.querySelectorAll('.bottom-nav button').forEach(b=>b.classList.remove('active'));
+  if(i<6) document.querySelector(`.bottom-nav button[data-bn="day"]`).classList.add('active');
+  else document.querySelector(`.bottom-nav button[data-bn="overview"]`).classList.add('active');
   fitMapToDay(i);
   window.scrollTo({top:document.getElementById('map').offsetTop+document.getElementById('map').offsetHeight-50,behavior:'smooth'});
 }
 fitMapToDay(0);
+
+// ============= CHARTS =============
+// Budget Doughnut
+const budgetCtx=document.getElementById('budgetChart').getContext('2d');
+new Chart(budgetCtx,{
+  type:'doughnut',
+  data:{
+    labels:['美食','交通','门票','购物','咖啡/饮品'],
+    datasets:[{
+      data:[8000,2604,1160,4000,1200],
+      backgroundColor:['#ff6b35','#38b000','#0077b6','#f4a261','#9b59b6'],
+      borderWidth:2,borderColor:'#fff'
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{position:'bottom',labels:{font:{size:11},padding:8,usePointStyle:true}},
+      title:{display:true,text:'预估预算分布（2人/NT$）',font:{size:13,weight:'bold'}}
+    }
+  }
+});
+
+// Transport Bar
+const transCtx=document.getElementById('transportChart').getContext('2d');
+new Chart(transCtx,{
+  type:'bar',
+  data:{
+    labels:['Day1','Day2','Day3','Day4','Day5','Day6'],
+    datasets:[{
+      label:'移动时间 (min)',
+      data:[105,95,240,75,130,135],
+      backgroundColor:['#e74c3c','#e67e22','#2ecc71','#3498db','#9b59b6','#1abc9c'],
+      borderRadius:6,
+      barThickness:28
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      title:{display:true,text:'每日交通时间 (min)',font:{size:13,weight:'bold'}}
+    },
+    scales:{
+      y:{beginAtZero:true,grid:{color:'#f0f0f0'}},
+      x:{grid:{display:false}}
+    }
+  }
+});
+
+// ============= FOOD FILTER =============
+const foodData=[
+  {name:"重庆豆浆炸蛋饼",cat:"breakfast",day:2,cost:"NT$80",lat:25.0530,lng:121.5100},
+  {name:"叶家小笼包",cat:"breakfast",day:3,cost:"NT$100",lat:25.0845,lng:121.4725},
+  {name:"正豪季水饺",cat:"breakfast",day:6,cost:"NT$90",lat:25.0880,lng:121.5240},
+  {name:"阿宗面线",cat:"noodle",day:1,cost:"NT$60",lat:25.0425,lng:121.5068},
+  {name:"一甲子餐饮",cat:"snack",day:1,cost:"NT$120",lat:25.0370,lng:121.4995},
+  {name:"老山东家常面",cat:"noodle",day:1,cost:"NT$100",lat:25.0385,lng:121.5010},
+  {name:"永康牛肉面",cat:"noodle",day:4,cost:"NT$250",lat:25.0335,lng:121.5285},
+  {name:"杭州小笼汤包",cat:"snack",day:4,cost:"NT$150",lat:25.0340,lng:121.5275},
+  {name:"永乐鸡卷大王",cat:"snack",day:2,cost:"NT$80",lat:25.0550,lng:121.5098},
+  {name:"Bonica Café",cat:"cafe",day:4,cost:"NT$350",lat:25.0310,lng:121.5300},
+  {name:"和盛 1947",cat:"cafe",day:2,cost:"NT$200",lat:25.0560,lng:121.5090},
+  {name:"50岚",cat:"cafe",day:2,cost:"NT$50",lat:25.0440,lng:121.5150},
+  {name:"红茶屋",cat:"cafe",day:3,cost:"NT$20",lat:25.0480,lng:121.5440},
+  {name:"永富冰淇淋",cat:"dessert",day:2,cost:"NT$40",lat:25.0545,lng:121.5085},
+  {name:"思慕昔 芒果冰",cat:"dessert",day:4,cost:"NT$200",lat:25.0332,lng:121.5290},
+  {name:"阿柑姨芋圆",cat:"dessert",day:3,cost:"NT$50",lat:25.1092,lng:121.8450},
+  {name:"南机场夜市",cat:"nightmarket",day:1,cost:"NT$150",lat:25.0320,lng:121.5080},
+  {name:"宁夏夜市",cat:"nightmarket",day:2,cost:"NT$250",lat:25.0558,lng:121.5155},
+  {name:"饶河夜市",cat:"nightmarket",day:3,cost:"NT$200",lat:25.0510,lng:121.5770},
+  {name:"师大夜市",cat:"nightmarket",day:4,cost:"NT$150",lat:25.0270,lng:121.5265},
+  {name:"士林夜市",cat:"nightmarket",day:6,cost:"NT$200",lat:25.0880,lng:121.5245},
+  {name:"天津葱抓饼",cat:"snack",day:2,cost:"NT$45",lat:25.0560,lng:121.5158},
+  {name:"Indulge Bistro",cat:"fine",day:4,cost:"NT$1,200",lat:25.0380,lng:121.5460},
+  {name:"猓玀苑(猫空)",cat:"fine",day:5,cost:"NT$300",lat:24.9690,lng:121.5870},
+  {name:"双月食品社",cat:"fine",day:5,cost:"NT$400",lat:25.0470,lng:121.5440},
+  {name:"故宫晶华",cat:"fine",day:6,cost:"NT$600",lat:25.1024,lng:121.5485},
+];
+const dayBg={1:'#e74c3c',2:'#e67e22',3:'#2ecc71',4:'#3498db',5:'#9b59b6',6:'#1abc9c'};
+function renderFoodGrid(cat){
+  const grid=document.getElementById('foodGrid');
+  const items=cat==='all'?foodData:foodData.filter(f=>f.cat===cat);
+  grid.innerHTML=items.map(f=>`
+    <div class="food-card">
+      <div class="fc-left">
+        <div class="fc-name">${f.name}</div>
+        <div class="fc-meta">${f.cost}/人</div>
+      </div>
+      <div class="fc-right">
+        <span class="fc-day" style="background:${dayBg[f.day]}">Day${f.day}</span>
+        <a class="fc-nav" href="https://www.google.com/maps/dir/?api=1&destination=${f.lat},${f.lng}" target="_blank" title="导航">🗺</a>
+      </div>
+    </div>
+  `).join('');
+}
+document.querySelectorAll('#foodFilter button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('#foodFilter button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderFoodGrid(btn.dataset.cat);
+  });
+});
+renderFoodGrid('all');
+
+// ============= BOTTOM NAV =============
+function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'})}
+function goToMap(){
+  document.getElementById('map').scrollIntoView({behavior:'smooth'});
+}
 </script>
+
+<!-- BOTTOM NAVIGATION -->
+<nav class="bottom-nav">
+  <button class="active" data-bn="day" onclick="showDay(currentDay>=0&&currentDay<6?currentDay:0)">
+    <span class="bn-icon">📅</span>行程
+  </button>
+  <button data-bn="map" onclick="goToMap()">
+    <span class="bn-icon">🗺</span>地图
+  </button>
+  <button data-bn="overview" onclick="showDay(6)">
+    <span class="bn-icon">📊</span>总览
+  </button>
+  <button data-bn="top" onclick="scrollToTop()">
+    <span class="bn-icon">⬆️</span>顶部
+  </button>
+</nav>
+
 </body>
 </html>
