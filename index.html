@@ -71,9 +71,12 @@
   .nearby-alts .na-item .na-cat.see{background:#e8f4fd;color:#0077b6}
   .nearby-alts .na-item .na-cat.shop{background:#fef3e2;color:#b87333}
   .nearby-alts .na-item .na-cat.bar{background:#1a1a2e;color:#f1c40f}
-  .nearby-alts .na-item .na-name{font-weight:600;white-space:nowrap;flex-shrink:0}
   .nearby-alts .na-item .na-desc{color:#888;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .nearby-alts .na-item a{color:#2980b9;text-decoration:none;font-size:.9em;margin-left:auto;flex-shrink:0}
+  .nearby-alts .na-item a.na-pin{color:#2980b9;text-decoration:none;font-size:.9em;margin-left:auto;flex-shrink:0}
+  .nearby-alts .na-item a.na-name{color:#2c3e50;text-decoration:none;font-weight:600;white-space:nowrap;flex-shrink:0}
+  .nearby-alts .na-item a.na-name:hover{color:#2980b9;text-decoration:underline}
+  .backup-box a.backup-link{color:inherit;text-decoration:none}
+  .backup-box a.backup-link:hover{color:#e74c3c;text-decoration:underline}
 
   /* PRIORITY BADGES */
   .priority-section{margin:10px 0 14px;padding:12px 14px;border-radius:12px;font-size:.84em;line-height:1.7}
@@ -297,7 +300,7 @@
 
     <div class="item hotel">
       <div class="top-row"><span class="time">16:00 – 16:40</span></div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0425,121.508" target="_blank">🏨 N Hotel 入住<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=N%20Hotel%20Ximending%20Taipei" target="_blank">🏨 N Hotel 入住<span class="gmap-icon">📍</span></a></div>
       <div class="desc">放行李、换轻便衣服、充个电。请前台确认 Day6 退房后寄放行李服务。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -317,7 +320,7 @@
         <span class="time">16:45 – 17:25</span>
         <span class="crowd low">🟢 平日下午人少</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.042,121.5075" target="_blank">西门町商圈<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E8%A5%BF%E9%97%A8%E7%94%BA%E5%95%86%E5%9C%88%20%E5%8F%B0%E5%8C%97" target="_blank">西门町商圈<span class="gmap-icon">📍</span></a></div>
       <div class="desc">台北最热闹的徒步区。药妆店（松本清/屈臣氏）、潮牌店、街头涂鸦墙。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -330,20 +333,20 @@
       <div class="nearby-alts">
         <div class="na-title">🔄 西门町一带更多逛点</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">万年大楼</span><span class="na-desc">— 复古电玩/模型/二手唱片</span><a href="https://www.google.com/maps/search/?api=1&query=25.0418,121.507" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat shop">🛍</span><span class="na-name">诚品武昌店</span><span class="na-desc">— 24h 书店+文创选物</span><a href="https://www.google.com/maps/search/?api=1&query=25.0430,121.508" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">鸭肉扁</span><span class="na-desc">— 西门町老字号鹅肉面</span><a href="https://www.google.com/maps/search/?api=1&query=25.0428,121.507" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat cafe">☕</span><span class="na-name">蜂大咖啡</span><span class="na-desc">— 60年老派咖啡馆</span><a href="https://www.google.com/maps/search/?api=1&query=25.0422,121.506" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat see">🏛</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E4%B8%87%E5%B9%B4%E5%A4%A7%E6%A5%BC%20%E5%8F%B0%E5%8C%97" target="_blank">万年大楼 📍</a><span class="na-desc">— 复古电玩/模型/二手唱片</span></div>
+          <div class="na-item"><span class="na-cat shop">🛍</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E8%AF%9A%E5%93%81%E6%AD%A6%E6%98%8C%E5%BA%97%20%E5%8F%B0%E5%8C%97" target="_blank">诚品武昌店 📍</a><span class="na-desc">— 24h 书店+文创选物</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E9%B8%AD%E8%82%89%E6%89%81%20%E5%8F%B0%E5%8C%97" target="_blank">鸭肉扁 📍</a><span class="na-desc">— 西门町老字号鹅肉面</span></div>
+          <div class="na-item"><span class="na-cat cafe">☕</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E8%9C%82%E5%A4%A7%E5%92%96%E5%95%A1%20%E5%8F%B0%E5%8C%97" target="_blank">蜂大咖啡 📍</a><span class="na-desc">— 60年老派咖啡馆</span></div>
         </div>
       </div>
     </div>
       <div class="nearby-alts">
         <div class="na-title">🔄 西门町附近还可以逛</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">鸭肉扁</span><span class="na-desc">— 60年卤鸭肉，免排队</span><a href="https://www.google.com/maps/search/?api=1&query=25.043,121.5072" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">成都杨桃冰</span><span class="na-desc">— 60年古早味杨桃冰 NT$30</span><a href="https://www.google.com/maps/search/?api=1&query=25.0428,121.506" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat cafe">☕</span><span class="na-name">CAFE!N 硬咖啡</span><span class="na-desc">— 西门町精品咖啡</span><a href="https://www.google.com/maps/search/?api=1&query=25.0418,121.5072" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">阿义鲁肉饭</span><span class="na-desc">— 巷弄隐藏卤肉饭</span><a href="https://www.google.com/maps/search/?api=1&query=25.0415,121.5078" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E9%B8%AD%E8%82%89%E6%89%81%20%E5%8F%B0%E5%8C%97" target="_blank">鸭肉扁 📍</a><span class="na-desc">— 60年卤鸭肉，免排队</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E6%88%90%E9%83%BD%E6%9D%A8%E6%A1%83%E5%86%B0%20%E5%8F%B0%E5%8C%97" target="_blank">成都杨桃冰 📍</a><span class="na-desc">— 60年古早味杨桃冰 NT$30</span></div>
+          <div class="na-item"><span class="na-cat cafe">☕</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=CAFE%21N%20%E7%A1%AC%E5%92%96%E5%95%A1%20%E5%8F%B0%E5%8C%97" target="_blank">CAFE!N 硬咖啡 📍</a><span class="na-desc">— 西门町精品咖啡</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E9%98%BF%E4%B9%89%E9%B2%81%E8%82%89%E9%A5%AD%20%E5%8F%B0%E5%8C%97" target="_blank">阿义鲁肉饭 📍</a><span class="na-desc">— 巷弄隐藏卤肉饭</span></div>
         </div>
       </div>
 
@@ -359,7 +362,7 @@
         <span class="crowd mid">🟡 常有排队</span>
         <span class="new-badge">🆕 新增</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0425,121.5068" target="_blank">阿宗面线<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E9%98%BF%E5%AE%97%E9%9D%A2%E7%BA%BF%20%E5%8F%B0%E5%8C%97" target="_blank">阿宗面线<span class="gmap-icon">📍</span></a></div>
       <div class="desc">西门町地标小吃，大肠面线只要NT$60。站着吃才是正宗style！红面线+卤大肠+柴鱼汤头。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -370,7 +373,7 @@
       <div class="meta"><span class="tag t-food">🍜 小吃</span><span class="tag t-cost">💰 NT$60/碗</span></div>
       <div class="backup-box">
         <div class="backup-title">⚠️ 排队超过15分钟？</div>
-        <div class="backup-item">→ 改吃旁边 <strong>鸭肉扁</strong>（中华路一段98-2号），卤鸭肉+当归鸭汤，60年老店无需排队</div>
+        <div class="backup-item">→ 改吃旁边 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E9%B8%AD%E8%82%89%E6%89%81%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>鸭肉扁</strong> 📍</a>（中华路一段98-2号），卤鸭肉+当归鸭汤，60年老店无需排队</div>
       </div>
     </div>
 
@@ -385,7 +388,7 @@
         <span class="time">17:50 – 18:15</span>
         <span class="crowd low">🟢 平日傍晚清静</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0428,121.5065" target="_blank">西门红楼<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E8%A5%BF%E9%97%A8%E7%BA%A2%E6%A5%BC%20%E5%8F%B0%E5%8C%97" target="_blank">西门红楼<span class="gmap-icon">📍</span></a></div>
       <div class="desc">1908年八角楼建筑。一楼文创市集+二楼剧场空间。旁边十字楼有独立品牌咖啡。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -396,7 +399,7 @@
       <div class="crowd-tip">✅ 避峰策略：周五晚有创意市集会很挤，周三晚上悠闲</div>
       <div class="backup-box">
         <div class="backup-title">⚠️ 红楼没有活动/在整修？</div>
-        <div class="backup-item">→ 步行3min去 <strong>中山堂</strong>（延平南路98号），日治时期公会堂建筑，免费参观<br>→ 或去 <strong>西门町电影街</strong>，在武昌街看看台湾老戏院</div>
+        <div class="backup-item">→ 步行3min去 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E4%B8%AD%E5%B1%B1%E5%A0%82%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>中山堂</strong> 📍</a>（延平南路98号），日治时期公会堂建筑，免费参观<br>→ 或去 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E8%A5%BF%E9%97%A8%E7%94%BA%E7%94%B5%E5%BD%B1%E8%A1%97%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>西门町电影街</strong> 📍</a>，在武昌街看看台湾老戏院</div>
       </div>
     </div>
 
@@ -411,7 +414,7 @@
         <span class="time">18:30 – 19:05</span>
         <span class="crowd mid">🟡 晚餐时段稍排队</span>
       </div>
-      <div class="name"><span class="must-badge">必吃</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.037,121.4995" target="_blank">一甲子餐饮<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><span class="must-badge">必吃</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E4%B8%80%E7%94%B2%E5%AD%90%E9%A4%90%E9%A5%AE%20%E5%8F%B0%E5%8C%97" target="_blank">一甲子餐饮<span class="gmap-icon">📍</span></a></div>
       <div class="desc">龙山寺旁50年老店。招牌<strong>焢肉饭</strong>（猪肉入口即化）+<strong>碗粿</strong>（南部古早味）+排骨酥汤。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -423,7 +426,7 @@
       <div class="detail"><strong>地址：</strong>万华区康定路79号</div>
       <div class="backup-box">
         <div class="backup-title">⚠️ 已售完/排队太长？</div>
-        <div class="backup-item">→ 旁边 <strong>两喜号鱿鱼羹</strong>（广州街250号），80年老店，鱿鱼羹+米粉一样经典</div>
+        <div class="backup-item">→ 旁边 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E4%B8%A4%E5%96%9C%E5%8F%B7%E9%B1%BF%E9%B1%BC%E7%BE%B9%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>两喜号鱿鱼羹</strong> 📍</a>（广州街250号），80年老店，鱿鱼羹+米粉一样经典</div>
       </div>
     </div>
 
@@ -435,7 +438,7 @@
 
     <div class="item local">
       <div class="top-row"><span class="time">19:10 – 19:30</span><span class="local-badge">🔥 口袋名单</span></div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0372,121.4998" target="_blank">龙山寺<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E9%BE%99%E5%B1%B1%E5%AF%BA%20%E5%8F%B0%E5%8C%97" target="_blank">龙山寺<span class="gmap-icon">📍</span></a></div>
       <div class="desc">270年历史，台北最灵验的妈祖庙。黄昏灯火渐亮最美。可以抽签问旅途平安。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -445,7 +448,7 @@
       <div class="meta"><span class="tag t-local">🏛 古迹</span><span class="tag t-cost">💰 免费</span></div>
       <div class="backup-box">
         <div class="backup-title">⚠️ 黄昏太晚/想跳过？</div>
-        <div class="backup-item">→ 改逛对面 <strong>剥皮寮历史街区</strong>（广州街/康定路口），清代老街免费入场，好拍照<br>→ 或直接前往一甲子餐饮，省30min</div>
+        <div class="backup-item">→ 改逛对面 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%89%A5%E7%9A%AE%E5%AF%AE%E5%8E%86%E5%8F%B2%E8%A1%97%E5%8C%BA%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>剥皮寮历史街区</strong> 📍</a>（广州街/康定路口），清代老街免费入场，好拍照<br>→ 或直接前往一甲子餐饮，省30min</div>
       </div>
     </div>
 
@@ -456,11 +459,11 @@
       <div class="nearby-alts">
         <div class="na-title">🔄 龙山寺/万华一带替代</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">周记肉粥</span><span class="na-desc">— 龙山寺旁清粥小菜</span><a href="https://www.google.com/maps/search/?api=1&query=25.0374,121.5" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">三六圆仔汤</span><span class="na-desc">— 70年甜汤，花生汤圆</span><a href="https://www.google.com/maps/search/?api=1&query=25.0375,121.4997" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">万华林家猪脚</span><span class="na-desc">— 卤猪脚+蒜泥白肉</span><a href="https://www.google.com/maps/search/?api=1&query=25.036,121.4988" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">剥皮寮历史街区</span><span class="na-desc">— 清代老街免费逛，好拍</span><a href="https://www.google.com/maps/search/?api=1&query=25.037,121.5005" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat bar">🍷</span><span class="na-name">Hanko 60</span><span class="na-desc">— 日式老屋酒吧 NT$350起</span><a href="https://www.google.com/maps/search/?api=1&query=25.0373,121.4996" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%91%A8%E8%AE%B0%E8%82%89%E7%B2%A5%20%E5%8F%B0%E5%8C%97" target="_blank">周记肉粥 📍</a><span class="na-desc">— 龙山寺旁清粥小菜</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E4%B8%89%E5%85%AD%E5%9C%86%E4%BB%94%E6%B1%A4%20%E5%8F%B0%E5%8C%97" target="_blank">三六圆仔汤 📍</a><span class="na-desc">— 70年甜汤，花生汤圆</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E4%B8%87%E5%8D%8E%E6%9E%97%E5%AE%B6%E7%8C%AA%E8%84%9A%20%E5%8F%B0%E5%8C%97" target="_blank">万华林家猪脚 📍</a><span class="na-desc">— 卤猪脚+蒜泥白肉</span></div>
+          <div class="na-item"><span class="na-cat see">🏛</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%89%A5%E7%9A%AE%E5%AF%AE%E5%8E%86%E5%8F%B2%E8%A1%97%E5%8C%BA%20%E5%8F%B0%E5%8C%97" target="_blank">剥皮寮历史街区 📍</a><span class="na-desc">— 清代老街免费逛，好拍</span></div>
+          <div class="na-item"><span class="na-cat bar">🍷</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=Hanko%2060%20%E5%8F%B0%E5%8C%97" target="_blank">Hanko 60 📍</a><span class="na-desc">— 日式老屋酒吧 NT$350起</span></div>
         </div>
       </div>
     </div>
@@ -470,7 +473,7 @@
         <span class="time">19:35 – 20:00</span>
         <span class="crowd low">🟢 19:00后客人渐少</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0385,121.501" target="_blank">老山东家常面<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E8%80%81%E5%B1%B1%E4%B8%9C%E5%AE%B6%E5%B8%B8%E9%9D%A2%20%E5%8F%B0%E5%8C%97" target="_blank">老山东家常面<span class="gmap-icon">📍</span></a></div>
       <div class="desc">手擀面条+酱烧牛腩，万华隐藏巷弄美食。在地人的家常面馆。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -481,7 +484,7 @@
     
       <div class="backup-box">
         <div class="backup-title">⚠️ 周日休息/已打烊？</div>
-        <div class="backup-item">→ 步行5min去 <strong>小王煮瓜</strong>（华西街17-4号），黑金卤肉饭+苦瓜排骨汤<br>→ 或 <strong>阿义鲁肉饭</strong>（华西街夜市内），在地人的深夜食堂</div>
+        <div class="backup-item">→ 步行5min去 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%B0%8F%E7%8E%8B%E7%85%AE%E7%93%9C%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>小王煮瓜</strong> 📍</a>（华西街17-4号），黑金卤肉饭+苦瓜排骨汤<br>→ 或 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E9%98%BF%E4%B9%89%E9%B2%81%E8%82%89%E9%A5%AD%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>阿义鲁肉饭</strong> 📍</a>（华西街夜市内），在地人的深夜食堂</div>
       </div>
     </div>
 
@@ -496,7 +499,7 @@
         <span class="time">20:15 – 21:00</span>
         <span class="crowd low">🟢 平日无需排队</span>
       </div>
-      <div class="name"><span class="must-badge">必吃</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.032,121.508" target="_blank">南机场夜市<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><span class="must-badge">必吃</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E5%8D%97%E6%9C%BA%E5%9C%BA%E5%A4%9C%E5%B8%82%20%E5%8F%B0%E5%8C%97" target="_blank">南机场夜市<span class="gmap-icon">📍</span></a></div>
       <div class="desc">台北人的秘密夜市，没有观光客！南机场水饺、来来水饺、山内鸡肉饭、彰化肉圆。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -515,10 +518,10 @@
       <div class="nearby-alts">
         <div class="na-title">🔄 南机场夜市必吃推荐</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">山内鸡肉饭</span><span class="na-desc">— 台北最强鸡肉饭 NT$65</span><a href="https://www.google.com/maps/search/?api=1&query=25.031,121.508" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">来来水饺</span><span class="na-desc">— 一颗NT$5·皮薄馅多</span><a href="https://www.google.com/maps/search/?api=1&query=25.031,121.507" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">无名推车烧饼</span><span class="na-desc">— 排队名物·酥脆葱烧饼</span><a href="https://www.google.com/maps/search/?api=1&query=25.032,121.508" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">臭老板臭豆腐</span><span class="na-desc">— 外酥内嫩+泡菜</span><a href="https://www.google.com/maps/search/?api=1&query=25.031,121.507" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%B1%B1%E5%86%85%E9%B8%A1%E8%82%89%E9%A5%AD%20%E5%8F%B0%E5%8C%97" target="_blank">山内鸡肉饭 📍</a><span class="na-desc">— 台北最强鸡肉饭 NT$65</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E6%9D%A5%E6%9D%A5%E6%B0%B4%E9%A5%BA%20%E5%8F%B0%E5%8C%97" target="_blank">来来水饺 📍</a><span class="na-desc">— 一颗NT$5·皮薄馅多</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E6%97%A0%E5%90%8D%E6%8E%A8%E8%BD%A6%E7%83%A7%E9%A5%BC%20%E5%8F%B0%E5%8C%97" target="_blank">无名推车烧饼 📍</a><span class="na-desc">— 排队名物·酥脆葱烧饼</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E8%87%AD%E8%80%81%E6%9D%BF%E8%87%AD%E8%B1%86%E8%85%90%20%E5%8F%B0%E5%8C%97" target="_blank">臭老板臭豆腐 📍</a><span class="na-desc">— 外酥内嫩+泡菜</span></div>
         </div>
       </div>
     </div>
@@ -568,7 +571,7 @@
         <span class="time">08:30 – 09:10</span>
         <span class="crowd low">🟢 平日早上不排</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.053,121.51" target="_blank">重庆豆浆炸蛋饼<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E9%87%8D%E5%BA%86%E8%B1%86%E6%B5%86%E7%82%B8%E8%9B%8B%E9%A5%BC%20%E5%8F%B0%E5%8C%97" target="_blank">重庆豆浆炸蛋饼<span class="gmap-icon">📍</span></a></div>
       <div class="desc">在地人早餐！炸蛋饼外酥内嫩+现磨咸豆浆（加油条碎）。每桌必点蛋饼+小笼包组合。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -579,7 +582,7 @@
     
       <div class="backup-box">
         <div class="backup-title">⚠️ 排队太长/没开？</div>
-        <div class="backup-item">→ 附近 <strong>鼎元豆浆</strong>（金华街30-1号），同样厚实蛋饼+咸豆浆<br>→ 或 <strong>永和豆浆大王</strong>（复兴南路二段），24h 随时有</div>
+        <div class="backup-item">→ 附近 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E9%BC%8E%E5%85%83%E8%B1%86%E6%B5%86%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>鼎元豆浆</strong> 📍</a>（金华街30-1号），同样厚实蛋饼+咸豆浆<br>→ 或 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E6%B0%B8%E5%92%8C%E8%B1%86%E6%B5%86%E5%A4%A7%E7%8E%8B%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>永和豆浆大王</strong> 📍</a>（复兴南路二段），24h 随时有</div>
       </div>
     </div>
 
@@ -594,7 +597,7 @@
         <span class="time">09:15 – 10:45</span>
         <span class="crowd low">🟢 平日上午游客少</span>
       </div>
-      <div class="name"><span class="must-badge">必逛</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0555,121.5095" target="_blank">大稻埕 · 迪化街<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><span class="must-badge">必逛</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E7%A8%BB%E5%9F%95%20%C2%B7%20%E8%BF%AA%E5%8C%96%E8%A1%97%20%E5%8F%B0%E5%8C%97" target="_blank">大稻埕 · 迪化街<span class="gmap-icon">📍</span></a></div>
       <div class="desc">台北最美老街。百年巴洛克骑楼、南北货行、文创小店。每栋老屋都有故事。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -610,44 +613,44 @@
       <div class="nearby-alts">
         <div class="na-title">🔄 大稻埕一带更多体验</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">大稻埕戏苑</span><span class="na-desc">— 传统戏曲表演/免费展览</span><a href="https://www.google.com/maps/search/?api=1&query=25.0555,121.510" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat cafe">☕</span><span class="na-name">森高砂咖啡</span><span class="na-desc">— 老宅改造精品咖啡</span><a href="https://www.google.com/maps/search/?api=1&query=25.0552,121.509" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat shop">🛍</span><span class="na-name">小艺埕/民艺埕</span><span class="na-desc">— 文创选物+在地品牌</span><a href="https://www.google.com/maps/search/?api=1&query=25.0558,121.510" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat see">🏛</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E7%A8%BB%E5%9F%95%E6%88%8F%E8%8B%91%20%E5%8F%B0%E5%8C%97" target="_blank">大稻埕戏苑 📍</a><span class="na-desc">— 传统戏曲表演/免费展览</span></div>
+          <div class="na-item"><span class="na-cat cafe">☕</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E6%A3%AE%E9%AB%98%E7%A0%82%E5%92%96%E5%95%A1%20%E5%8F%B0%E5%8C%97" target="_blank">森高砂咖啡 📍</a><span class="na-desc">— 老宅改造精品咖啡</span></div>
+          <div class="na-item"><span class="na-cat shop">🛍</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%B0%8F%E8%89%BA%E5%9F%95/%E6%B0%91%E8%89%BA%E5%9F%95%20%E5%8F%B0%E5%8C%97" target="_blank">小艺埕/民艺埕 📍</a><span class="na-desc">— 文创选物+在地品牌</span></div>
         </div>
       </div>
     </div>
       <div class="nearby-alts">
         <div class="na-title">🔄 大稻埕一带还可以逛/吃</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">慈圣宫庙口美食</span><span class="na-desc">— 最在地的庙口小吃群</span><a href="https://www.google.com/maps/search/?api=1&query=25.0565,121.5105" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">妙口四神汤</span><span class="na-desc">— 60年，四神汤+肉粽</span><a href="https://www.google.com/maps/search/?api=1&query=25.0558,121.51" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat cafe">☕</span><span class="na-name">森高砂咖啡</span><span class="na-desc">— 老屋咖啡，自烘豆</span><a href="https://www.google.com/maps/search/?api=1&query=25.057,121.5093" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat shop">🛍</span><span class="na-name">小器生活</span><span class="na-desc">— 日系生活道具选物</span><a href="https://www.google.com/maps/search/?api=1&query=25.056,121.5095" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E6%85%88%E5%9C%A3%E5%AE%AB%E5%BA%99%E5%8F%A3%E7%BE%8E%E9%A3%9F%20%E5%8F%B0%E5%8C%97" target="_blank">慈圣宫庙口美食 📍</a><span class="na-desc">— 最在地的庙口小吃群</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%A6%99%E5%8F%A3%E5%9B%9B%E7%A5%9E%E6%B1%A4%20%E5%8F%B0%E5%8C%97" target="_blank">妙口四神汤 📍</a><span class="na-desc">— 60年，四神汤+肉粽</span></div>
+          <div class="na-item"><span class="na-cat cafe">☕</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E6%A3%AE%E9%AB%98%E7%A0%82%E5%92%96%E5%95%A1%20%E5%8F%B0%E5%8C%97" target="_blank">森高砂咖啡 📍</a><span class="na-desc">— 老屋咖啡，自烘豆</span></div>
+          <div class="na-item"><span class="na-cat shop">🛍</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%B0%8F%E5%99%A8%E7%94%9F%E6%B4%BB%20%E5%8F%B0%E5%8C%97" target="_blank">小器生活 📍</a><span class="na-desc">— 日系生活道具选物</span></div>
         </div>
       </div>
 
     <div class="item local">
       <div class="top-row"><span class="time">大稻埕内</span><span class="local-badge">🔥 口袋名单</span></div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0565,121.5092" target="_blank">迪化街十连栋<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E8%BF%AA%E5%8C%96%E8%A1%97%E5%8D%81%E8%BF%9E%E6%A0%8B%20%E5%8F%B0%E5%8C%97" target="_blank">迪化街十连栋<span class="gmap-icon">📍</span></a></div>
       <div class="desc">10栋连续巴洛克式洋楼，是迪化街最壮观的立面。现为南北货、中药行、文创商店。</div>
       <div class="meta"><span class="tag t-local">📸 必拍</span><span class="tag t-cost">💰 免费</span></div>
     
       <div class="backup-box">
         <div class="backup-title">⚠️ 商家没开/在整修？</div>
-        <div class="backup-item">→ 改去隔壁 <strong>小艺埕</strong>（迪化街一段32巷1号），同样老屋+文创选物<br>→ 或直接往永乐市场走，看布料批发的热闹场面</div>
+        <div class="backup-item">→ 改去隔壁 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%B0%8F%E8%89%BA%E5%9F%95%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>小艺埕</strong> 📍</a>（迪化街一段32巷1号），同样老屋+文创选物<br>→ 或直接往永乐市场走，看布料批发的热闹场面</div>
       </div>
     </div>
 
     <div class="item food">
       <div class="top-row"><span class="time">10:45 – 11:10</span></div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.055,121.5098" target="_blank">永乐鸡卷大王<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E6%B0%B8%E4%B9%90%E9%B8%A1%E5%8D%B7%E5%A4%A7%E7%8E%8B%20%E5%8F%B0%E5%8C%97" target="_blank">永乐鸡卷大王<span class="gmap-icon">📍</span></a></div>
       <div class="desc">永乐市场2楼的古早味。鸡卷（其实是猪肉卷）+鱼翅肉羹。</div>
       <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">08:00 – 14:00</span><span class="h-rest">下午就没了</span></div>
       <div class="meta"><span class="tag t-food">🍜 古早味</span><span class="tag t-cost">💰 ~NT$80/人</span></div>
     
       <div class="backup-box">
         <div class="backup-title">⚠️ 卖完了/没开？</div>
-        <div class="backup-item">→ 永乐市场2楼 <strong>林合发油饭</strong>，百年油饭老店 NT$40起<br>→ 或 <strong>永乐担仔面</strong>（市场周边），古早台南味</div>
+        <div class="backup-item">→ 永乐市场2楼 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E6%9E%97%E5%90%88%E5%8F%91%E6%B2%B9%E9%A5%AD%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>林合发油饭</strong> 📍</a>，百年油饭老店 NT$40起<br>→ 或 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E6%B0%B8%E4%B9%90%E6%8B%85%E4%BB%94%E9%9D%A2%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>永乐担仔面</strong> 📍</a>（市场周边），古早台南味</div>
       </div>
     </div>
 
@@ -662,40 +665,40 @@
         <span class="time">11:10 – 11:50</span>
         <span class="crowd low">🟢 11:00开门即到</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.056,121.509" target="_blank">和盛 1947<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E5%92%8C%E7%9B%9B%201947%20%E5%8F%B0%E5%8C%97" target="_blank">和盛 1947<span class="gmap-icon">📍</span></a></div>
       <div class="desc">百年老屋改造咖啡厅。红砖墙+木梁+自然光，喝杯台湾茶很惬意。</div>
       <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">11:00 – 19:00</span><span class="h-rest">周一休</span></div>
       <div class="meta"><span class="tag t-food">☕ 咖啡厅</span><span class="tag t-cost">💰 ~NT$200/人</span></div>
     
       <div class="backup-box">
         <div class="backup-title">⚠️ 客满/没营业？</div>
-        <div class="backup-item">→ 改去 <strong>ASW Tea House</strong>（迪化街一段34号），同条街英式茶屋+台湾茶<br>→ 或 <strong>稻舍URS329</strong>（迪化街一段329号），米食料理+老屋空间</div>
+        <div class="backup-item">→ 改去 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=ASW%20Tea%20House%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>ASW Tea House</strong> 📍</a>（迪化街一段34号），同条街英式茶屋+台湾茶<br>→ 或 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E7%A8%BB%E8%88%8DURS329%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>稻舍URS329</strong> 📍</a>（迪化街一段329号），米食料理+老屋空间</div>
       </div>
     </div>
 
     <div class="item food">
       <div class="top-row"><span class="time">11:50 – 12:10</span></div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0545,121.5085" target="_blank">永富冰淇淋<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E6%B0%B8%E5%AF%8C%E5%86%B0%E6%B7%87%E6%B7%8B%20%E5%8F%B0%E5%8C%97" target="_blank">永富冰淇淋<span class="gmap-icon">📍</span></a></div>
       <div class="desc">大稻埕老字号。芋头冰淇淋+花生冰淇淋，古早味浓郁。NT$40一球。</div>
       <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">10:00 – 18:00</span></div>
       <div class="meta"><span class="tag t-food">🍦 甜品</span><span class="tag t-cost">💰 NT$40/球</span></div>
     
       <div class="backup-box">
         <div class="backup-title">⚠️ 没开/不想吃冰？</div>
-        <div class="backup-item">→ 附近 <strong>夏树甜品</strong>（迪化街一段240号），豆花+仙草<br>→ 或买杯 <strong>大稻埕青草茶</strong>（永乐市场旁），消暑古早味</div>
+        <div class="backup-item">→ 附近 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%A4%8F%E6%A0%91%E7%94%9C%E5%93%81%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>夏树甜品</strong> 📍</a>（迪化街一段240号），豆花+仙草<br>→ 或买杯 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E7%A8%BB%E5%9F%95%E9%9D%92%E8%8D%89%E8%8C%B6%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>大稻埕青草茶</strong> 📍</a>（永乐市场旁），消暑古早味</div>
       </div>
     </div>
 
     <div class="item local">
       <div class="top-row"><span class="time">12:15 – 12:35</span><span class="local-badge">🔥 口袋名单</span></div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.054,121.505" target="_blank">大稻埕码头<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E7%A8%BB%E5%9F%95%E7%A0%81%E5%A4%B4%20%E5%8F%B0%E5%8C%97" target="_blank">大稻埕码头<span class="gmap-icon">📍</span></a></div>
       <div class="desc">淡水河畔最美夕阳点。白天也舒服，有货柜市集和自行车道。拍河景很出片。</div>
       <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">全天开放</span></div>
       <div class="meta"><span class="tag t-local">🌅 河景</span><span class="tag t-cost">💰 免费</span></div>
     
       <div class="backup-box">
         <div class="backup-title">⚠️ 天气不好/码头没活动？</div>
-        <div class="backup-item">→ 改去 <strong>台北霞海城隍庙</strong>（迪化街一段61号），月老超灵，旁边还有庙口小吃<br>→ 或在迪化街继续逛南北货/中药材老店</div>
+        <div class="backup-item">→ 改去 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E9%9C%9E%E6%B5%B7%E5%9F%8E%E9%9A%8D%E5%BA%99%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>台北霞海城隍庙</strong> 📍</a>（迪化街一段61号），月老超灵，旁边还有庙口小吃<br>→ 或在迪化街继续逛南北货/中药材老店</div>
       </div>
     </div>
 
@@ -704,14 +707,14 @@
         <span class="time">12:40 – 13:10</span>
         <span class="new-badge">🆕 新增</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0575,121.5115" target="_blank">林华泰茶行<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E6%9E%97%E5%8D%8E%E6%B3%B0%E8%8C%B6%E8%A1%8C%20%E5%8F%B0%E5%8C%97" target="_blank">林华泰茶行<span class="gmap-icon">📍</span></a></div>
       <div class="desc">1883年创立，台北最老茶行。可以试喝再买，高山乌龙茶/东方美人茶伴手礼首选。比观光区便宜30-50%。</div>
       <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">07:30 – 21:00</span><span class="h-rest">全年无休</span></div>
       <div class="meta"><span class="tag t-shop">🍵 伴手礼</span><span class="tag t-cost">💰 ~NT$300起/150g</span></div>
     
       <div class="backup-box">
         <div class="backup-title">⚠️ 不买茶/已关门？</div>
-        <div class="backup-item">→ 隔壁 <strong>有记名茶</strong>（重庆北路二段64巷26号），百年茶行可试喝<br>→ 或直接前往中正纪念堂，多留时间拍照</div>
+        <div class="backup-item">→ 隔壁 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E6%9C%89%E8%AE%B0%E5%90%8D%E8%8C%B6%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>有记名茶</strong> 📍</a>（重庆北路二段64巷26号），百年茶行可试喝<br>→ 或直接前往中正纪念堂，多留时间拍照</div>
       </div>
     </div>
 
@@ -727,7 +730,7 @@
         <span class="time">13:40 – 14:50</span>
         <span class="crowd low">🟢 平日下午宽敞</span>
       </div>
-      <div class="name"><span class="must-badge">必看</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0348,121.5217" target="_blank">中正纪念堂<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><span class="must-badge">必看</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E4%B8%AD%E6%AD%A3%E7%BA%AA%E5%BF%B5%E5%A0%82%20%E5%8F%B0%E5%8C%97" target="_blank">中正纪念堂<span class="gmap-icon">📍</span></a></div>
       <div class="desc">台湾最具代表性地标。89阶白色阶梯+蓝瓦白墙。<strong>整点卫兵交接仪式</strong>不可错过。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -740,9 +743,9 @@
       <div class="nearby-alts">
         <div class="na-title">🔄 中正纪念堂附近替代</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat cafe">☕</span><span class="na-name">保安捌肆 Boan 84</span><span class="na-desc">— 百年古宅咖啡厅</span><a href="https://www.google.com/maps/search/?api=1&query=25.043,121.5145" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">黄记卤肉饭</span><span class="na-desc">— 中正区隐藏卤肉饭之王</span><a href="https://www.google.com/maps/search/?api=1&query=25.038,121.518" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">猪肝荣仔</span><span class="na-desc">— 在地人最爱猪肝汤</span><a href="https://www.google.com/maps/search/?api=1&query=25.0445,121.5148" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E9%87%91%E5%B3%B0%E5%8D%A4%E8%82%89%E9%A5%AD%20%E5%8F%B0%E5%8C%97" target="_blank">金峰卤肉饭 📍</a><span class="na-desc">— 台北TOP3卤肉饭·南门市场旁</span></div>
+          <div class="na-item"><span class="na-cat shop">🛍</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%8D%97%E9%97%A8%E5%B8%82%E5%9C%BA%20%E5%8F%B0%E5%8C%97" target="_blank">南门市场 📍</a><span class="na-desc">— 伴手礼/熟食/南北货</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E7%9B%9B%E5%9B%AD%E4%B8%9D%E7%93%9C%E5%B0%8F%E7%AC%BC%E5%8C%85%20%E5%8F%B0%E5%8C%97" target="_blank">盛园丝瓜小笼包 📍</a><span class="na-desc">— 杭州南路·丝瓜虾仁小笼包</span></div>
         </div>
       </div>
     </div>
@@ -758,7 +761,7 @@
         <span class="time">15:10 – 15:50</span>
         <span class="crowd low">🟢 非假日几乎包场</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0427,121.5148" target="_blank">国立台湾博物馆<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E5%9B%BD%E7%AB%8B%E5%8F%B0%E6%B9%BE%E5%8D%9A%E7%89%A9%E9%A6%86%20%E5%8F%B0%E5%8C%97" target="_blank">国立台湾博物馆<span class="gmap-icon">📍</span></a></div>
       <div class="desc">台湾最老的博物馆（1908）。希腊式圆柱建筑很壮观。自然史+台湾原住民文化常设展。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -768,7 +771,7 @@
       <div class="meta"><span class="tag t-see">🏛 博物馆</span><span class="tag t-cost">💰 NT$30</span><span class="tag t-time">⏱ 40min</span></div>
       <div class="backup-box">
         <div class="backup-title">⚠️ 周一休馆/不想看展？</div>
-        <div class="backup-item">→ 改逛对面 <strong>二二八和平公园</strong>，日式庭园散步+拍台博馆外观<br>→ 或步行10min去 <strong>台北市立美术馆</strong>（圆山站），当代艺术展</div>
+        <div class="backup-item">→ 改逛对面 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E4%BA%8C%E4%BA%8C%E5%85%AB%E5%92%8C%E5%B9%B3%E5%85%AC%E5%9B%AD%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>二二八和平公园</strong> 📍</a>，日式庭园散步+拍台博馆外观<br>→ 或步行10min去 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E5%B8%82%E7%AB%8B%E7%BE%8E%E6%9C%AF%E9%A6%86%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>台北市立美术馆</strong> 📍</a>（圆山站），当代艺术展</div>
       </div>
     </div>
 
@@ -780,14 +783,14 @@
 
     <div class="item food">
       <div class="top-row"><span class="time">15:55 – 16:10</span></div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.044,121.515" target="_blank">50岚<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=50%E5%B2%9A%20%E5%8F%B0%E5%8C%97" target="_blank">50岚<span class="gmap-icon">📍</span></a></div>
       <div class="desc">台湾本土手摇茶连锁。推荐「四季春+珍珠」或「冰淇淋红茶」。比CoCo更在地。</div>
       <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">09:00 – 22:00</span></div>
       <div class="meta"><span class="tag t-food">🧋 手摇饮</span><span class="tag t-cost">💰 ~NT$50</span></div>
     
       <div class="backup-box">
         <div class="backup-title">⚠️ 想换别的喝？</div>
-        <div class="backup-item">→ <strong>迷客夏</strong>（各捷运站旁都有），芝芝芒果绿好喝<br>→ 或 <strong>可不可熟成红茶</strong>，台湾本土红茶专门店</div>
+        <div class="backup-item">→ <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E8%BF%B7%E5%AE%A2%E5%A4%8F%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>迷客夏</strong> 📍</a>（各捷运站旁都有），芝芝芒果绿好喝<br>→ 或 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%8F%AF%E4%B8%8D%E5%8F%AF%E7%86%9F%E6%88%90%E7%BA%A2%E8%8C%B6%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>可不可熟成红茶</strong> 📍</a>，台湾本土红茶专门店</div>
       </div>
     </div>
 
@@ -802,7 +805,7 @@
         <span class="time">17:30 – 19:00</span>
         <span class="crowd mid">🟡 18:30后开始排队</span>
       </div>
-      <div class="name"><span class="must-badge">必吃</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0558,121.5155" target="_blank">宁夏夜市<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><span class="must-badge">必吃</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E5%AE%81%E5%A4%8F%E5%A4%9C%E5%B8%82%20%E5%8F%B0%E5%8C%97" target="_blank">宁夏夜市<span class="gmap-icon">📍</span></a></div>
       <div class="desc">台北最强小吃夜市，米其林指南常客。单一条街，密度极高，不走冤枉路。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -821,28 +824,28 @@
       <div class="meta"><span class="tag t-food">🌙 夜市</span><span class="tag t-cost">💰 ~NT$250/人吃到撑</span></div>
       <div class="backup-box">
         <div class="backup-title">⚠️ 刘芋仔排队超过30分钟？</div>
-        <div class="backup-item">→ 先吃 <strong>圆环边蚵仔煎</strong>（宁夏路中段），同是米其林必比登，排队较短<br>→ 或改吃 <strong>方家鸡肉饭</strong>（宁夏路44号），鸡肉饭+猪肝汤，在地人首选</div>
+        <div class="backup-item">→ 先吃 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%9C%86%E7%8E%AF%E8%BE%B9%E8%9A%B5%E4%BB%94%E7%85%8E%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>圆环边蚵仔煎</strong> 📍</a>（宁夏路中段），同是米其林必比登，排队较短<br>→ 或改吃 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E6%96%B9%E5%AE%B6%E9%B8%A1%E8%82%89%E9%A5%AD%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>方家鸡肉饭</strong> 📍</a>（宁夏路44号），鸡肉饭+猪肝汤，在地人首选</div>
       </div>
       <div class="nearby-alts">
         <div class="na-title">🔄 宁夏附近更多选择</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">呷二嘴米苔目</span><span class="na-desc">— 古早味米苔目</span><a href="https://www.google.com/maps/search/?api=1&query=25.0555,121.5152" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">阿桐阿宝四神汤</span><span class="na-desc">— 必比登推荐</span><a href="https://www.google.com/maps/search/?api=1&query=25.056,121.5153" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">老阿伯胖鱿焿</span><span class="na-desc">— 铁板鱿鱼+肉羹</span><a href="https://www.google.com/maps/search/?api=1&query=25.0558,121.5155" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">台北当代艺术馆</span><span class="na-desc">— 当代艺术（如有时间）</span><a href="https://www.google.com/maps/search/?api=1&query=25.05,121.519" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%91%B7%E4%BA%8C%E5%98%B4%E7%B1%B3%E8%8B%94%E7%9B%AE%20%E5%8F%B0%E5%8C%97" target="_blank">呷二嘴米苔目 📍</a><span class="na-desc">— 古早味米苔目</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E9%98%BF%E6%A1%90%E9%98%BF%E5%AE%9D%E5%9B%9B%E7%A5%9E%E6%B1%A4%20%E5%8F%B0%E5%8C%97" target="_blank">阿桐阿宝四神汤 📍</a><span class="na-desc">— 必比登推荐</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E8%80%81%E9%98%BF%E4%BC%AF%E8%83%96%E9%B1%BF%E7%84%BF%20%E5%8F%B0%E5%8C%97" target="_blank">老阿伯胖鱿焿 📍</a><span class="na-desc">— 铁板鱿鱼+肉羹</span></div>
+          <div class="na-item"><span class="na-cat see">🏛</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E5%BD%93%E4%BB%A3%E8%89%BA%E6%9C%AF%E9%A6%86%20%E5%8F%B0%E5%8C%97" target="_blank">台北当代艺术馆 📍</a><span class="na-desc">— 当代艺术（如有时间）</span></div>
         </div>
       </div>
     </div>
 
     <div class="item food">
       <div class="top-row"><span class="time">宁夏内</span></div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.056,121.5158" target="_blank">天津葱抓饼<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E5%A4%A9%E6%B4%A5%E8%91%B1%E6%8A%93%E9%A5%BC%20%E5%8F%B0%E5%8C%97" target="_blank">天津葱抓饼<span class="gmap-icon">📍</span></a></div>
       <div class="desc">宁夏夜市入口处。葱抓饼+蛋+起司，层层酥脆。NT$45起。</div>
       <div class="meta"><span class="tag t-food">🥞 小吃</span><span class="tag t-cost">💰 NT$45</span></div>
     
       <div class="backup-box">
         <div class="backup-title">⚠️ 没开/客满？</div>
-        <div class="backup-item">→ 改去 <strong>九份茶坊</strong>（基山街142号），面海茶座更有氛围<br>→ 或在基山街买杯 <strong>花生卷冰淇淋</strong>（NT$40），边走边吃</div>
+        <div class="backup-item">→ 改去 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E4%B9%9D%E4%BB%BD%E8%8C%B6%E5%9D%8A%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>九份茶坊</strong> 📍</a>（基山街142号），面海茶座更有氛围<br>→ 或在基山街买杯 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E8%8A%B1%E7%94%9F%E5%8D%B7%E5%86%B0%E6%B7%87%E6%B7%8B%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>花生卷冰淇淋</strong> 📍</a>（NT$40），边走边吃</div>
       </div>
     </div>
     <div class="travel-connector">
@@ -893,7 +896,7 @@
         <span class="time">07:30 – 08:10</span>
         <span class="crowd low">🟢 平日早上免排</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0845,121.4725" target="_blank">叶家小笼包<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B6%E5%AE%B6%E5%B0%8F%E7%AC%BC%E5%8C%85%20%E5%8F%B0%E5%8C%97" target="_blank">叶家小笼包<span class="gmap-icon">📍</span></a></div>
       <div class="desc">在地人排队早餐。小笼包皮薄汤多+酸辣汤，比鼎泰丰便宜10倍。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -903,7 +906,7 @@
       <div class="meta"><span class="tag t-food">🥟 早餐</span><span class="tag t-cost">💰 ~NT$100/人</span></div>
       <div class="backup-box">
         <div class="backup-title">⚠️ 太早还没开/卖完了？</div>
-        <div class="backup-item">→ 附近 <strong>阜杭豆浆</strong>（忠孝东路一段108号2楼），厚烧饼+咸豆浆，CNN推荐。但要排30min+</div>
+        <div class="backup-item">→ 附近 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E9%98%9C%E6%9D%AD%E8%B1%86%E6%B5%86%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>阜杭豆浆</strong> 📍</a>（忠孝东路一段108号2楼），厚烧饼+咸豆浆，CNN推荐。但要排30min+</div>
       </div>
     </div>
 
@@ -919,7 +922,7 @@
         <span class="time">09:40 – 12:00</span>
         <span class="crowd mid">🟡 周五比周末好</span>
       </div>
-      <div class="name"><span class="must-badge">必逛</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.109,121.8445" target="_blank">九份老街<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><span class="must-badge">必逛</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E4%B9%9D%E4%BB%BD%E8%80%81%E8%A1%97%20%E4%B9%9D%E4%BB%BD" target="_blank">九份老街<span class="gmap-icon">📍</span></a></div>
       <div class="desc">宫崎骏灵感来源。红灯笼、石阶、山城海景。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -939,11 +942,11 @@
       <div class="nearby-alts">
         <div class="na-title">🔄 九份老街内更多选择</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">赖阿婆芋圆</span><span class="na-desc">— 另一芋圆名店，人较少</span><a href="https://www.google.com/maps/search/?api=1&query=25.1088,121.8443" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">九份茶坊</span><span class="na-desc">— 百年老屋品茶看海景</span><a href="https://www.google.com/maps/search/?api=1&query=25.1085,121.8448" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">护理长的店</span><span class="na-desc">— 隐藏手作蛋糕</span><a href="https://www.google.com/maps/search/?api=1&query=25.1087,121.844" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">升平戏院</span><span class="na-desc">— 免费，日治戏院复刻</span><a href="https://www.google.com/maps/search/?api=1&query=25.1089,121.8442" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">金瓜石黄金博物馆</span><span class="na-desc">— 淘金体验（需额外1.5h）</span><a href="https://www.google.com/maps/search/?api=1&query=25.108,121.857" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E8%B5%96%E9%98%BF%E5%A9%86%E8%8A%8B%E5%9C%86%20%E5%8F%B0%E5%8C%97" target="_blank">赖阿婆芋圆 📍</a><span class="na-desc">— 另一芋圆名店，人较少</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E4%B9%9D%E4%BB%BD%E8%8C%B6%E5%9D%8A%20%E4%B9%9D%E4%BB%BD" target="_blank">九份茶坊 📍</a><span class="na-desc">— 百年老屋品茶看海景</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E6%8A%A4%E7%90%86%E9%95%BF%E7%9A%84%E5%BA%97%20%E5%8F%B0%E5%8C%97" target="_blank">护理长的店 📍</a><span class="na-desc">— 隐藏手作蛋糕</span></div>
+          <div class="na-item"><span class="na-cat see">🏛</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%8D%87%E5%B9%B3%E6%88%8F%E9%99%A2%20%E5%8F%B0%E5%8C%97" target="_blank">升平戏院 📍</a><span class="na-desc">— 免费，日治戏院复刻</span></div>
+          <div class="na-item"><span class="na-cat see">🏛</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E9%87%91%E7%93%9C%E7%9F%B3%E9%BB%84%E9%87%91%E5%8D%9A%E7%89%A9%E9%A6%86%20%E6%96%B0%E5%8C%97" target="_blank">金瓜石黄金博物馆 📍</a><span class="na-desc">— 淘金体验（需额外1.5h）</span></div>
         </div>
       </div>
     </div>
@@ -953,13 +956,13 @@
         <span class="time">九份内</span>
         <span class="new-badge">🆕 新增</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.1092,121.845" target="_blank">阿柑姨芋圆<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E9%98%BF%E6%9F%91%E5%A7%A8%E8%8A%8B%E5%9C%86%20%E4%B9%9D%E4%BB%BD" target="_blank">阿柑姨芋圆<span class="gmap-icon">📍</span></a></div>
       <div class="desc">九份最强芋圆！面向山海景的座位，一边吃芋圆一边看基隆山。芋圆+地瓜圆+红豆汤底。</div>
       <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">09:00 – 20:00</span></div>
       <div class="meta"><span class="tag t-food">🍧 甜品</span><span class="tag t-cost">💰 NT$50</span></div>
       <div class="backup-box">
         <div class="backup-title">⚠️ 排队太久？</div>
-        <div class="backup-item">→ 旁边 <strong>赖阿婆芋圆</strong>，人较少味道也好<br>→ 或 <strong>九份茶坊</strong>，百年老屋品茶看海景 NT$300/人含茶点</div>
+        <div class="backup-item">→ 旁边 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E8%B5%96%E9%98%BF%E5%A9%86%E8%8A%8B%E5%9C%86%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>赖阿婆芋圆</strong> 📍</a>，人较少味道也好<br>→ 或 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E4%B9%9D%E4%BB%BD%E8%8C%B6%E5%9D%8A%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>九份茶坊</strong> 📍</a>，百年老屋品茶看海景 NT$300/人含茶点</div>
       </div>
     </div>
 
@@ -974,14 +977,14 @@
       <div class="top-row">
         <span class="time">14:00 – 14:30</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.048,121.544" target="_blank">红茶屋<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E7%BA%A2%E8%8C%B6%E5%B1%8B%20%E4%B9%9D%E4%BB%BD" target="_blank">红茶屋<span class="gmap-icon">📍</span></a></div>
       <div class="desc">松山区老牌红茶店。红茶NT$20起，坐下来歇歇脚。</div>
       <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">10:00 – 22:00</span></div>
       <div class="meta"><span class="tag t-food">🍵 饮品</span><span class="tag t-cost">💰 NT$20起</span></div>
     
       <div class="backup-box">
         <div class="backup-title">⚠️ 没开/客满？</div>
-        <div class="backup-item">→ 改去 <strong>九份茶坊</strong>（基山街142号），面海茶座更有氛围<br>→ 或在基山街买杯 <strong>花生卷冰淇淋</strong>（NT$40），边走边吃</div>
+        <div class="backup-item">→ 改去 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E4%B9%9D%E4%BB%BD%E8%8C%B6%E5%9D%8A%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>九份茶坊</strong> 📍</a>（基山街142号），面海茶座更有氛围<br>→ 或在基山街买杯 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E8%8A%B1%E7%94%9F%E5%8D%B7%E5%86%B0%E6%B7%87%E6%B7%8B%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>花生卷冰淇淋</strong> 📍</a>（NT$40），边走边吃</div>
       </div>
     </div>
 
@@ -996,7 +999,7 @@
         <span class="time">17:30 – 19:00</span>
         <span class="crowd mid">🟡 周五傍晚渐多</span>
       </div>
-      <div class="name"><span class="must-badge">必吃</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.051,121.577" target="_blank">饶河夜市<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><span class="must-badge">必吃</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E9%A5%B6%E6%B2%B3%E5%A4%9C%E5%B8%82%20%E5%8F%B0%E5%8C%97" target="_blank">饶河夜市<span class="gmap-icon">📍</span></a></div>
       <div class="desc">松山代表夜市。入口的胡椒饼是台北No.1小吃！</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -1014,27 +1017,27 @@
       <div class="meta"><span class="tag t-food">🌙 夜市</span><span class="tag t-cost">💰 ~NT$200/人</span></div>
       <div class="backup-box">
         <div class="backup-title">⚠️ 胡椒饼排队超过20分钟？</div>
-        <div class="backup-item">→ 先逛里面，回程再排（通常20:30后队伍变短）<br>→ 或改吃 <strong>陈董药炖排骨</strong>（中段），药膳汤头暖胃不排队</div>
+        <div class="backup-item">→ 先逛里面，回程再排（通常20:30后队伍变短）<br>→ 或改吃 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E9%99%88%E8%91%A3%E8%8D%AF%E7%82%96%E6%8E%92%E9%AA%A8%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>陈董药炖排骨</strong> 📍</a>（中段），药膳汤头暖胃不排队</div>
       </div>
       <div class="nearby-alts">
         <div class="na-title">🔄 饶河夜市更多必吃</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">施老板麻辣臭豆腐</span><span class="na-desc">— 隐藏版外酥内嫩</span><a href="https://www.google.com/maps/search/?api=1&query=25.0512,121.5775" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">红豆饼</span><span class="na-desc">— 入口车轮饼</span><a href="https://www.google.com/maps/search/?api=1&query=25.0509,121.5769" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E6%96%BD%E8%80%81%E6%9D%BF%E9%BA%BB%E8%BE%A3%E8%87%AD%E8%B1%86%E8%85%90%20%E5%8F%B0%E5%8C%97" target="_blank">施老板麻辣臭豆腐 📍</a><span class="na-desc">— 隐藏版外酥内嫩</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E7%BA%A2%E8%B1%86%E9%A5%BC%20%E5%8F%B0%E5%8C%97" target="_blank">红豆饼 📍</a><span class="na-desc">— 入口车轮饼</span></div>
         </div>
       </div>
     </div>
 
     <div class="item local">
       <div class="top-row"><span class="time">饶河旁</span><span class="local-badge">🔥 口袋名单</span></div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0512,121.5778" target="_blank">松山慈祐宫<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E6%9D%BE%E5%B1%B1%E6%85%88%E7%A5%90%E5%AE%AB%20%E5%8F%B0%E5%8C%97" target="_blank">松山慈祐宫<span class="gmap-icon">📍</span></a></div>
       <div class="desc">260年历史妈祖庙，就在饶河夜市入口。金碧辉煌的屋顶剪粘工艺值得抬头看。</div>
       <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">06:00 – 22:00</span></div>
       <div class="meta"><span class="tag t-local">🏛 古迹</span><span class="tag t-cost">💰 免费</span></div>
     
       <div class="backup-box">
         <div class="backup-title">⚠️ 时间不够/不想看庙？</div>
-        <div class="backup-item">→ 直接逛饶河夜市，省10min多吃两摊<br>→ 或去 <strong>彩虹桥</strong>（饶河夜市旁基隆河畔），夜景拍照好点</div>
+        <div class="backup-item">→ 直接逛饶河夜市，省10min多吃两摊<br>→ 或去 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%BD%A9%E8%99%B9%E6%A1%A5%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>彩虹桥</strong> 📍</a>（饶河夜市旁基隆河畔），夜景拍照好点</div>
       </div>
     </div>
     <div class="travel-connector">
@@ -1085,13 +1088,13 @@
         <span class="time">10:00 – 10:40</span>
         <span class="crowd low">🟢 10:00开门抢头批</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.031,121.53" target="_blank">Bonica Café<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=Bonica%20Caf%C3%A9%20%E5%8F%B0%E5%8C%97" target="_blank">Bonica Café<span class="gmap-icon">📍</span></a></div>
       <div class="desc">永康街最美咖啡厅。澳式brunch+手冲咖啡。ins风装潢。</div>
       <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">10:00 – 18:00</span><span class="h-rest">周二休</span></div>
       <div class="meta"><span class="tag t-food">☕ 早午餐</span><span class="tag t-cost">💰 ~NT$350/人</span></div>
       <div class="backup-box">
         <div class="backup-title">⚠️ 周六客满/等位太久？</div>
-        <div class="backup-item">→ 改去 <strong>Fika Fika Café</strong>（伊通街33号），北欧风自烘咖啡，永康区步行10min<br>→ 或 <strong>Cafe Junkies</strong>（永康街41巷2号），澳式brunch平替</div>
+        <div class="backup-item">→ 改去 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=Fika%20Fika%20Caf%C3%A9%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>Fika Fika Café</strong> 📍</a>（伊通街33号），北欧风自烘咖啡，永康区步行10min<br>→ 或 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=Cafe%20Junkies%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>Cafe Junkies</strong> 📍</a>（永康街41巷2号），澳式brunch平替</div>
       </div>
     </div>
 
@@ -1106,7 +1109,7 @@
         <span class="time">10:50 – 11:40</span>
         <span class="crowd mid">🟡 周六午前需排</span>
       </div>
-      <div class="name"><span class="must-badge">必吃</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0335,121.5285" target="_blank">永康牛肉面<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><span class="must-badge">必吃</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E6%B0%B8%E5%BA%B7%E7%89%9B%E8%82%89%E9%9D%A2%20%E5%8F%B0%E5%8C%97" target="_blank">永康牛肉面<span class="gmap-icon">📍</span></a></div>
       <div class="desc">CNN评选全球最好吃牛肉面。红烧半筋半肉面，汤头浓郁。粉蒸排骨也必点。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -1117,15 +1120,15 @@
       <div class="meta"><span class="tag t-food">🍜 牛肉面</span><span class="tag t-cost">💰 ~NT$250/人</span></div>
       <div class="backup-box">
         <div class="backup-title">⚠️ 排队超过30分钟？</div>
-        <div class="backup-item">→ 走2分钟到 <strong>老张牛肉面</strong>（大安路一段49巷2号），在地人心中的No.1，红烧清炖都强</div>
+        <div class="backup-item">→ 走2分钟到 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E8%80%81%E5%BC%A0%E7%89%9B%E8%82%89%E9%9D%A2%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>老张牛肉面</strong> 📍</a>（大安路一段49巷2号），在地人心中的No.1，红烧清炖都强</div>
       </div>
       <div class="nearby-alts">
         <div class="na-title">🔄 永康街一带更多选择</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">鼎泰丰(永康)</span><span class="na-desc">— 世界级小笼包（排30-60min）</span><a href="https://www.google.com/maps/search/?api=1&query=25.033,121.5295" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">金锅贴</span><span class="na-desc">— 隐藏锅贴，脆底</span><a href="https://www.google.com/maps/search/?api=1&query=25.0328,121.528" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">吕家巷口麻辣面</span><span class="na-desc">— 巷弄麻辣干拌面</span><a href="https://www.google.com/maps/search/?api=1&query=25.0333,121.5278" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">好公道金鸡园</span><span class="na-desc">— 老牌小笼包+酸辣汤</span><a href="https://www.google.com/maps/search/?api=1&query=25.0332,121.5282" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E9%BC%8E%E6%B3%B0%E4%B8%B0%28%E6%B0%B8%E5%BA%B7%29%20%E5%8F%B0%E5%8C%97" target="_blank">鼎泰丰(永康) 📍</a><span class="na-desc">— 世界级小笼包（排30-60min）</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E9%87%91%E9%94%85%E8%B4%B4%20%E5%8F%B0%E5%8C%97" target="_blank">金锅贴 📍</a><span class="na-desc">— 隐藏锅贴，脆底</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%90%95%E5%AE%B6%E5%B7%B7%E5%8F%A3%E9%BA%BB%E8%BE%A3%E9%9D%A2%20%E5%8F%B0%E5%8C%97" target="_blank">吕家巷口麻辣面 📍</a><span class="na-desc">— 巷弄麻辣干拌面</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%A5%BD%E5%85%AC%E9%81%93%E9%87%91%E9%B8%A1%E5%9B%AD%20%E5%8F%B0%E5%8C%97" target="_blank">好公道金鸡园 📍</a><span class="na-desc">— 老牌小笼包+酸辣汤</span></div>
         </div>
       </div>
     </div>
@@ -1140,14 +1143,14 @@
       <div class="top-row">
         <span class="time">11:45 – 12:05</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.034,121.5275" target="_blank">杭州小笼汤包<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E6%9D%AD%E5%B7%9E%E5%B0%8F%E7%AC%BC%E6%B1%A4%E5%8C%85%20%E5%8F%B0%E5%8C%97" target="_blank">杭州小笼汤包<span class="gmap-icon">📍</span></a></div>
       <div class="desc">永康街小笼包名店。蟹黄汤包是招牌。价格只有鼎泰丰的1/3。</div>
       <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">11:00 – 21:00</span><span class="h-rest">周一休</span></div>
       <div class="meta"><span class="tag t-food">🥟 小笼包</span><span class="tag t-cost">💰 ~NT$150/人</span></div>
     
       <div class="backup-box">
         <div class="backup-title">⚠️ 排队超过30min？</div>
-        <div class="backup-item">→ 附近 <strong>济南鲜汤包</strong>（济南路三段7号），人少味道不输<br>→ 或 <strong>好公道金鸡园</strong>（永康街28-1号），鸡汤小馄饨一绝</div>
+        <div class="backup-item">→ 附近 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E6%B5%8E%E5%8D%97%E9%B2%9C%E6%B1%A4%E5%8C%85%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>济南鲜汤包</strong> 📍</a>（济南路三段7号），人少味道不输<br>→ 或 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%A5%BD%E5%85%AC%E9%81%93%E9%87%91%E9%B8%A1%E5%9B%AD%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>好公道金鸡园</strong> 📍</a>（永康街28-1号），鸡汤小馄饨一绝</div>
       </div>
     </div>
 
@@ -1156,14 +1159,14 @@
         <span class="time">12:10 – 12:25</span>
         <span class="new-badge">🆕 新增</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0332,121.529" target="_blank">思慕昔 Smoothie House<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E6%80%9D%E6%85%95%E6%98%94%20Smoothie%20House%20%E5%8F%B0%E5%8C%97" target="_blank">思慕昔 Smoothie House<span class="gmap-icon">📍</span></a></div>
       <div class="desc">永康街芒果冰传奇。超大碗新鲜芒果雪花冰，夏天到台北必吃。5月正当季！</div>
       <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">10:00 – 23:00</span></div>
       <div class="meta"><span class="tag t-food">🍧 冰品</span><span class="tag t-cost">💰 ~NT$200</span></div>
     
       <div class="backup-box">
         <div class="backup-title">⚠️ 不是芒果季/排太长？</div>
-        <div class="backup-item">→ 隔壁 <strong>芒果恰恰</strong>（永康街15-7号），同样芒果冰换个口味<br>→ 或 <strong>冰馆</strong>（永康街15号），草莓冰一样出名</div>
+        <div class="backup-item">→ 隔壁 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E8%8A%92%E6%9E%9C%E6%81%B0%E6%81%B0%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>芒果恰恰</strong> 📍</a>（永康街15-7号），同样芒果冰换个口味<br>→ 或 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%86%B0%E9%A6%86%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>冰馆</strong> 📍</a>（永康街15号），草莓冰一样出名</div>
       </div>
     </div>
 
@@ -1172,14 +1175,14 @@
         <span class="time">12:30 – 12:50</span>
         <span class="new-badge">🆕 新增</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0305,121.5318" target="_blank">青田七六<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E9%9D%92%E7%94%B0%E4%B8%83%E5%85%AD%20%E5%8F%B0%E5%8C%97" target="_blank">青田七六<span class="gmap-icon">📍</span></a></div>
       <div class="desc">日治时期台大教授宿舍群。青田街整条都是老树+日式平房，台北最美散步街道。免费逛外观即可。</div>
       <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">外观全天 · 内部 11:30 – 21:00</span></div>
       <div class="meta"><span class="tag t-see">🏡 日式老屋</span><span class="tag t-cost">💰 免费（外观）</span></div>
     
       <div class="backup-box">
         <div class="backup-title">⚠️ 客满/周一休？</div>
-        <div class="backup-item">→ 步行5min去 <strong>殷海光故居</strong>（温州街18巷16弄1-1号），日式老宅+花园免费参观<br>→ 或 <strong>台大校园</strong>（罗斯福路四段1号），椰林大道散步</div>
+        <div class="backup-item">→ 步行5min去 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E6%AE%B7%E6%B5%B7%E5%85%89%E6%95%85%E5%B1%85%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>殷海光故居</strong> 📍</a>（温州街18巷16弄1-1号），日式老宅+花园免费参观<br>→ 或 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%A4%A7%E6%A0%A1%E5%9B%AD%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>台大校园</strong> 📍</a>（罗斯福路四段1号），椰林大道散步</div>
       </div>
     </div>
 
@@ -1194,7 +1197,7 @@
         <span class="time">13:10 – 14:30</span>
         <span class="crowd mid">🟡 周六下午文青多</span>
       </div>
-      <div class="name"><span class="must-badge">必逛</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.044,121.5295" target="_blank">华山1914 文创园区<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><span class="must-badge">必逛</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E5%8D%8E%E5%B1%B11914%20%E6%96%87%E5%88%9B%E5%9B%AD%E5%8C%BA%20%E5%8F%B0%E5%8C%97" target="_blank">华山1914 文创园区<span class="gmap-icon">📍</span></a></div>
       <div class="desc">日治酒厂改造的文创基地。展览+独立书店+设计商店+咖啡厅。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -1209,9 +1212,9 @@
       <div class="nearby-alts">
         <div class="na-title">🔄 华山/忠孝一带替代</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat cafe">☕</span><span class="na-name">兴波 Simple Kaffa</span><span class="na-desc">— 世界咖啡冠军，华山内</span><a href="https://www.google.com/maps/search/?api=1&query=25.0438,121.5292" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat cafe">☕</span><span class="na-name">Luguo Cafe 炉锅</span><span class="na-desc">— 华山旁自烘咖啡</span><a href="https://www.google.com/maps/search/?api=1&query=25.0442,121.53" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">松烟文创园区</span><span class="na-desc">— 日治烟厂+诚品生活</span><a href="https://www.google.com/maps/search/?api=1&query=25.0442,121.56" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat cafe">☕</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%85%B4%E6%B3%A2%20Simple%20Kaffa%20%E5%8F%B0%E5%8C%97" target="_blank">兴波 Simple Kaffa 📍</a><span class="na-desc">— 世界咖啡冠军，华山内</span></div>
+          <div class="na-item"><span class="na-cat cafe">☕</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=Luguo%20Cafe%20%E7%82%89%E9%94%85%20%E5%8F%B0%E5%8C%97" target="_blank">Luguo Cafe 炉锅 📍</a><span class="na-desc">— 华山旁自烘咖啡</span></div>
+          <div class="na-item"><span class="na-cat see">🏛</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E6%9D%BE%E7%83%9F%E6%96%87%E5%88%9B%E5%9B%AD%E5%8C%BA%20%E5%8F%B0%E5%8C%97" target="_blank">松烟文创园区 📍</a><span class="na-desc">— 日治烟厂+诚品生活</span></div>
         </div>
       </div>
     </div>
@@ -1227,7 +1230,7 @@
         <span class="time">14:45 – 15:45</span>
         <span class="crowd mid">🟡 周末人稍多</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.051,121.5315" target="_blank">袖珍博物馆<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E8%A2%96%E7%8F%8D%E5%8D%9A%E7%89%A9%E9%A6%86%20%E5%8F%B0%E5%8C%97" target="_blank">袖珍博物馆<span class="gmap-icon">📍</span></a></div>
       <div class="desc">亚洲第一座微缩模型博物馆。200多件精密作品。值得慢慢看。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -1238,7 +1241,7 @@
     
       <div class="backup-box">
         <div class="backup-title">⚠️ 不感兴趣/时间不够？</div>
-        <div class="backup-item">→ 改去 <strong>光华数码新天地</strong>（市民大道三段8号），电子产品/周边<br>→ 或直接提早去 Indulge Bistro，享受更多用餐时光</div>
+        <div class="backup-item">→ 改去 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%85%89%E5%8D%8E%E6%95%B0%E7%A0%81%E6%96%B0%E5%A4%A9%E5%9C%B0%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>光华数码新天地</strong> 📍</a>（市民大道三段8号），电子产品/周边<br>→ 或直接提早去 Indulge Bistro，享受更多用餐时光</div>
       </div>
     </div>
 
@@ -1253,7 +1256,7 @@
         <span class="time">18:00 – 19:30</span>
         <span class="crowd high">🔴 周六晚必订位</span>
       </div>
-      <div class="name"><span class="must-badge">必吃</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.038,121.546" target="_blank">Indulge Bistro ⭐<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><span class="must-badge">必吃</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=Indulge%20Bistro%20%E2%AD%90%20%E5%8F%B0%E5%8C%97" target="_blank">Indulge Bistro ⭐<span class="gmap-icon">📍</span></a></div>
       <div class="desc">亚洲50最佳酒吧。实验性调酒+创意料理。台北fine dining的性价比之王。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -1264,14 +1267,14 @@
       <div class="meta"><span class="tag t-food">🍷 餐酒馆</span><span class="tag t-cost">💰 ~NT$1,200/人（含酒）</span></div>
       <div class="backup-box">
         <div class="backup-title">⚠️ 订不到位？</div>
-        <div class="backup-item">→ <strong>Draft Land</strong>（忠孝东路四段248巷3号），同样创意调酒，氛围轻松<br>→ <strong>Longtail</strong>（敦化南路二段174号），亚洲50最佳餐厅，需提前1周订<br>→ <strong>MUME</strong>（四维路28号），北欧x台湾创意料理，米其林一星</div>
+        <div class="backup-item">→ <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=Draft%20Land%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>Draft Land</strong> 📍</a>（忠孝东路四段248巷3号），同样创意调酒，氛围轻松<br>→ <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=Longtail%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>Longtail</strong> 📍</a>（敦化南路二段174号），亚洲50最佳餐厅，需提前1周订<br>→ <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=MUME%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>MUME</strong> 📍</a>（四维路28号），北欧x台湾创意料理，米其林一星</div>
       </div>
       <div class="nearby-alts">
         <div class="na-title">🔄 大安区餐酒替代</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat bar">🍷</span><span class="na-name">Aha Saloon</span><span class="na-desc">— 精酿啤酒吧 50+龙头</span><a href="https://www.google.com/maps/search/?api=1&query=25.031,121.544" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">Ice Monster</span><span class="na-desc">— 芒果冰始祖（忠孝店）</span><a href="https://www.google.com/maps/search/?api=1&query=25.042,121.549" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat cafe">☕</span><span class="na-name">Cafe de Lugano</span><span class="na-desc">— 老牌义式咖啡</span><a href="https://www.google.com/maps/search/?api=1&query=25.03,121.531" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat bar">🍷</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=Aha%20Saloon%20%E5%8F%B0%E5%8C%97" target="_blank">Aha Saloon 📍</a><span class="na-desc">— 精酿啤酒吧 50+龙头</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=Ice%20Monster%20%E5%8F%B0%E5%8C%97" target="_blank">Ice Monster 📍</a><span class="na-desc">— 芒果冰始祖（忠孝店）</span></div>
+          <div class="na-item"><span class="na-cat cafe">☕</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=Cafe%20de%20Lugano%20%E5%8F%B0%E5%8C%97" target="_blank">Cafe de Lugano 📍</a><span class="na-desc">— 老牌义式咖啡</span></div>
         </div>
       </div>
     </div>
@@ -1287,7 +1290,7 @@
         <span class="time">20:30 – 21:30</span>
         <span class="crowd mid">🟡 21:00后人散</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.027,121.5265" target="_blank">师大夜市<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E5%B8%88%E5%A4%A7%E5%A4%9C%E5%B8%82%20%E5%8F%B0%E5%8C%97" target="_blank">师大夜市<span class="gmap-icon">📍</span></a></div>
       <div class="desc">师大学生区，平价小吃集中。灯笼卤味、许记生煎包、师大卤味。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -1302,7 +1305,7 @@
       <div class="nearby-alts">
         <div class="na-title">🔄 师大一带更多小吃</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">师园盐酥鸡</span><span class="na-desc">— 师大入口盐酥鸡</span><a href="https://www.google.com/maps/search/?api=1&query=25.0275,121.5262" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%B8%88%E5%9B%AD%E7%9B%90%E9%85%A5%E9%B8%A1%20%E5%8F%B0%E5%8C%97" target="_blank">师园盐酥鸡 📍</a><span class="na-desc">— 师大入口盐酥鸡</span></div>
         </div>
       </div>
     </div>
@@ -1355,7 +1358,7 @@
         <span class="time">09:00 – 09:25</span>
         <span class="crowd low">🟢 开门第一班</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=24.9982,121.5762" target="_blank">猫空缆车 · 动物园站<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E7%8C%AB%E7%A9%BA%E7%BC%86%E8%BD%A6%20%C2%B7%20%E5%8A%A8%E7%89%A9%E5%9B%AD%E7%AB%99%20%E7%8C%AB%E7%A9%BA" target="_blank">猫空缆车 · 动物园站<span class="gmap-icon">📍</span></a></div>
       <div class="desc">全程4.03km，约25-30分钟。选水晶车厢（排Crystal Cabin队伍）。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -1367,7 +1370,7 @@
     
       <div class="backup-box">
         <div class="backup-title">⚠️ 缆车停驶（周一定检/天气）？</div>
-        <div class="backup-item">→ 改搭 <strong>小10公车</strong>（动物园站旁）直达猫空，约25min<br>→ 或放弃猫空，改去 <strong>台北动物园</strong>（NT$60），大熊猫馆值得看</div>
+        <div class="backup-item">→ 改搭 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%B0%8F10%E5%85%AC%E8%BD%A6%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>小10公车</strong> 📍</a>（动物园站旁）直达猫空，约25min<br>→ 或放弃猫空，改去 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E5%8A%A8%E7%89%A9%E5%9B%AD%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>台北动物园</strong> 📍</a>（NT$60），大熊猫馆值得看</div>
       </div>
     </div>
 
@@ -1376,20 +1379,20 @@
         <span class="time">10:00 – 11:30</span>
         <span class="crowd low">🟢 假日早场清幽</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=24.969,121.587" target="_blank">猫空茶园 · 猓玀苑<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E7%8C%AB%E7%A9%BA%E8%8C%B6%E5%9B%AD%20%C2%B7%20%E7%8C%93%E7%8E%80%E8%8B%91%20%E7%8C%AB%E7%A9%BA" target="_blank">猫空茶园 · 猓玀苑<span class="gmap-icon">📍</span></a></div>
       <div class="desc">猫空山上看台北盆地全景。品铁观音茶+茶油面线。坐户外区吹山风。</div>
       <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">假日 10:00 – 21:00（平日 11:00起）</span></div>
       <div class="crowd-tip">✅ 假日10:00开门，搭缆车约20min，提前在动物园站搭09:30首班猫缆</div>
       <div class="meta"><span class="tag t-food">🍵 茶餐厅</span><span class="tag t-cost">💰 ~NT$300/人</span></div>
       <div class="backup-box">
         <div class="backup-title">⚠️ 猓玀苑客满/还没开？</div>
-        <div class="backup-item">→ <strong>邀月茶坊</strong>（猫空指南路三段40巷6号），山景露台+铁观音套餐<br>→ <strong>猫空大茶壶</strong>（指南路三段38巷内），铁观音鸡汤也好吃</div>
+        <div class="backup-item">→ <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E9%82%80%E6%9C%88%E8%8C%B6%E5%9D%8A%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>邀月茶坊</strong> 📍</a>（猫空指南路三段40巷6号），山景露台+铁观音套餐<br>→ <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E7%8C%AB%E7%A9%BA%E5%A4%A7%E8%8C%B6%E5%A3%B6%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>猫空大茶壶</strong> 📍</a>（指南路三段38巷内），铁观音鸡汤也好吃</div>
       </div>
       <div class="nearby-alts">
         <div class="na-title">🔄 猫空山上更多茶馆</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">六季香茶坊</span><span class="na-desc">— 在地人推荐茶油鸡</span><a href="https://www.google.com/maps/search/?api=1&query=24.9695,121.5875" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">台北动物园</span><span class="na-desc">— 亚洲最大，大猫熊馆</span><a href="https://www.google.com/maps/search/?api=1&query=24.9985,121.581" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%85%AD%E5%AD%A3%E9%A6%99%E8%8C%B6%E5%9D%8A%20%E5%8F%B0%E5%8C%97" target="_blank">六季香茶坊 📍</a><span class="na-desc">— 在地人推荐茶油鸡</span></div>
+          <div class="na-item"><span class="na-cat see">🏛</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E5%8A%A8%E7%89%A9%E5%9B%AD%20%E5%8F%B0%E5%8C%97" target="_blank">台北动物园 📍</a><span class="na-desc">— 亚洲最大，大猫熊馆</span></div>
         </div>
       </div>
       <div class="detail"><strong>推荐点：</strong>铁观音茶鸡 + 茶油面线 + 一壶铁观音<br><strong>📸 拍照：</strong>面向台北盆地的露台座位</div>
@@ -1406,7 +1409,7 @@
         <span class="time">12:00 – 14:00</span>
         <span class="crowd mid">🟡 周日人多但可逛</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.0548,121.6065" target="_blank">三井LaLaport 南港<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E4%B8%89%E4%BA%95LaLaport%20%E5%8D%97%E6%B8%AF%20%E5%8F%B0%E5%8C%97" target="_blank">三井LaLaport 南港<span class="gmap-icon">📍</span></a></div>
       <div class="desc">2024年开幕的大型购物中心。日系品牌+美食街+亲子设施。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -1417,22 +1420,22 @@
       <div class="nearby-alts">
         <div class="na-title">🔄 南港一带替代逛点</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat shop">🛍</span><span class="na-name">CITYLINK南港</span><span class="na-desc">— 车站共构商场·拉面街</span><a href="https://www.google.com/maps/search/?api=1&query=25.053,121.607" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">南港公园</span><span class="na-desc">— 都市绿洲散步休息</span><a href="https://www.google.com/maps/search/?api=1&query=25.055,121.607" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">瓦城·南港店</span><span class="na-desc">— 泰式料理连锁人气店</span><a href="https://www.google.com/maps/search/?api=1&query=25.054,121.607" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat shop">🛍</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=CITYLINK%E5%8D%97%E6%B8%AF%20%E5%8D%97%E6%B8%AF%20%E5%8F%B0%E5%8C%97" target="_blank">CITYLINK南港 📍</a><span class="na-desc">— 车站共构商场·拉面街</span></div>
+          <div class="na-item"><span class="na-cat see">🏛</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%8D%97%E6%B8%AF%E5%85%AC%E5%9B%AD%20%E5%8D%97%E6%B8%AF%20%E5%8F%B0%E5%8C%97" target="_blank">南港公园 📍</a><span class="na-desc">— 都市绿洲散步休息</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E7%93%A6%E5%9F%8E%C2%B7%E5%8D%97%E6%B8%AF%E5%BA%97%20%E5%8D%97%E6%B8%AF%20%E5%8F%B0%E5%8C%97" target="_blank">瓦城·南港店 📍</a><span class="na-desc">— 泰式料理连锁人气店</span></div>
         </div>
       </div>
     </div>
 
     <div class="item shop">
       <div class="top-row"><span class="time">LaLaport内</span></div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.055,121.606" target="_blank">Your Curve<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=Your%20Curve%20%E5%8F%B0%E5%8C%97" target="_blank">Your Curve<span class="gmap-icon">📍</span></a></div>
       <div class="desc">台湾设计师品牌选物店。极简风格服饰/配件。独特的裁剪设计。</div>
       <div class="meta"><span class="tag t-shop">👗 设计师品牌</span></div>
     
       <div class="backup-box">
         <div class="backup-title">⚠️ 没开/不感兴趣？</div>
-        <div class="backup-item">→ LaLaport内其他品牌：<strong>niko and...</strong>（日系杂货）、<strong>GU</strong>（平价日系服饰）<br>→ 或去 <strong>Mitsui Outlet南港</strong>（旁边），折扣品牌更多</div>
+        <div class="backup-item">→ LaLaport内其他品牌：<a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=niko%20and...%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>niko and...</strong> 📍</a>（日系杂货）、<a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=GU%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>GU</strong> 📍</a>（平价日系服饰）<br>→ 或去 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=Mitsui%20Outlet%E5%8D%97%E6%B8%AF%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>Mitsui Outlet南港</strong> 📍</a>（旁边），折扣品牌更多</div>
       </div>
     </div>
 
@@ -1443,8 +1446,8 @@
       <div class="nearby-alts">
         <div class="na-title">🔄 南港购物更多选择</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">南港CITYLINK美食</span><span class="na-desc">— 车站商场拉面/火锅</span><a href="https://www.google.com/maps/search/?api=1&query=25.053,121.607" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat shop">🛍</span><span class="na-name">Mitsui Outlet 南港</span><span class="na-desc">— 旁边outlet折扣品牌</span><a href="https://www.google.com/maps/search/?api=1&query=25.0545,121.606" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%8D%97%E6%B8%AFCITYLINK%E7%BE%8E%E9%A3%9F%20%E5%8D%97%E6%B8%AF%20%E5%8F%B0%E5%8C%97" target="_blank">南港CITYLINK美食 📍</a><span class="na-desc">— 车站商场拉面/火锅</span></div>
+          <div class="na-item"><span class="na-cat shop">🛍</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=Mitsui%20Outlet%20%E5%8D%97%E6%B8%AF%20%E5%8D%97%E6%B8%AF%20%E5%8F%B0%E5%8C%97" target="_blank">Mitsui Outlet 南港 📍</a><span class="na-desc">— 旁边outlet折扣品牌</span></div>
         </div>
       </div>
       <div class="uber-alt"><span class="uber-logo">UBER</span> <span class="uber-info">替代方案：</span><span class="uber-price">~NT$250/车</span><span class="uber-time">15min</span> · 从LaLaport直达象山登山口</div>
@@ -1456,7 +1459,7 @@
         <span class="crowd mid">🟡 黄昏热门时段</span>
         <span class="local-badge">🔥 口袋名单</span>
       </div>
-      <div class="name"><span class="must-badge">必去</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.027,121.571" target="_blank">象山步道<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><span class="must-badge">必去</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E8%B1%A1%E5%B1%B1%E6%AD%A5%E9%81%93%20%E5%8F%B0%E5%8C%97" target="_blank">象山步道<span class="gmap-icon">📍</span></a></div>
       <div class="desc">台北看101最佳角度。约20分钟登顶，夕阳+101合照绝美。</div>
       <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">全天开放（建议日落前1h上山）</span></div>
       <div class="crowd-tip">✅ 避峰策略：16:30上山，占好拍照位等日落。太晚上去好位置被占</div>
@@ -1465,11 +1468,11 @@
       <div class="nearby-alts">
         <div class="na-title">🔄 信义区顺道去</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">四四南村</span><span class="na-desc">— 眷村遗址+假日市集</span><a href="https://www.google.com/maps/search/?api=1&query=25.031,121.562" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">台北101观景台</span><span class="na-desc">— 89F NT$600 看日落</span><a href="https://www.google.com/maps/search/?api=1&query=25.0339,121.5645" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat cafe">☕</span><span class="na-name">Starbucks 101 35F</span><span class="na-desc">— 旗舰店看夜景</span><a href="https://www.google.com/maps/search/?api=1&query=25.0339,121.5645" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">ATT 4 FUN美食</span><span class="na-desc">— 日韩料理楼层</span><a href="https://www.google.com/maps/search/?api=1&query=25.036,121.567" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat bar">🍷</span><span class="na-name">Sidebar</span><span class="na-desc">— 精品鸡尾酒吧</span><a href="https://www.google.com/maps/search/?api=1&query=25.0365,121.565" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat see">🏛</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%9B%9B%E5%9B%9B%E5%8D%97%E6%9D%91%20%E5%8F%B0%E5%8C%97" target="_blank">四四南村 📍</a><span class="na-desc">— 眷村遗址+假日市集</span></div>
+          <div class="na-item"><span class="na-cat see">🏛</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97101%E8%A7%82%E6%99%AF%E5%8F%B0%20%E5%8F%B0%E5%8C%97" target="_blank">台北101观景台 📍</a><span class="na-desc">— 89F NT$600 看日落</span></div>
+          <div class="na-item"><span class="na-cat cafe">☕</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=Starbucks%20101%2035F%20%E5%8F%B0%E5%8C%97" target="_blank">Starbucks 101 35F 📍</a><span class="na-desc">— 旗舰店看夜景</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=ATT%204%20FUN%E7%BE%8E%E9%A3%9F%20%E5%8F%B0%E5%8C%97" target="_blank">ATT 4 FUN美食 📍</a><span class="na-desc">— 日韩料理楼层</span></div>
+          <div class="na-item"><span class="na-cat bar">🍷</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=Sidebar%20%E5%8F%B0%E5%8C%97" target="_blank">Sidebar 📍</a><span class="na-desc">— 精品鸡尾酒吧</span></div>
         </div>
       </div>
     </div>
@@ -1485,7 +1488,7 @@
         <span class="time">18:30 – 19:30</span>
         <span class="crowd mid">🟡 晚餐时段需等</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.047,121.544" target="_blank">双月食品社<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E5%8F%8C%E6%9C%88%E9%A3%9F%E5%93%81%E7%A4%BE%20%E5%8F%B0%E5%8C%97" target="_blank">双月食品社<span class="gmap-icon">📍</span></a></div>
       <div class="desc">米其林必比登推荐。招牌<strong>香油鸡汤</strong>（整只乌骨鸡！）+烫青菜+卤肉饭。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -1494,7 +1497,7 @@
       </div>
       <div class="meta"><span class="tag t-food">🍲 台式汤品</span><span class="tag t-cost">💰 ~NT$400/人</span></div>      <div class="backup-box">
         <div class="backup-title">⚠️ 排队太长/周日已满？</div>
-        <div class="backup-item">→ 附近 <strong>好记担仔面</strong>（信义路四段60-66号），台南担仔面+虾卷+蒸蛋，也是老台北味</div>
+        <div class="backup-item">→ 附近 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%A5%BD%E8%AE%B0%E6%8B%85%E4%BB%94%E9%9D%A2%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>好记担仔面</strong> 📍</a>（信义路四段60-66号），台南担仔面+虾卷+蒸蛋，也是老台北味</div>
       </div>
 
     </div>
@@ -1549,7 +1552,7 @@
         <span class="time">08:30 – 09:10</span>
         <span class="crowd low">🟢 早上客人少</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.088,121.524" target="_blank">正豪季水饺<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E6%AD%A3%E8%B1%AA%E5%AD%A3%E6%B0%B4%E9%A5%BA%20%E5%8F%B0%E5%8C%97" target="_blank">正豪季水饺<span class="gmap-icon">📍</span></a></div>
       <div class="desc">士林在地早餐。手工水饺皮薄馅多+酸辣汤。点韭菜+高丽菜各10颗。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -1559,12 +1562,12 @@
       <div class="meta"><span class="tag t-food">🥟 水饺</span><span class="tag t-cost">💰 ~NT$90/人</span></div>
       <div class="backup-box">
         <div class="backup-title">⚠️ 太早没开/卖完？</div>
-        <div class="backup-item">→ <strong>士林大饼</strong>（文林路101号），酥脆大饼+豆浆<br>→ 7-11/全家便利店买 <strong>御饭团+关东煮</strong>，快速解决上路</div>
+        <div class="backup-item">→ <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%A3%AB%E6%9E%97%E5%A4%A7%E9%A5%BC%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>士林大饼</strong> 📍</a>（文林路101号），酥脆大饼+豆浆<br>→ 7-11/全家便利店买 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%BE%A1%E9%A5%AD%E5%9B%A2%2B%E5%85%B3%E4%B8%9C%E7%85%AE%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>御饭团+关东煮</strong> 📍</a>，快速解决上路</div>
       </div>
       <div class="nearby-alts">
         <div class="na-title">🔄 士林早餐替代</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">阿亮面线</span><span class="na-desc">— 在地人面线+卤大肠</span><a href="https://www.google.com/maps/search/?api=1&query=25.0878,121.5242" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E9%98%BF%E4%BA%AE%E9%9D%A2%E7%BA%BF%20%E5%8F%B0%E5%8C%97" target="_blank">阿亮面线 📍</a><span class="na-desc">— 在地人面线+卤大肠</span></div>
         </div>
       </div>
     </div>
@@ -1580,7 +1583,7 @@
         <span class="time">09:30 – 12:00</span>
         <span class="crowd low">🟢 周二平日最佳</span>
       </div>
-      <div class="name"><span class="must-badge">必看</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.1024,121.5485" target="_blank">故宫博物院<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><span class="must-badge">必看</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E6%95%85%E5%AE%AB%E5%8D%9A%E7%89%A9%E9%99%A2%20%E5%8F%B0%E5%8C%97" target="_blank">故宫博物院<span class="gmap-icon">📍</span></a></div>
       <div class="desc">世界四大博物馆之一，近70万件文物。<strong>必看三宝：</strong>翠玉白菜、肉形石、毛公鼎。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -1598,29 +1601,29 @@
       <div class="nearby-alts">
         <div class="na-title">🔄 故宫一带替代</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">至善园</span><span class="na-desc">— 故宫旁中式园林 NT$20</span><a href="https://www.google.com/maps/search/?api=1&query=25.101,121.548" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">顺益原住民博物馆</span><span class="na-desc">— 故宫对面·认识原住民文化</span><a href="https://www.google.com/maps/search/?api=1&query=25.101,121.549" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">故宫三希堂</span><span class="na-desc">— 院内茶馆·看山喝茶</span><a href="https://www.google.com/maps/search/?api=1&query=25.102,121.549" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat see">🏛</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E8%87%B3%E5%96%84%E5%9B%AD%20%E5%8F%B0%E5%8C%97" target="_blank">至善园 📍</a><span class="na-desc">— 故宫旁中式园林 NT$20</span></div>
+          <div class="na-item"><span class="na-cat see">🏛</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E9%A1%BA%E7%9B%8A%E5%8E%9F%E4%BD%8F%E6%B0%91%E5%8D%9A%E7%89%A9%E9%A6%86%20%E5%8F%B0%E5%8C%97" target="_blank">顺益原住民博物馆 📍</a><span class="na-desc">— 故宫对面·认识原住民文化</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E6%95%85%E5%AE%AB%E4%B8%89%E5%B8%8C%E5%A0%82%20%E5%8F%B0%E5%8C%97" target="_blank">故宫三希堂 📍</a><span class="na-desc">— 院内茶馆·看山喝茶</span></div>
         </div>
       </div>
     </div>
       <div class="nearby-alts">
         <div class="na-title">🔄 故宫附近补充</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat see">🏛</span><span class="na-name">顺益原住民博物馆</span><span class="na-desc">— 台湾原住民文化</span><a href="https://www.google.com/maps/search/?api=1&query=25.1018,121.5475" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat see">🏛</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E9%A1%BA%E7%9B%8A%E5%8E%9F%E4%BD%8F%E6%B0%91%E5%8D%9A%E7%89%A9%E9%A6%86%20%E5%8F%B0%E5%8C%97" target="_blank">顺益原住民博物馆 📍</a><span class="na-desc">— 台湾原住民文化</span></div>
         </div>
       </div>
 
     <div class="item local">
       <div class="top-row"><span class="time">故宫内</span><span class="local-badge">🔥 口袋名单</span></div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.1024,121.5485" target="_blank">故宫晶华 · 国宝宴<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E6%95%85%E5%AE%AB%E6%99%B6%E5%8D%8E%20%C2%B7%20%E5%9B%BD%E5%AE%9D%E5%AE%B4%20%E5%8F%B0%E5%8C%97" target="_blank">故宫晶华 · 国宝宴<span class="gmap-icon">📍</span></a></div>
       <div class="desc">故宫B1餐厅。把国宝做成菜！「翠玉白菜」→翡翠虾松、「肉形石」→东坡肉。</div>
       <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">11:30 – 14:30 / 17:30 – 21:00</span></div>
       <div class="meta"><span class="tag t-local">🍽 主题餐厅</span><span class="tag t-cost">💰 ~NT$600/人</span></div>
     
       <div class="backup-box">
         <div class="backup-title">⚠️ 没订到位/预算不够？</div>
-        <div class="backup-item">→ 故宫内 <strong>三希堂</strong>，中式茶点套餐 NT$300起，氛围也好<br>→ 或出来后在 <strong>士林捷运站周边</strong> 吃，省钱留给夜市</div>
+        <div class="backup-item">→ 故宫内 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E4%B8%89%E5%B8%8C%E5%A0%82%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>三希堂</strong> 📍</a>，中式茶点套餐 NT$300起，氛围也好<br>→ 或出来后在 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%A3%AB%E6%9E%97%E6%8D%B7%E8%BF%90%E7%AB%99%E5%91%A8%E8%BE%B9%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>士林捷运站周边</strong> 📍</a> 吃，省钱留给夜市</div>
       </div>
     </div>
 
@@ -1635,7 +1638,7 @@
         <span class="time">13:00 – 14:30</span>
         <span class="crowd low">🟢 周二+非晚间=几乎没人</span>
       </div>
-      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=25.088,121.5245" target="_blank">士林夜市<span class="gmap-icon">📍</span></a></div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E5%A3%AB%E6%9E%97%E5%A4%9C%E5%B8%82%20%E5%8F%B0%E5%8C%97" target="_blank">士林夜市<span class="gmap-icon">📍</span></a></div>
       <div class="desc">台北最大夜市。白天地下美食区也有营业。</div>
       <div class="hours-bar">
         <span class="h-icon">🕐</span>
@@ -1653,13 +1656,13 @@
       <div class="meta"><span class="tag t-food">🌙 夜市（日间）</span><span class="tag t-cost">💰 ~NT$200/人</span><span class="tag t-go">🚃 捷运剑潭站</span></div>
       <div class="backup-box">
         <div class="backup-title">⚠️ 地下美食区选择障碍？推荐点单顺序</div>
-        <div class="backup-item">1. <strong>蚵仔煎</strong> → 2. <strong>大饼包小饼</strong> → 3. <strong>生炒花枝</strong> → 4. <strong>盐水鸡</strong><br>吃不下就到地面买 <strong>豪大大鸡排</strong> 外带路上啃</div>
+        <div class="backup-item">1. <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E8%9A%B5%E4%BB%94%E7%85%8E%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>蚵仔煎</strong> 📍</a> → 2. <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%A5%BC%E5%8C%85%E5%B0%8F%E9%A5%BC%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>大饼包小饼</strong> 📍</a> → 3. <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E7%94%9F%E7%82%92%E8%8A%B1%E6%9E%9D%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>生炒花枝</strong> 📍</a> → 4. <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E7%9B%90%E6%B0%B4%E9%B8%A1%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>盐水鸡</strong> 📍</a><br>吃不下就到地面买 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E8%B1%AA%E5%A4%A7%E5%A4%A7%E9%B8%A1%E6%8E%92%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>豪大大鸡排</strong> 📍</a> 外带路上啃</div>
       </div>
       <div class="nearby-alts">
         <div class="na-title">🔄 士林夜市更多推荐</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">士林大香肠</span><span class="na-desc">— 地标大肠包小肠</span><a href="https://www.google.com/maps/search/?api=1&query=25.0882,121.5248" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">家湘涵骨</span><span class="na-desc">— 旁边东北麻辣烫</span><a href="https://www.google.com/maps/search/?api=1&query=25.0885,121.525" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%A3%AB%E6%9E%97%E5%A4%A7%E9%A6%99%E8%82%A0%20%E5%A3%AB%E6%9E%97%20%E5%8F%B0%E5%8C%97" target="_blank">士林大香肠 📍</a><span class="na-desc">— 地标大肠包小肠</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%AE%B6%E6%B9%98%E6%B6%B5%E9%AA%A8%20%E5%8F%B0%E5%8C%97" target="_blank">家湘涵骨 📍</a><span class="na-desc">— 旁边东北麻辣烫</span></div>
         </div>
       </div>
     </div>
@@ -1673,7 +1676,7 @@
     
       <div class="backup-box">
         <div class="backup-title">⚠️ 没开/客满？</div>
-        <div class="backup-item">→ 四四南村内 <strong>Simple Market</strong>（周末市集），手作点心+在地品牌<br>→ 或直接去西门町最后采购，多留购物时间</div>
+        <div class="backup-item">→ 四四南村内 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=Simple%20Market%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>Simple Market</strong> 📍</a>（周末市集），手作点心+在地品牌<br>→ 或直接去西门町最后采购，多留购物时间</div>
       </div>
     </div>
 
@@ -1715,11 +1718,11 @@
       <div class="nearby-alts">
         <div class="na-title">🔄 西门町伴手礼/最后一吃</div>
         <div class="na-grid">
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">老天禄卤味</span><span class="na-desc">— 70年卤味伴手礼</span><a href="https://www.google.com/maps/search/?api=1&query=25.0425,121.507" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">阿宗面线(外带)</span><span class="na-desc">— 最后机会！外带路上吃</span><a href="https://www.google.com/maps/search/?api=1&query=25.0425,121.5068" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat shop">🛍</span><span class="na-name">日药本铺</span><span class="na-desc">— 最便宜日本药妆</span><a href="https://www.google.com/maps/search/?api=1&query=25.0422,121.5072" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">微热山丘(民生)</span><span class="na-desc">— 凤梨酥试吃整块+奉茶</span><a href="https://www.google.com/maps/search/?api=1&query=25.058,121.558" target="_blank">📍</a></div>
-          <div class="na-item"><span class="na-cat food">🍜</span><span class="na-name">佳德糕饼</span><span class="na-desc">— 凤梨酥名店（要排队）</span><a href="https://www.google.com/maps/search/?api=1&query=25.0475,121.5445" target="_blank">📍</a></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E8%80%81%E5%A4%A9%E7%A6%84%E5%8D%A4%E5%91%B3%20%E5%8F%B0%E5%8C%97" target="_blank">老天禄卤味 📍</a><span class="na-desc">— 70年卤味伴手礼</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E9%98%BF%E5%AE%97%E9%9D%A2%E7%BA%BF%28%E5%A4%96%E5%B8%A6%29%20%E5%8F%B0%E5%8C%97" target="_blank">阿宗面线(外带) 📍</a><span class="na-desc">— 最后机会！外带路上吃</span></div>
+          <div class="na-item"><span class="na-cat shop">🛍</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E6%97%A5%E8%8D%AF%E6%9C%AC%E9%93%BA%20%E5%8F%B0%E5%8C%97" target="_blank">日药本铺 📍</a><span class="na-desc">— 最便宜日本药妆</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%BE%AE%E7%83%AD%E5%B1%B1%E4%B8%98%28%E6%B0%91%E7%94%9F%29%20%E5%8F%B0%E5%8C%97" target="_blank">微热山丘(民生) 📍</a><span class="na-desc">— 凤梨酥试吃整块+奉茶</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E4%BD%B3%E5%BE%B7%E7%B3%95%E9%A5%BC%20%E5%8F%B0%E5%8C%97" target="_blank">佳德糕饼 📍</a><span class="na-desc">— 凤梨酥名店（要排队）</span></div>
         </div>
       </div>
     </div>
@@ -1855,10 +1858,10 @@ const locations = [
   {day:2,name:"50岚",lat:25.0440,lng:121.5150,type:"food"},
   {day:2,name:"迪化街十连栋 🔥",lat:25.0565,lng:121.5092,type:"local"},
   {day:2,name:"大稻埕码头 🔥",lat:25.0540,lng:121.5050,type:"local"},
-  {day:3,name:"叶家小笼包",lat:25.0845,lng:121.4725,type:"food"},
+  {day:3,name:"叶家小笼包",lat:25.0363,lng:121.5255,type:"food"},
   {day:3,name:"九份老街",lat:25.1090,lng:121.8445,type:"see"},
   {day:3,name:"阿柑姨芋圆",lat:25.1092,lng:121.8450,type:"food"},
-  {day:3,name:"红茶屋",lat:25.0480,lng:121.5440,type:"food"},
+  {day:3,name:"红茶屋",lat:25.1089,lng:121.8442,type:"food"},
   {day:3,name:"饶河夜市",lat:25.0510,lng:121.5770,type:"food"},
   {day:3,name:"松山慈祐宫 🔥",lat:25.0512,lng:121.5778,type:"local"},
   {day:4,name:"Bonica Café",lat:25.0310,lng:121.5300,type:"food"},
@@ -1874,7 +1877,7 @@ const locations = [
   {day:5,name:"猓玀苑",lat:24.9690,lng:121.5870,type:"food"},
   {day:5,name:"乐扣乐扣 LaLaport",lat:25.0548,lng:121.6065,type:"shop"},
   {day:5,name:"Your Curve",lat:25.0550,lng:121.6060,type:"shop"},
-  {day:5,name:"双月食品社",lat:25.0470,lng:121.5440,type:"food"},
+  {day:5,name:"双月食品社",lat:25.0330,lng:121.5535,type:"food"},
   {day:5,name:"象山步道 🔥",lat:25.0270,lng:121.5710,type:"local"},
   {day:6,name:"正豪季水饺",lat:25.0880,lng:121.5240,type:"food"},
   {day:6,name:"至善区（故宫）",lat:25.1024,lng:121.5485,type:"see"},
@@ -1980,7 +1983,7 @@ new Chart(transCtx,{
 // ============= FOOD FILTER =============
 const foodData=[
   {name:"重庆豆浆炸蛋饼",cat:"breakfast",day:2,cost:"NT$80",lat:25.0530,lng:121.5100},
-  {name:"叶家小笼包",cat:"breakfast",day:3,cost:"NT$100",lat:25.0845,lng:121.4725},
+  {name:"叶家小笼包",cat:"breakfast",day:3,cost:"NT$100",lat:25.0363,lng:121.5255},
   {name:"正豪季水饺",cat:"breakfast",day:6,cost:"NT$90",lat:25.0880,lng:121.5240},
   {name:"阿宗面线",cat:"noodle",day:1,cost:"NT$60",lat:25.0425,lng:121.5068},
   {name:"一甲子餐饮",cat:"snack",day:1,cost:"NT$120",lat:25.0370,lng:121.4995},
@@ -1991,7 +1994,7 @@ const foodData=[
   {name:"Bonica Café",cat:"cafe",day:4,cost:"NT$350",lat:25.0310,lng:121.5300},
   {name:"和盛 1947",cat:"cafe",day:2,cost:"NT$200",lat:25.0560,lng:121.5090},
   {name:"50岚",cat:"cafe",day:2,cost:"NT$50",lat:25.0440,lng:121.5150},
-  {name:"红茶屋",cat:"cafe",day:3,cost:"NT$20",lat:25.0480,lng:121.5440},
+  {name:"红茶屋",cat:"cafe",day:3,cost:"NT$20",lat:25.1089,lng:121.8442},
   {name:"永富冰淇淋",cat:"dessert",day:2,cost:"NT$40",lat:25.0545,lng:121.5085},
   {name:"思慕昔 芒果冰",cat:"dessert",day:4,cost:"NT$200",lat:25.0332,lng:121.5290},
   {name:"阿柑姨芋圆",cat:"dessert",day:3,cost:"NT$50",lat:25.1092,lng:121.8450},
@@ -2003,7 +2006,7 @@ const foodData=[
   {name:"天津葱抓饼",cat:"snack",day:2,cost:"NT$45",lat:25.0560,lng:121.5158},
   {name:"Indulge Bistro",cat:"fine",day:4,cost:"NT$1,200",lat:25.0380,lng:121.5460},
   {name:"猓玀苑(猫空)",cat:"fine",day:5,cost:"NT$300",lat:24.9690,lng:121.5870},
-  {name:"双月食品社",cat:"fine",day:5,cost:"NT$400",lat:25.0470,lng:121.5440},
+  {name:"双月食品社",cat:"fine",day:5,cost:"NT$400",lat:25.0330,lng:121.5535},
   {name:"故宫晶华",cat:"fine",day:6,cost:"NT$600",lat:25.1024,lng:121.5485},
 ];
 const dayBg={1:'#e74c3c',2:'#e67e22',3:'#2ecc71',4:'#3498db',5:'#9b59b6',6:'#1abc9c'};
