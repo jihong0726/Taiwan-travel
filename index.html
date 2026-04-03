@@ -95,11 +95,14 @@
   .timeline::before{content:'';position:absolute;left:9px;top:0;bottom:0;width:2px;background:var(--border)}
 
   /* TRAVEL CONNECTOR */
-  .travel-connector{position:relative;display:flex;align-items:flex-start;gap:8px;padding:8px 8px 8px 8px;margin:4px 0;font-size:.74em;color:var(--muted);background:linear-gradient(90deg,#f9f9f9,transparent);border-radius:8px;border:1px dashed #e0e0e0;flex-wrap:wrap}
+  .travel-connector{position:relative;display:flex;align-items:center;gap:6px;padding:8px 8px 8px 8px;margin:4px 0;font-size:.74em;color:var(--muted);background:linear-gradient(90deg,#f9f9f9,transparent);border-radius:8px;border:1px dashed #e0e0e0;flex-wrap:wrap}
   .travel-connector::before{content:'';position:absolute;left:-21px;top:0;bottom:0;width:2px;border-left:2px dashed #d5d5d5}
   .tc-icon{font-size:1.1em;flex-shrink:0;margin-top:1px}
   .tc-pill{background:#e8e8e8;padding:3px 10px;border-radius:12px;font-weight:700;color:#444;white-space:nowrap;flex-shrink:0}
-  .tc-label{color:#666;line-height:1.5;flex:1 1 60%}
+  .tc-label{color:#666;line-height:1.5;flex:0 0 100%}
+  .tc-route{display:inline-flex;align-items:center;gap:2px;padding:3px 8px;background:linear-gradient(135deg,#4285f4,#34a853);color:#fff;border-radius:12px;font-size:.68em;font-weight:600;text-decoration:none;cursor:pointer;transition:opacity .2s;flex-shrink:0;white-space:nowrap;height:fit-content}
+  .tc-route:hover{opacity:.85;color:#fff}
+  .tc-route .route-icon{font-size:.9em}
   .tc-label strong{color:#333}
   .travel-connector>.uber-alt{flex:0 0 100%}
   .travel-connector>.nearby-alts{flex:0 0 100%}
@@ -353,6 +356,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚶</span>
       <span class="tc-pill">2 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=N+Hotel+Ximending+台北&destination=阿宗面线+台北&travelmode=walking" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">沿峨嵋街走 → 阿宗面线在峨嵋街8-1号（西门町步行区内，很好找）</span>
     </div>
 
@@ -380,6 +385,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚶</span>
       <span class="tc-pill">5 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=N+Hotel+Ximending+台北&destination=西门红楼+台北&travelmode=walking" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">沿成都路往西走 → 经过捷运西门站<strong>1号出口</strong>旁 → 红楼在左手边（成都路10号）</span>
     </div>
 
@@ -406,6 +413,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚶</span>
       <span class="tc-pill">10 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=西门红楼+台北&destination=一甲子餐饮+台北&travelmode=walking" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">红楼出来 → 沿康定路往南走 → 过桂林路后继续直行 → 右转广州街 → 一甲子在康定路79号（龙山寺对面巷内）</span>
     </div>
 
@@ -433,6 +442,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚶</span>
       <span class="tc-pill">5 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=一甲子餐饮+台北&destination=龙山寺+台北&travelmode=walking" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">一甲子出来 → 沿广州街往西走 → 经过龙山寺正门（广州街211号）→ 龙山寺就在左手边</span>
     </div>
 
@@ -455,6 +466,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚶</span>
       <span class="tc-pill">5 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=龙山寺+台北&destination=老山东家常面+台北&travelmode=walking" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">龙山寺沿广州街继续往东走 → 左转康定路 → 老山东在康定路 old-town 巷弄内</span>
       <div class="nearby-alts">
         <div class="na-title">🔄 龙山寺/万华一带替代</div>
@@ -491,6 +504,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚶</span>
       <span class="tc-pill">12 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=老山东家常面+台北&destination=南机场夜市+台北&travelmode=walking" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">沿中华路二段往南步行 → 经过捷运龙山寺站 → 右转南宁路 → 再左转中华路二段307巷 → 进入南机场夜市（巷子入口不显眼，认「南机场公寓」招牌）</span>
     </div>
 
@@ -528,6 +543,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚶</span>
       <span class="tc-pill">15 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=南机场夜市+台北&destination=N+Hotel+Ximending+台北&travelmode=walking" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">原路返回中华路 → 往北走至捷运西门站<strong>6号出口</strong> → 步行3min回N Hotel<br>（或在南机场叫Uber/计程车回酒店约NT$85，5min）</span>
     </div>
   </div>
@@ -565,6 +582,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🏨</span>
       <span class="tc-pill">15 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=N+Hotel+Ximending+台北&destination=Bonica+Cafe+台北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">🏨 N Hotel出发 → 步行到捷运<strong>西门站6号出口</strong>进站（3min）→ 搭板南线(蓝线)往南港方向 → 在「忠孝新生站」下车（3站6min）→ 换中和新芦线(橘线)往南势角方向 → 在「东门站」下车（1站2min）→ <strong>5号出口</strong>出站</span>
     </div>
 
@@ -586,6 +605,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚶</span>
       <span class="tc-pill">3 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=Bonica+Cafe+台北&destination=永康牛肉面+台北&travelmode=walking" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">Bonica出门 → 沿永康街往北走3分钟 → 永康牛肉面在金华街/永康街口（金华街31巷17号）</span>
     </div>
 
@@ -621,6 +642,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚶</span>
       <span class="tc-pill">2 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=永康牛肉面+台北&destination=杭州小笼汤包+台北&travelmode=walking" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">永康牛肉面出来 → 沿永康街走100米 → 杭州小笼汤包在永康街/信义路口附近</span>
     </div>
 
@@ -674,6 +697,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚃</span>
       <span class="tc-pill">15 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=青田七六+台北&destination=华山1914+文创园区+台北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">步行至捷运<strong>东门站5号出口</strong>进站 → 搭中和新芦线(橘线)往迴龙方向 → 在「忠孝新生站」下车（1站2min）→ <strong>1号出口</strong>出站 → 往八德路方向步行5min → 华山1914在八德路一段1号</span>
     </div>
 
@@ -707,6 +732,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚃</span>
       <span class="tc-pill">10 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=华山1914+文创园区+台北&destination=袖珍博物馆+台北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">步行回捷运<strong>忠孝新生站1号出口</strong>进站 → 搭板南线(蓝线)往南港方向 → 在「忠孝敦化站」下车（2站4min）→ <strong>4号出口</strong>出站 → 往建国北路方向步行3min</span>
     </div>
 
@@ -733,6 +760,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚕</span>
       <span class="tc-pill">12 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=袖珍博物馆+台北&destination=Indulge+Bistro+台北&travelmode=walking" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">⚡ 15:45-18:00 有2小时空档！推荐：① 仁爱路林荫大道散步（很美）② 东区逛街 ③ 回酒店休息再出发<br>建议搭<strong>计程车/Uber</strong>到Indulge Bistro（仁爱路四段345巷4弄36号）→ 费用约NT$120 → 或步行25min穿过仁爱路林荫大道</span>
     </div>
 
@@ -767,6 +796,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚕</span>
       <span class="tc-pill">10 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=Indulge+Bistro+台北&destination=师大夜市+台北&travelmode=driving" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">搭<strong>计程车/Uber</strong>到师大夜市（师大路/龙泉街口）→ 费用约NT$120<br>（或捷运「台电大楼站」3号出口步行5min）</span>
     </div>
 
@@ -797,6 +828,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚃</span>
       <span class="tc-pill">15 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=师大夜市+台北&destination=N+Hotel+Ximending+台北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">步行到捷运<strong>台电大楼站3号出口</strong>进站 → 搭松山新店线(绿线)往松山方向 → 在「西门站」下车 → <strong>6号出口</strong>出站 → 步行3min回N Hotel</span>
     </div>
   </div>
@@ -834,6 +867,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🏨</span>
       <span class="tc-pill">35 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=N+Hotel+Ximending+台北&destination=猫空缆车动物园站+台北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">🏨 N Hotel出发 → 步行到捷运<strong>西门站6号出口</strong>进站 → 搭板南线(蓝线)往南港方向 → 在「忠孝复兴站」换文湖线(棕线)往动物园方向 → 在「动物园站」下车 → 出站步行5min到猫空缆车站</span>
       <div class="uber-alt"><span class="uber-logo">UBER</span> <span class="uber-info">替代方案：</span><span class="uber-price">~NT$350/车</span><span class="uber-time">20min</span> · 直达动物园站缆车入口</div>
     </div>
@@ -867,7 +902,7 @@
       <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E7%8C%AB%E7%A9%BA%E8%8C%B6%E5%9B%AD%20%C2%B7%20%E7%8C%93%E7%8E%80%E8%8B%91%20%E7%8C%AB%E7%A9%BA" target="_blank">猫空茶园 · 猓玀苑<span class="gmap-icon">📍</span></a></div>
       <div class="desc">猫空山上看台北盆地全景。品铁观音茶+茶油面线。坐户外区吹山风。</div>
       <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">假日 10:00 – 21:00（平日 11:00起）</span></div>
-      <div class="crowd-tip">✅ 假日(周六)10:00开门，搭缆车约20min，提前在动物园站搭09:30首班猫缆</div>
+      <div class="crowd-tip">✅ 假日(周六)10:00开门，搭缆车约20min，提前在动物园站搭09:30首班猫缆<br>💡 <strong>09:25到猫空站 → 10:00开门前：</strong>步行猫空壶穴步道（缆车站旁，5min即到），或在茶园步道拍照看全景，35min刚好消磨</div>
       <div class="meta"><span class="tag t-food">🍵 茶餐厅</span><span class="tag t-cost">💰 ~NT$300/人</span></div>
       <div class="backup-box">
         <div class="backup-title">⚠️ 猓玀苑客满/还没开？</div>
@@ -886,6 +921,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚡</span>
       <span class="tc-pill">25 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=猫空+台北&destination=三井LaLaport+南港+台北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">搭缆车原路返回「动物园站」（25min）→ 转搭捷运文湖线(棕线)往南港方向 → 在「南港展览馆站」下车（终点站）</span>
     </div>
 
@@ -927,6 +964,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚃</span>
       <span class="tc-pill">20 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=三井LaLaport+南港+台北&destination=象山步道+台北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">捷运「南港展览馆站」进站 → 搭板南线(蓝线)往顶埔方向 → 在「市政府站」下车 → <strong>2号出口</strong>出站</span>
       <div class="nearby-alts">
         <div class="na-title">🔄 南港购物更多选择</div>
@@ -965,6 +1004,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚃</span>
       <span class="tc-pill">15 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=象山步道+台北&destination=双月食品社+台北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">捷运<strong>象山站</strong>进站 → 搭淡水信义线(红线)往淡水方向 → 在「信义安和站」下车 → <strong>3号出口</strong>步行5min → 双月食品社（信义路四段389号）</span>
     </div>
 
@@ -990,6 +1031,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚃</span>
       <span class="tc-pill">15 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=双月食品社+台北&destination=N+Hotel+Ximending+台北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">步行回捷运<strong>信义安和站</strong>进站 → 搭淡水信义线(红线)往淡水方向 → 在「台北车站」换板南线(蓝线)往顶埔方向 → 在「西门站」下车 → <strong>6号出口</strong>出站回N Hotel</span>
     </div>
   </div>
@@ -1025,6 +1068,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🏨</span>
       <span class="tc-pill">15 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=N+Hotel+Ximending+台北&destination=重庆豆浆炸蛋饼+台北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">🏨 N Hotel出发 → 步行到捷运<strong>西门站6号出口</strong>进站（3min）→ 搭板南线(蓝线)往南港方向 → 在「北门站」下车（1站2min）→ <strong>3号出口</strong>出站 → 步行往延平北路（10min）</span>
     </div>
 
@@ -1051,6 +1096,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚶</span>
       <span class="tc-pill">5 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=重庆豆浆炸蛋饼+台北&destination=大稻埕+迪化街+台北&travelmode=walking" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">出店左转 → 沿延平北路二段往北走 → 进入迪化街一段（大稻埕老街入口）</span>
     </div>
 
@@ -1183,6 +1230,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚃</span>
       <span class="tc-pill">25 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=N+Hotel+Ximending+台北&destination=正豪季水饺+台北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">步行回捷运<strong>北门站3号出口</strong>（10min）→ 搭板南线(蓝线)往南港方向 → 在「台北车站」换淡水信义线(红线)往象山方向 → 在「中正纪念堂站」下车 → <strong>5号出口</strong>出站即到广场</span>
       <div class="uber-alt"><span class="uber-logo">UBER</span> <span class="uber-info">替代方案：</span><span class="uber-price">~NT$200/车</span><span class="uber-time">12min</span> · 从大稻埕直达</div>
     </div>
@@ -1201,7 +1250,7 @@
       </div>
       <div class="crowd-tip">✅ 避峰策略：14:00交接仪式比10:00场人少一半</div>
       <div class="meta"><span class="tag t-see">🏛 地标</span><span class="tag t-cost">💰 免费</span><span class="tag t-time">⏱ 60min</span></div>
-      <div class="detail"><strong>交接仪式时间：</strong>每整点（09:00-17:00）<br><strong>建议：</strong>13:50到堂内占好位置看14:00场</div>
+      <div class="detail"><strong>交接仪式时间：</strong>每整点（09:00-17:00），每次约10分钟<br><strong>建议：</strong>抓14:00整点到！13:50进堂内占好位置看14:00场卫兵交接仪式，全程约10分钟，结束后自由拍照</div>
       <div class="nearby-alts">
         <div class="na-title">🔄 中正纪念堂附近替代</div>
         <div class="na-grid">
@@ -1313,6 +1362,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚃</span>
       <span class="tc-pill">15 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=宁夏夜市+台北&destination=N+Hotel+Ximending+台北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">宁夏路走回捷运<strong>中山站1号出口</strong>进站 → 搭淡水信义线(红线)往象山方向 → 在「台北车站」换板南线(蓝线)往顶埔方向 → 在「西门站」下车（1站）→ <strong>6号出口</strong>出站 → 步行3min回N Hotel</span>
     </div>
   </div>
@@ -1350,6 +1401,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🏨</span>
       <span class="tc-pill">12 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=N+Hotel+Ximending+台北&destination=叶家小笼包+台北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">🏨 N Hotel出发 → 步行到捷运<strong>西门站6号出口</strong>进站（3min）→ 搭板南线(蓝线)往南港方向 → 在「善导寺站」下车（2站4min）→ <strong>5号出口</strong>出站</span>
     </div>
 
@@ -1375,7 +1428,9 @@
     <div class="travel-connector">
       <span class="tc-icon">🚌</span>
       <span class="tc-pill">80-90 min</span>
-      <span class="tc-label">步行至捷运「善导寺站」进站 → 搭板南线往南港方向 → 在「忠孝复兴站」下车 → <strong>1号出口</strong>出站 → 步行至<strong>基隆客运1062站牌</strong>（复兴南路一段/忠孝东路口）→ 搭往金瓜石方向 → 在「九份老街站」下车（约80-90min）→ 票价NT$101<br><strong>⚡ Tips：</strong>上车刷悠游卡，回程同站牌对面等车</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=叶家小笼包+台北&destination=九份老街+新北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
+      <span class="tc-label">步行至捷运「善导寺站」进站 → 搭板南线往南港方向 → 在「忠孝复兴站」下车 → <strong>1号出口</strong>出站 → 步行至<strong>基隆客运1062站牌</strong>（复兴南路一段/忠孝东路口）→ 搭往金瓜石方向 → 在「九份老街站」下车（约80-90min）→ 票价NT$101<br><strong>⚡ Tips：</strong>上车刷悠游卡，回程同站牌对面等车<br>⚠️ <strong>注意：</strong>Google Maps 路线可能显示不同公车或路径，请认准「基隆客运 1062」站牌，不要跟着导航走错站</span>
       <div class="uber-alt"><span class="uber-logo">UBER</span> <span class="uber-info">替代方案：</span><span class="uber-price">~NT$1,200/车</span><span class="uber-time">40min</span> · 2人分摊每人NT$600，省40min+免塞公车</div>
     </div>
 
@@ -1447,6 +1502,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚌</span>
       <span class="tc-pill">80-90 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=九份老街+新北&destination=忠孝复兴站+台北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">九份老街站牌等<strong>1062公车</strong>返回台北（往台北方向，认「基隆客运」）→ 在「忠孝复兴站」下车 → 转搭捷运板南线往南港方向</span>
       <div class="uber-alt"><span class="uber-logo">UBER</span> <span class="uber-info">替代方案：</span><span class="uber-price">~NT$1,200/车</span><span class="uber-time">40min</span> · 回程在九份7-11门口叫车，比等公车省力</div>
     </div>
@@ -1454,6 +1511,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚃</span>
       <span class="tc-pill">10 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=忠孝复兴站+台北&destination=饶河夜市+台北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">捷运板南线继续搭到「松山站」→ <strong>5号出口</strong>出站即到饶河街夜市入口（慈祐宫牌坊）</span>
     </div>
 
@@ -1506,6 +1565,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚃</span>
       <span class="tc-pill">20 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=饶河夜市+台北&destination=N+Hotel+Ximending+台北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">捷运<strong>松山站</strong>进站 → 搭松山新店线(绿线)往新店方向 → 在「西门站」下车 → <strong>6号出口</strong>出站 → 步行3min回N Hotel</span>
     </div>
   </div>
@@ -1576,6 +1637,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚌</span>
       <span class="tc-pill">15 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=士林捷运站+台北&destination=故宫博物院+台北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">士林站<strong>1号出口</strong>出站 → 右转到中正路「士林站」公车站 → 搭<strong>红30</strong>或<strong>255</strong>或<strong>小18</strong>→ 在「故宫博物院站」下车（约15min）</span>
     </div>
 
@@ -1631,6 +1694,8 @@
     <div class="travel-connector">
       <span class="tc-icon">🚌</span>
       <span class="tc-pill">15 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=故宫博物院+台北&destination=士林夜市+台北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
       <span class="tc-label">故宫门口搭<strong>红30公车</strong>原路返回 → 在「剑潭站(基河)」下车（约15min）→ <strong>剑潭站1号出口</strong>出站直走即到士林夜市入口（基河路上的大牌坊）</span>
     </div>
 
@@ -1684,20 +1749,10 @@
     <div class="travel-connector">
       <span class="tc-icon">🚃</span>
       <span class="tc-pill">20 min</span>
-      <span class="tc-label">捷运<strong>剑潭站</strong>进站 → 搭淡水信义线(红线)往象山方向 → 在「台北车站」换板南线(蓝线)往顶埔方向 → 在「西门站」下车（1站）→ <strong>6号出口</strong>出站 → 步行3min回N Hotel</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=士林夜市+台北&destination=N+Hotel+Ximending+台北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      
+      <span class="tc-label">捷运<strong>剑潭站</strong>进站 → 搭淡水信义线(红线)往象山方向 → 在「台北车站」换板南线(蓝线)往顶埔方向 → 在「西门站」下车（1站）→ <strong>6号出口</strong>出站 → 直奔西门町采购（行李寄酒店，轻装逛街）</span>
       <div class="uber-alt"><span class="uber-logo">UBER</span> <span class="uber-info">替代方案：</span><span class="uber-price">~NT$250/车</span><span class="uber-time">15min</span> · 带战利品搭车更方便</div>
-    </div>
-
-    <div class="item hotel">
-      <div class="top-row"><span class="time">15:00</span></div>
-      <div class="name">回 N Hotel 拿行李</div>
-      <div class="desc">收拾战利品，确认护照、登机证、充电宝。</div>
-    </div>
-
-    <div class="travel-connector">
-      <span class="tc-icon">🚶</span>
-      <span class="tc-pill">3 min</span>
-      <span class="tc-label">N Hotel出门 → 往武昌街/汉中街方向走入西门町徒步区</span>
     </div>
 
     <div class="item see">
@@ -1727,9 +1782,24 @@
         </div>
       </div>
     </div>
+
+    <div class="travel-connector">
+      <span class="tc-icon">🚶</span>
+      <span class="tc-pill">3 min</span>
+      <span class="tc-label">西门町步行回 N Hotel（武昌街方向3分钟）</span>
+    </div>
+
+    <div class="item hotel">
+      <div class="top-row"><span class="time">17:30</span></div>
+      <div class="name">回 N Hotel 拿行李</div>
+      <div class="desc">收拾战利品，确认护照、登机证、充电宝。预留时间整理行李箱。</div>
+    </div>
+
     <div class="travel-connector">
       <span class="tc-icon">🚃</span>
       <span class="tc-pill">40 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=N+Hotel+Ximending+台北&destination=桃园国际机场+台湾&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+
       <span class="tc-label">N Hotel拿行李 → 步行到捷运<strong>西门站6号出口</strong>进站 → 搭板南线(蓝线)往南港方向 → 在「台北车站」下车（1站2min）→ 跟指标走地下街往「桃园机场捷运 A1站」（步行约5min）→ 搭机捷<strong>紫线直达车</strong>→ 桃园机场第一/第二航厦（35min）→ 确认你的航厦再下车</span>
       <div class="uber-alt"><span class="uber-logo">UBER</span> <span class="uber-info">替代方案：</span><span class="uber-price">~NT$1,100/车</span><span class="uber-time">40-50min</span> · 拖行李推荐！免转车免走地下街。但尖峰时段可能塞车</div>
     </div>
