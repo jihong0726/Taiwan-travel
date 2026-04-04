@@ -216,6 +216,42 @@
     .day-travel-summary{flex-wrap:wrap;gap:6px}
     .dts-stat{flex-wrap:wrap;gap:8px}
   }
+
+  /* ── Custom Place: FAB + Modal ── */
+  .fab-add{position:fixed;bottom:calc(72px + env(safe-area-inset-bottom,8px));right:16px;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#ff6b35,#f7931e);color:#fff;font-size:26px;font-weight:700;border:none;box-shadow:0 4px 14px rgba(255,107,53,.45);cursor:pointer;z-index:2001;display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s}
+  .fab-add:hover{transform:scale(1.1);box-shadow:0 6px 20px rgba(255,107,53,.5)}
+  .fab-add:active{transform:scale(.95)}
+
+  .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:3000;align-items:flex-end;justify-content:center;padding:0}
+  .modal-overlay.show{display:flex}
+  .modal-box{background:#fff;border-radius:20px 20px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom,8px));width:100%;max-width:500px;max-height:88vh;overflow-y:auto;box-shadow:0 -8px 40px rgba(0,0,0,.18);animation:slideUp .3s ease}
+  @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+  .modal-box::before{content:'';display:block;width:36px;height:4px;background:#ddd;border-radius:4px;margin:0 auto 14px}
+  .modal-box h3{margin:0 0 14px;font-size:1.1em;color:#333;text-align:center}
+  .modal-box label{display:block;font-size:.78em;font-weight:600;color:#888;margin-bottom:3px;text-transform:uppercase;letter-spacing:.5px}
+  .modal-box input,.modal-box select,.modal-box textarea{width:100%;padding:11px 14px;border:1.5px solid #e8e8e8;border-radius:10px;font-size:.88em;margin-bottom:10px;box-sizing:border-box;font-family:inherit;background:#fafafa;transition:border-color .2s,background .2s}
+  .modal-box input:focus,.modal-box select:focus,.modal-box textarea:focus{border-color:#ff6b35;outline:none;background:#fff}
+  .modal-box textarea{resize:vertical;min-height:56px}
+  .modal-row{display:flex;gap:10px}
+  .modal-row>div{flex:1}
+  .modal-btns{display:flex;gap:10px;margin-top:6px}
+  .modal-btns button{flex:1;padding:12px;border:none;border-radius:12px;font-size:.92em;font-weight:700;cursor:pointer;transition:opacity .2s}
+  .btn-save{background:linear-gradient(135deg,#ff6b35,#f7931e);color:#fff;box-shadow:0 3px 10px rgba(255,107,53,.3)}
+  .btn-save:hover{opacity:.9}
+  .btn-cancel{background:#f0f0f0;color:#999}
+  .btn-cancel:hover{background:#e4e4e4;color:#666}
+
+  .custom-place{border-left:4px solid #ff6b35;border-radius:0 12px 12px 0;padding:12px 14px;margin:10px 0;background:linear-gradient(135deg,#fff9f5,#fff4ed);position:relative;box-shadow:0 1px 4px rgba(255,107,53,.1)}
+  .custom-place .cp-header{display:flex;align-items:center;gap:6px;margin-bottom:5px;flex-wrap:wrap}
+  .custom-place .cp-badge{background:linear-gradient(135deg,#ff6b35,#f7931e);color:#fff;font-size:.62em;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.5px}
+  .custom-place .cp-name{font-weight:700;color:#333;font-size:.95em}
+  .custom-place .cp-time{font-size:.78em;color:#999;margin-left:auto;background:#fff;padding:1px 8px;border-radius:6px;border:1px solid #eee}
+  .custom-place .cp-cat{font-size:.75em;color:#ff6b35;font-weight:600}
+  .custom-place .cp-notes{font-size:.82em;color:#666;margin-top:5px;line-height:1.55;padding:6px 8px;background:#fff;border-radius:6px;border:1px dashed #f0ddd0}
+  .custom-place .cp-del{position:absolute;top:8px;right:8px;background:#fff;border:1px solid #eee;color:#ccc;font-size:.85em;cursor:pointer;padding:2px 7px;border-radius:50%;line-height:1;transition:all .2s}
+  .custom-place .cp-del:hover{color:#fff;background:#e53935;border-color:#e53935}
+  .custom-place .cp-gmaps{display:inline-flex;align-items:center;gap:3px;margin-top:8px;padding:4px 10px;background:linear-gradient(135deg,#4285f4,#34a853);color:#fff;border-radius:8px;font-size:.72em;font-weight:600;text-decoration:none;transition:opacity .2s}
+  .custom-place .cp-gmaps:hover{opacity:.85;color:#fff}
 </style>
 </head>
 <body>
@@ -979,14 +1015,14 @@
 
     <div class="item see">
       <div class="top-row">
-        <span class="time">16:30 – 17:45</span>
+        <span class="time">16:00 – 17:00</span>
         <span class="crowd mid">🟡 黄昏热门时段</span>
         <span class="local-badge">🔥 口袋名单</span>
       </div>
       <div class="name"><span class="must-badge">必去</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E8%B1%A1%E5%B1%B1%E6%AD%A5%E9%81%93%20%E5%8F%B0%E5%8C%97" target="_blank">象山步道<span class="gmap-icon">📍</span></a></div>
       <div class="desc">台北看101最佳角度。约20分钟登顶，夕阳+101合照绝美。</div>
       <div class="hours-bar"><span class="h-icon">🕐</span><span class="h-time">全天开放（建议日落前1h上山）</span></div>
-      <div class="crowd-tip">✅ 避峰策略：16:30上山，占好拍照位等日落。太晚上去好位置被占</div>
+      <div class="crowd-tip">✅ 避峰策略：16:00上山，占好拍照位拍照+等日落。拍完下山直奔101观景台看夕阳</div>
       <div class="detail"><strong>路线：</strong>捷运象山站2号出口 → 步行10min到登山口 → 六巨石观景台约20min<br><strong>📸 拍照tips：</strong>六巨石是最经典角度，101+台北市景</div>
       <div class="meta"><span class="tag t-see">🏔 步道</span><span class="tag t-cost">💰 免费</span><span class="tag t-time">⏱ 1h来回</span></div>
       <div class="nearby-alts">
@@ -1002,16 +1038,53 @@
     </div>
 
     <div class="travel-connector">
+      <span class="tc-icon">🚶</span>
+      <span class="tc-pill">10 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=象山步道+台北&destination=台北101观景台+台北&travelmode=walking" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      <span class="tc-label">象山下山 → 沿信义路五段150巷往101方向走 → 经过松德路 → 101购物中心<strong>5楼售票处</strong>（约10min平路）</span>
+    </div>
+
+    <div class="item see">
+      <div class="top-row">
+        <span class="time">17:15 – 18:30</span>
+        <span class="crowd mid">🟡 傍晚日落时段</span>
+      </div>
+      <div class="name"><span class="must-badge">必去</span> <a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97101%E8%A7%82%E6%99%AF%E5%8F%B0%20%E5%8F%B0%E5%8C%97" target="_blank">台北101观景台<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">89楼室内观景台 + 91楼户外观景台。先拍日落金色台北，再等天黑看百万夜景。<strong>刚爬完象山看101外观，再进去看台北全景，绝配！</strong></div>
+      <div class="hours-bar">
+        <span class="h-icon">🕐</span>
+        <span class="h-time">10:00 – 21:00（最后入场 20:15）</span>
+      </div>
+      <div class="crowd-tip">✅ 17:00后人潮减少，正好赶日落黄金时段。<strong>提前在 Klook/KKday 买票免排队！</strong></div>
+      <div class="detail">
+        <strong>🎟️ 门票：</strong>现场 NT$600/人 → <a href="https://www.klook.com/en-US/activity/1659-taipei-101-taipei/" target="_blank" style="color:#1565c0;font-weight:600;">Klook 约 NT$540-560 📲</a> ｜ <a href="https://www.kkday.com/en-us/product/8332-taipei-101-observatory-ticket" target="_blank" style="color:#1565c0;">KKday 📲</a><br>
+        <strong>📸 拍照tips：</strong>日落约 18:10-18:30（5月），建议17:15入场抢西面窗位<br>
+        <strong>🛍 B1美食街：</strong>鼎泰丰（排队长）、度小月（免排队）可当晚餐备案
+      </div>
+      <div class="meta"><span class="tag t-see">🏛 地标</span><span class="tag t-cost">💰 NT$600/人（线上约NT$540）</span><span class="tag t-time">⏱ 1-1.5h</span></div>
+      <div class="backup-box">
+        <div class="backup-title">⚠️ 不想花NT$600？</div>
+        <div class="backup-item">→ 免费替代：101大楼<strong>B1美食街 + 1F精品层</strong>拍照打卡也值得<br>→ 或去 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=Starbucks%20101%2035F%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>Starbucks 35F</strong> 📍</a>（需提前预约），一杯咖啡的价格看夜景</div>
+      </div>
+      <div class="nearby-alts">
+        <div class="na-title">🔄 信义区晚餐替代</div>
+        <div class="na-grid">
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E9%BC%8E%E6%B3%B0%E4%B8%B0101%20%E5%8F%B0%E5%8C%97" target="_blank">鼎泰丰101 📍</a><span class="na-desc">— B1美食街·经典小笼包</span></div>
+          <div class="na-item"><span class="na-cat food">🍜</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%BA%A6%E5%B0%8F%E6%9C%88101%20%E5%8F%B0%E5%8C%97" target="_blank">度小月101 📍</a><span class="na-desc">— 台南担仔面·不排队</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="travel-connector">
       <span class="tc-icon">🚃</span>
       <span class="tc-pill">15 min</span>
-      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=象山步道+台北&destination=双月食品社+台北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
-      
-      <span class="tc-label">捷运<strong>象山站</strong>进站 → 搭淡水信义线(红线)往淡水方向 → 在「信义安和站」下车 → <strong>3号出口</strong>步行5min → 双月食品社（信义路四段389号）</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=台北101+台北&destination=双月食品社+台北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      <span class="tc-label">101 B1出口 → 捷运<strong>台北101/世贸站</strong>进站 → 搭淡水信义线(红线)往淡水方向1站 → 在「信义安和站」下车 → <strong>3号出口</strong>步行5min</span>
     </div>
 
     <div class="item food">
       <div class="top-row">
-        <span class="time">18:30 – 19:30</span>
+        <span class="time">19:00 – 20:00</span>
         <span class="crowd mid">🟡 晚餐时段需等</span>
       </div>
       <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E5%8F%8C%E6%9C%88%E9%A3%9F%E5%93%81%E7%A4%BE%20%E5%8F%B0%E5%8C%97" target="_blank">双月食品社<span class="gmap-icon">📍</span></a></div>
@@ -1582,7 +1655,7 @@
 
   <div class="priority-section must">
     <h4>⭐ 必做 3 件事</h4>
-    1. 故宫博物院三宝（翠玉白菜/肉形石/毛公鼎）<br>2. 士林夜市白天版<br>3. 西门町最后伴手礼采购
+    1. 北投温泉早汤（旅途最放松时刻）<br>2. 故宫博物院三宝（翠玉白菜/肉形石/毛公鼎）<br>3. 士林夜市白天版 + 西门町最后伴手礼采购
   </div>
   <div class="priority-section skip">
     <h4>✂️ 时间不够可删</h4>
@@ -1594,9 +1667,9 @@
   <div class="day-travel-summary">
     <span class="dts-icon">🗺</span>
     <div class="dts-stat">
-      <span>总移动 <span class="num">~135 min</span></span>
+      <span>总移动 <span class="num">~170 min</span></span>
       <span>公车 <span class="num">~30 min</span></span>
-      <span>捷运+机捷 <span class="num">~60 min</span></span>
+      <span>捷运+机捷 <span class="num">~95 min</span></span>
       <span>步行 <span class="num">~45 min</span></span>
     </div>
   </div>
@@ -1604,14 +1677,54 @@
   <div class="timeline">
     <div class="travel-connector">
       <span class="tc-icon">🏨</span>
-      <span class="tc-pill">20 min</span>
-      <span class="tc-label">🏨 N Hotel出发（退房，寄放行李）→ 步行到捷运<strong>西门站6号出口</strong>进站 → 搭板南线(蓝线)往南港方向 → 在「台北车站」换淡水信义线(红线)往淡水方向 → 在「士林站」下车 → <strong>1号出口</strong>出站</span>
-      <div class="uber-alt"><span class="uber-logo">UBER</span> <span class="uber-info">替代方案：</span><span class="uber-price">~NT$200/车</span><span class="uber-time">15min</span></div>
+      <span class="tc-pill">25 min</span>
+      <span class="tc-label">🏨 N Hotel出发（退房，寄放行李）→ 步行到捷运<strong>西门站6号出口</strong>进站 → 搭板南线(蓝线)往南港方向 → 在「台北车站」换淡水信义线(红线)往北投方向 → 在「北投站」换<strong>新北投支线</strong> → 「新北投站」下车（全程约25min）</span>
+    </div>
+
+    <div class="item see">
+      <div class="top-row">
+        <span class="time">07:00 – 08:00</span>
+        <span class="crowd low">🟢 清晨包场</span>
+        <span class="local-badge">🔥 口袋名单</span>
+      </div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%8A%95%E6%B8%A9%E6%B3%89%20%E5%8F%B0%E5%8C%97" target="_blank">北投温泉 · 早汤<span class="gmap-icon">📍</span></a></div>
+      <div class="desc">最后一天用温泉开场！北投是台北最知名温泉区，白磺泉/青磺泉两种泉质。早上泡汤人最少，旅途疲劳一扫而光。</div>
+      <div class="hours-bar">
+        <span class="h-icon">🕐</span>
+        <span class="h-time">大众池多为 05:30 – 22:00（汤屋需预约）</span>
+      </div>
+      <div class="crowd-tip">✅ 07:00泡汤几乎没人，享受私人温泉时光。周二平日更清幽</div>
+      <div class="detail">
+        <strong>🎟️ 推荐选择：</strong><br>
+        • <strong>大众池（平价）：</strong><a href="https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%8A%95%E5%8D%83%E7%A6%BE%E6%B1%A4%E5%B1%8B%20%E5%8F%B0%E5%8C%97" target="_blank" style="color:#1565c0;">千禧汤 📍</a> 露天大众池 NT$40/人，北投公园内<br>
+        • <strong>私人汤屋（推荐）：</strong><a href="https://www.kkday.com/en-us/product/productlist?keyword=%E5%8C%97%E6%8A%95%E6%BA%AB%E6%B3%89" target="_blank" style="color:#1565c0;font-weight:600;">KKday 北投温泉 📲</a> 私人汤屋 NT$600-1,200/间（2人用·60-90min）<br>
+        • <strong>高CP推荐：</strong><a href="https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%8A%95%E6%98%A5%E5%A4%A9%E9%85%92%E5%BA%97%20%E5%8F%B0%E5%8C%97" target="_blank" style="color:#1565c0;">北投春天酒店 📍</a> 露天风呂 + 免费接驳车<br>
+        💡 <strong>提前在 Klook/KKday 买汤券更便宜</strong>，到现场直接泡
+      </div>
+      <div class="meta"><span class="tag t-see">♨️ 温泉</span><span class="tag t-cost">💰 NT$40-600/人</span><span class="tag t-time">⏱ 1h</span></div>
+      <div class="backup-box">
+        <div class="backup-title">⚠️ 不想泡汤/时间不够？</div>
+        <div class="backup-item">→ 免费替代：<a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%9C%B0%E7%83%AD%E8%B0%B7%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>地热谷</strong> 📍</a>（新北投站步行5min），硫磺烟雾仙境拍照，免门票<br>→ 或 <a class="backup-link" href="https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%8A%95%E6%B8%A9%E6%B3%89%E5%8D%9A%E7%89%A9%E9%A6%86%20%E5%8F%B0%E5%8C%97" target="_blank"><strong>北投温泉博物馆</strong> 📍</a>（09:00开门），日式澡堂古迹免费参观<br>→ 跳过北投直接去士林，多睡1小时</div>
+      </div>
+      <div class="nearby-alts">
+        <div class="na-title">🔄 北投一带顺路看</div>
+        <div class="na-grid">
+          <div class="na-item"><span class="na-cat see">🏛</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%9C%B0%E7%83%AD%E8%B0%B7%20%E5%8F%B0%E5%8C%97" target="_blank">地热谷 📍</a><span class="na-desc">— 硫磺烟雾仙境·免费</span></div>
+          <div class="na-item"><span class="na-cat see">🏛</span><a class="na-name" href="https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%8A%95%E5%9B%BE%E4%B9%A6%E9%A6%86%20%E5%8F%B0%E5%8C%97" target="_blank">北投图书馆 📍</a><span class="na-desc">— 全木造绿建筑·拍照圣地</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="travel-connector">
+      <span class="tc-icon">🚃</span>
+      <span class="tc-pill">10 min</span>
+      <a class="tc-route" href="https://www.google.com/maps/dir/?api=1&origin=新北投站+台北&destination=士林站+台北&travelmode=transit" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      <span class="tc-label">新北投站搭支线 → 北投站换淡水信义线(红线)往象山方向 → 在「士林站」下车 → <strong>1号出口</strong>出站</span>
     </div>
 
     <div class="item food">
       <div class="top-row">
-        <span class="time">08:30 – 09:10</span>
+        <span class="time">08:15 – 08:50</span>
         <span class="crowd low">🟢 早上客人少</span>
       </div>
       <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=%E6%AD%A3%E8%B1%AA%E5%AD%A3%E6%B0%B4%E9%A5%BA%20%E5%8F%B0%E5%8C%97" target="_blank">正豪季水饺<span class="gmap-icon">📍</span></a></div>
@@ -1869,10 +1982,10 @@
     <h3>📊 每日交通时间对比</h3>
     <div class="row"><span class="icon">🔴</span><div><strong>Day1 · 西门/万华</strong> — 移动 ~105min（含机场70min）<br>🟢 最轻松日，步行为主</div></div>
     <div class="row"><span class="icon">🟠</span><div><strong>Day2 · 永康/大安</strong>（五）— 移动 ~75min<br>🟢 最高效日，同街区步行为主</div></div>
-    <div class="row"><span class="icon">🟢</span><div><strong>Day3 · 猫空/南港</strong>（六）— 移动 ~130min<br>🟡 缆车50min+捷运65min，周六节奏适中</div></div>
+    <div class="row"><span class="icon">🟢</span><div><strong>Day3 · 猫空/101/象山</strong>（六）— 移动 ~140min<br>🟡 缆车50min+捷运65min+步行25min，含101观景台</div></div>
     <div class="row"><span class="icon">🔵</span><div><strong>Day4 · 大稻埕/中正</strong>（日）— 移动 ~95min<br>🟢 高效U形路线，步行55min+捷运40min</div></div>
     <div class="row"><span class="icon">🟣</span><div><strong>Day5 · 九份/松山</strong>（一）— 移动 ~240min<br>🟡 交通最重日！但周一人最少</div></div>
-    <div class="row"><span class="icon">🟢</span><div><strong>Day6 · 士林/故宫</strong> — 移动 ~135min（含去机场45min）<br>🟡 最后日，注意时间掌控</div></div>
+    <div class="row"><span class="icon">🟢</span><div><strong>Day6 · 北投/故宫/士林</strong> — 移动 ~170min（含去机场45min）<br>🟡 最后日加了北投温泉，早起出发注意时间掌控</div></div>
   </div>
 
   <div class="checklist">
@@ -1893,6 +2006,47 @@
     <div class="row"><span class="icon">🔌</span><div><strong>插头：</strong>台湾110V扁头（A型），和马来西亚不同，<strong>带转接头</strong></div></div>
     <div class="row"><span class="icon">🍽</span><div><strong>订位：</strong>Indulge Bistro 提前3-5天！故宫晶华也建议提前</div></div>
     <div class="row"><span class="icon">🧴</span><div><strong>防晒：</strong>5月紫外线已强，防晒霜+帽子</div></div>
+  </div>
+
+  <div class="checklist" style="background:linear-gradient(135deg,#fff8e1,#fff3e0);border:2px solid #ffb74d;">
+    <h3>🎟️ 门票优惠攻略（提前线上买！）</h3>
+    <div class="row"><span class="icon">⚡</span><div><strong style="color:#e65100;">核心原则：Klook / KKday 提前买 = 比现场便宜 + 免排队</strong><br>两个平台比价，哪个便宜买哪个。首次注册通常有新人折扣码。</div></div>
+
+    <div class="row"><span class="icon">🏛</span><div><strong>故宫博物院</strong>（Day6）— 现场 NT$350/人<br>
+      → <a href="https://www.klook.com/en-US/activity/10136-national-palace-museum-ticket-package-taipei/" target="_blank" style="color:#1565c0;font-weight:600;">Klook 故宫门票 📲</a> 约 NT$300-320，即买即用<br>
+      → <a href="https://www.klook.com/en-US/activity/937-national-palace-museum-shung-ye-museum-of-formosan-aborigines-taipei/" target="_blank" style="color:#1565c0;">Klook 故宫+顺益原住民博物馆套票 📲</a> 两馆更划算<br>
+      💡 <strong>每人省 NT$30-50</strong></div></div>
+
+    <div class="row"><span class="icon">🚡</span><div><strong>猫空缆车</strong>（Day3）— 现场单程 NT$120/人<br>
+      → <a href="https://www.klook.com/en-US/activity/16000-maokong-gondola-combo-ticket-taipei/" target="_blank" style="color:#1565c0;font-weight:600;">Klook 猫空缆车套票 📲</a> 含来回+动物园门票 更划算<br>
+      → 官方 <strong>一日票 NT$300</strong>（不限次数搭乘，现场或悠游卡都可买）<br>
+      💡 买来回票 NT$240 vs 一日票 NT$300 → <strong>来回票即可</strong></div></div>
+
+    <div class="row"><span class="icon">🔬</span><div><strong>袖珍博物馆</strong>（Day2）— 现场 NT$200/人<br>
+      → <a href="https://www.klook.com/en-US/activity/15528-miniatures-museum-taiwan-ticket-taipei/" target="_blank" style="color:#1565c0;font-weight:600;">Klook 袖珍博物馆门票 📲</a> 约 NT$180<br>
+      → <a href="https://www.klook.com/en-US/activity/36726-national-taiwan-museum-miniatures-moca-taipei-combo-ticket/" target="_blank" style="color:#1565c0;">Klook 三馆联票（袖珍+台博+当代艺术馆）📲</a> 博物馆控必买<br>
+      💡 <strong>每人省 NT$20+</strong></div></div>
+
+    <div class="row"><span class="icon">🏛</span><div><strong>国立台湾博物馆</strong>（Day4）— 现场 NT$30/人<br>
+      → 太便宜了，<strong>直接现场买即可</strong>，不用线上订</div></div>
+
+    <div class="row" style="background:#e3f2fd;border-radius:8px;padding:8px;margin-top:8px;"><span class="icon">🌟</span><div><strong style="color:#0d47a1;">额外推荐：台北101观景台</strong> — 现场 NT$600/人<br>
+      → <a href="https://www.klook.com/en-US/activity/1659-taipei-101-taipei/" target="_blank" style="color:#1565c0;font-weight:600;">Klook 101观景台门票 📲</a> 线上优惠约 NT$540-560<br>
+      → <a href="https://www.kkday.com/en-us/product/8332-taipei-101-observatory-ticket" target="_blank" style="color:#1565c0;">KKday 101观景台门票 📲</a><br>
+      💡 <strong>建议安排在 Day3 象山步道后</strong>（傍晚先登象山拍101外观 → 下山搭捷运到101 → 看夕阳+夜景）<br>
+      ⏰ 营业到 21:00（最后入场 20:15）· 信义线「台北101/世贸站」4号出口</div></div>
+
+    <div class="row" style="background:#e8f5e9;border-radius:8px;padding:8px;margin-top:8px;"><span class="icon">♨️</span><div><strong style="color:#1b5e20;">额外推荐：北投温泉体验</strong><br>
+      → <a href="https://www.kkday.com/en-us/product/productlist?keyword=%E5%8C%97%E6%8A%95%E6%BA%AB%E6%B3%89" target="_blank" style="color:#1565c0;font-weight:600;">KKday 北投温泉 📲</a> 私人汤屋 NT$600-1,200/间（2人用）<br>
+      → <a href="https://www.klook.com/zh-TW/blog/trend-tip-hot-spring-cheap-beitou-taiwan/" target="_blank" style="color:#1565c0;">Klook 北投温泉推荐 📲</a> 大众池 NT$40起<br>
+      💡 <strong>建议安排在 Day6 上午</strong>（故宫前加个温泉早汤）：新北投站泡 1 小时 → 搭捷运去故宫<br>
+      🚃 淡水信义线「新北投站」，从西门町搭捷运约 25min 直达</div></div>
+
+    <div class="row" style="background:#fce4ec;border-radius:8px;padding:8px;margin-top:8px;"><span class="icon">🃏</span><div><strong style="color:#b71c1c;">北北基好玩卡 — 值得买吗？</strong><br>
+      → <a href="https://funpass.travel.taipei/?lang=zh_TW" target="_blank" style="color:#1565c0;">官网 📲</a> ｜ <a href="https://www.klook.com/en-US/activity/76302-taipei-unlimited-fun-pass-pick-up-taipei/" target="_blank" style="color:#1565c0;">Klook购买 📲</a> ｜ <a href="https://www.kkday.com/en-us/product/19392-taipei-fun-pass-unlimited-travel-pass" target="_blank" style="color:#1565c0;">KKday购买 📲</a><br>
+      📋 <strong>无限畅游卡</strong>：1日 NT$1,300 / 2日 NT$1,700 / 3日 NT$2,000<br>
+      包含 34 个景点（故宫+101+猫空缆车+动物园+袖珍博物馆+台博馆+美丽华摩天轮+野柳...）+ 无限搭捷运/公车<br>
+      ⚠️ <strong>你的行程分散 6 天</strong>，好玩卡最多 3 天有效，无法覆盖全部。<strong>如果你愿意把 101 和故宫排在同 1-2 天</strong>，2日券 NT$1,700 就回本（故宫350+101 600+缆车240+袖珍200+交通~300 = NT$1,690）。否则<strong>单独买 Klook 散票更灵活</strong>。</div></div>
   </div>
 
   <div class="checklist">
@@ -1948,8 +2102,10 @@ const locations = [
   {day:3,name:"猓玀苑",lat:24.9690,lng:121.5870,type:"food"},
   {day:3,name:"乐扣乐扣 LaLaport",lat:25.0548,lng:121.6065,type:"shop"},
   {day:3,name:"Your Curve",lat:25.0550,lng:121.6060,type:"shop"},
+  {day:3,name:"台北101观景台",lat:25.0340,lng:121.5645,type:"see"},
   {day:3,name:"双月食品社",lat:25.0330,lng:121.5535,type:"food"},
   {day:3,name:"象山步道 🔥",lat:25.0270,lng:121.5710,type:"local"},
+  {day:6,name:"北投温泉",lat:25.1370,lng:121.5070,type:"see"},
   {day:6,name:"正豪季水饺",lat:25.0880,lng:121.5240,type:"food"},
   {day:6,name:"至善区（故宫）",lat:25.1024,lng:121.5485,type:"see"},
   {day:6,name:"士林夜市",lat:25.0880,lng:121.5245,type:"food"},
@@ -1965,8 +2121,8 @@ const routes={
   4:["重庆豆浆炸蛋饼","大稻埕","永乐鸡卷大王","和盛 1947","永富冰淇淋","林华泰茶行","中正纪念堂","国立台湾博物馆","50岚","宁夏夜市","天津葱抓饼"],
   5:["叶家小笼包","九份老街","阿柑姨芋圆","红茶屋","饶河夜市"],
   2:["Bonica Café","永康牛肉面","杭州小笼汤包","思慕昔","青田七六","华山1914","袖珍博物馆","Indulge Bistro ⭐","师大夜市"],
-  3:["台北动物园站","猓玀苑","乐扣乐扣 LaLaport","Your Curve","象山步道 🔥","双月食品社"],
-  6:["正豪季水饺","至善区（故宫）","士林夜市"]
+  3:["台北动物园站","猓玀苑","乐扣乐扣 LaLaport","Your Curve","象山步道 🔥","台北101观景台","双月食品社"],
+  6:["北投温泉","正豪季水饺","至善区（故宫）","士林夜市"]
 };
 Object.keys(routes).forEach(d=>{
   const names=routes[d];
@@ -2032,7 +2188,7 @@ new Chart(transCtx,{
     labels:['Day1','Day2','Day3','Day4','Day5','Day6'],
     datasets:[{
       label:'移动时间 (min)',
-      data:[105,75,130,95,240,135],
+      data:[105,75,140,95,240,170],
       backgroundColor:['#e74c3c','#e67e22','#2ecc71','#3498db','#9b59b6','#1abc9c'],
       borderRadius:6,
       barThickness:28
@@ -2128,6 +2284,133 @@ function goToMap(){
     <span class="bn-icon">⬆️</span>顶部
   </button>
 </nav>
+
+<!-- FAB + Modal -->
+<button class="fab-add" onclick="openAddModal()" title="添加新地点">＋</button>
+
+<div class="modal-overlay" id="addModal" onclick="if(event.target===this)closeAddModal()">
+  <div class="modal-box">
+    <h3>📌 添加新地点</h3>
+    <label>归属天数</label>
+    <select id="cpDay">
+      <option value="0">Day1 · 5/7（四）西门/万华</option>
+      <option value="1">Day2 · 5/8（五）永康/大安</option>
+      <option value="2">Day3 · 5/9（六）猫空/101/象山</option>
+      <option value="3">Day4 · 5/10（日）大稻埕/中正</option>
+      <option value="4">Day5 · 5/11（一）九份/饶河</option>
+      <option value="5">Day6 · 5/12（二）北投/故宫/士林</option>
+    </select>
+    <label>地点名称 *</label>
+    <input type="text" id="cpName" placeholder="例：阜杭豆浆">
+    <div class="modal-row">
+      <div>
+        <label>类别</label>
+        <select id="cpCat">
+          <option value="🍜 美食">🍜 美食</option>
+          <option value="☕ 咖啡">☕ 咖啡</option>
+          <option value="🏛 景点">🏛 景点</option>
+          <option value="🛍 购物">🛍 购物</option>
+          <option value="🍷 酒吧">🍷 酒吧</option>
+          <option value="♨️ 体验">♨️ 体验</option>
+          <option value="📍 其他">📍 其他</option>
+        </select>
+      </div>
+      <div>
+        <label>时间（选填）</label>
+        <input type="text" id="cpTime" placeholder="14:00">
+      </div>
+    </div>
+    <label>地址 / Google Maps 链接（选填）</label>
+    <input type="text" id="cpAddr" placeholder="例：台北市中正区忠孝东路...">
+    <label>备注</label>
+    <textarea id="cpNotes" placeholder="朋友推荐的、路过看到的、网上种草的..."></textarea>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeAddModal()">取消</button>
+      <button class="btn-save" onclick="savePlace()">保存</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── Custom Places: localStorage persistence ── */
+const CP_KEY='taipei_custom_places';
+function getPlaces(){try{return JSON.parse(localStorage.getItem(CP_KEY))||[]}catch(e){return[]}}
+function savePlaces(arr){localStorage.setItem(CP_KEY,JSON.stringify(arr))}
+
+function openAddModal(){
+  document.getElementById('addModal').classList.add('show');
+  /* auto-select current visible day */
+  const active=document.querySelector('.tab-bar button.active');
+  if(active){
+    const dayAttr=active.getAttribute('data-day');
+    if(dayAttr){document.getElementById('cpDay').value=parseInt(dayAttr)-1}
+  }
+}
+function closeAddModal(){
+  document.getElementById('addModal').classList.remove('show');
+  ['cpName','cpTime','cpAddr','cpNotes'].forEach(id=>document.getElementById(id).value='');
+}
+
+function savePlace(){
+  const name=document.getElementById('cpName').value.trim();
+  if(!name){alert('请填写地点名称');return}
+  const place={
+    id:Date.now(),
+    day:parseInt(document.getElementById('cpDay').value),
+    name:name,
+    cat:document.getElementById('cpCat').value,
+    time:document.getElementById('cpTime').value.trim(),
+    addr:document.getElementById('cpAddr').value.trim(),
+    notes:document.getElementById('cpNotes').value.trim()
+  };
+  const places=getPlaces();
+  places.push(place);
+  savePlaces(places);
+  renderPlaces();
+  closeAddModal();
+}
+
+function deletePlace(id){
+  if(!confirm('删除这个地点？'))return;
+  const places=getPlaces().filter(p=>p.id!==id);
+  savePlaces(places);
+  renderPlaces();
+}
+
+function renderPlaces(){
+  /* clear old custom places */
+  document.querySelectorAll('.custom-place').forEach(el=>el.remove());
+  const places=getPlaces();
+  places.forEach(p=>{
+    const panel=document.getElementById('day'+p.day);
+    if(!panel)return;
+    const timeline=panel.querySelector('.timeline');
+    if(!timeline)return;
+    const div=document.createElement('div');
+    div.className='custom-place';
+    let gmapLink='';
+    if(p.addr){
+      const isUrl=p.addr.startsWith('http');
+      const href=isUrl?p.addr:'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(p.addr);
+      gmapLink='<a class="cp-gmaps" href="'+href+'" target="_blank">🗺️ 在地图查看</a>';
+    }else{
+      gmapLink='<a class="cp-gmaps" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(p.name+' 台北')+'" target="_blank">🗺️ 搜索地图</a>';
+    }
+    div.innerHTML='<button class="cp-del" onclick="deletePlace('+p.id+')" title="删除">✕</button>'
+      +'<div class="cp-header">'
+      +'<span class="cp-badge">自添</span>'
+      +'<span class="cp-cat">'+p.cat+'</span>'
+      +(p.time?'<span class="cp-time">'+p.time+'</span>':'')
+      +'</div>'
+      +'<div class="cp-name">'+p.name+'</div>'
+      +(p.notes?'<div class="cp-notes">'+p.notes+'</div>':'')
+      +gmapLink;
+    timeline.appendChild(div);
+  });
+}
+/* render on load */
+renderPlaces();
+</script>
 
 </body>
 </html>
