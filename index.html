@@ -7,7 +7,6 @@
 <title>台北 6 天深度行程 · 5/7 – 5/12</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   :root {
     --bg:#faf9f7;--card:#fff;--text:#1a1a2e;--muted:#7f8c8d;
@@ -95,17 +94,32 @@
   .timeline::before{content:'';position:absolute;left:9px;top:0;bottom:0;width:2px;background:var(--border)}
 
   /* TRAVEL CONNECTOR */
-  .travel-connector{position:relative;display:flex;align-items:center;gap:6px;padding:8px 8px 8px 8px;margin:4px 0;font-size:.74em;color:var(--muted);background:linear-gradient(90deg,#f9f9f9,transparent);border-radius:8px;border:1px dashed #e0e0e0;flex-wrap:wrap}
+  .travel-connector{position:relative;display:flex;align-items:center;gap:6px;padding:6px 10px;margin:4px 0;font-size:.74em;color:var(--muted);background:linear-gradient(90deg,#f9f9f9,transparent);border-radius:8px;border:1px dashed #e0e0e0;cursor:pointer;transition:background .2s}
+  .travel-connector:hover{background:linear-gradient(90deg,#f0f4ff,transparent)}
   .travel-connector::before{content:'';position:absolute;left:-21px;top:0;bottom:0;width:2px;border-left:2px dashed #d5d5d5}
-  .tc-icon{font-size:1.1em;flex-shrink:0;margin-top:1px}
+  .tc-icon{font-size:1.1em;flex-shrink:0}
   .tc-pill{background:#e8e8e8;padding:3px 10px;border-radius:12px;font-weight:700;color:#444;white-space:nowrap;flex-shrink:0}
-  .tc-label{color:#666;line-height:1.5;flex:0 0 100%}
-  .tc-route{display:inline-flex;align-items:center;gap:2px;padding:3px 8px;background:linear-gradient(135deg,#4285f4,#34a853);color:#fff;border-radius:12px;font-size:.68em;font-weight:600;text-decoration:none;cursor:pointer;transition:opacity .2s;flex-shrink:0;white-space:nowrap;height:fit-content}
+  .tc-hint{font-size:.85em;color:#bbb;margin-left:4px;flex-shrink:0}
+  .travel-connector.expanded .tc-hint{display:none}
+  .tc-toggle{font-size:.8em;color:#aaa;transition:transform .25s;flex-shrink:0;margin-left:auto}
+  .travel-connector.expanded .tc-toggle{transform:rotate(180deg)}
+  .tc-route{display:none;align-items:center;gap:2px;padding:3px 8px;background:linear-gradient(135deg,#4285f4,#34a853);color:#fff;border-radius:12px;font-size:.85em;font-weight:600;text-decoration:none;cursor:pointer;transition:opacity .2s;flex-shrink:0;white-space:nowrap;margin-top:8px}
+  .travel-connector.expanded .tc-route{display:inline-flex}
   .tc-route:hover{opacity:.85;color:#fff}
   .tc-route .route-icon{font-size:.9em}
+  .tc-detail{display:none;width:100%;margin-top:6px}
+  .travel-connector.expanded .tc-detail{display:block}
+  .tc-steps{list-style:none;padding:0;margin:4px 0 0}
+  .tc-steps li{position:relative;padding:5px 10px 5px 26px;margin:0;font-size:.95em;color:#444;line-height:1.45;border-left:2px solid #e0e0e0}
+  .tc-steps li:last-child{border-left-color:transparent}
+  .tc-steps li::before{content:'';position:absolute;left:-6px;top:10px;width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid #4285f4}
+  .tc-steps li:last-child::before{background:#4285f4}
+  .tc-steps li strong{color:#1a73e8}
+  .tc-label{color:#666;line-height:1.5}
   .tc-label strong{color:#333}
-  .travel-connector>.uber-alt{flex:0 0 100%}
-  .travel-connector>.nearby-alts{flex:0 0 100%}
+  .travel-connector>.uber-alt{display:none;width:100%;margin-top:4px}
+  .travel-connector.expanded>.uber-alt{display:block}
+  .travel-connector>.nearby-alts{width:100%}
 
   /* ITEM CARD */
   .item{position:relative;background:var(--card);border-radius:14px;padding:14px 16px;margin-bottom:2px;box-shadow:var(--shadow);border-left:3px solid transparent;transition:transform .15s}
@@ -183,8 +197,6 @@
   .ov-card .label{font-size:.78em;color:var(--muted)}
   .chart-container{background:#fff;border-radius:12px;padding:16px;box-shadow:var(--shadow);margin:12px 0}
   .chart-container h3{font-size:1em;margin-bottom:12px}
-  .chart-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .chart-box{position:relative;height:220px}
 
   .checklist{background:#fff;border-radius:12px;padding:16px;box-shadow:var(--shadow);margin:12px 0}
   .checklist h3{font-size:1em;margin-bottom:10px}
@@ -208,20 +220,13 @@
   .food-card .fc-nav:hover{background:#e74c3c;color:#fff}
 
   /* BOTTOM NAV */
-  .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;align-items:center;padding:8px 0 env(safe-area-inset-bottom,8px);box-shadow:0 -2px 12px rgba(0,0,0,.08);z-index:2000;border-top:1px solid var(--border)}
-  .bottom-nav button{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;font-size:.65em;color:var(--muted);cursor:pointer;padding:4px 12px;transition:color .2s}
-  .bottom-nav button.active{color:var(--accent)}
-  .bottom-nav button .bn-icon{font-size:1.6em}
 
   @media(max-width:480px){
     .hero h1{font-size:1.5em}
     #map{height:220px}
     .overview-grid{grid-template-columns:1fr}
-    .chart-row{grid-template-columns:1fr}
-    .chart-box{height:200px}
     .hours-bar{flex-wrap:wrap}
-    .travel-connector{flex-wrap:wrap;gap:6px}
-    .tc-label{font-size:.72em}
+    .tc-steps li{font-size:.9em;padding-left:22px}
     .day-travel-summary{flex-wrap:wrap;gap:6px}
     .dts-stat{flex-wrap:wrap;gap:8px}
   }
@@ -1906,17 +1911,20 @@
   <div class="overview-grid">
     <div class="ov-card"><div class="num" style="color:var(--day1)">6</div><div class="label">天</div></div>
     <div class="ov-card"><div class="num" style="color:var(--food)">62</div><div class="label">总地点数</div></div>
-    <div class="ov-card"><div class="num" style="color:var(--transport)">~765 min</div><div class="label">总交通时间</div></div>
-    <div class="ov-card"><div class="num" style="color:var(--local)">15</div><div class="label">🔥口袋名单</div></div>
+    <div class="ov-card"><div class="num" style="color:var(--local)">5</div><div class="label">🌙 夜市</div></div>
+    <div class="ov-card"><div class="num" style="color:var(--see)">3</div><div class="label">🎯 目标</div></div>
   </div>
 
-  <!-- CHARTS -->
-  <div class="chart-container">
-    <h3>📊 预算 & 交通分析</h3>
-    <div class="chart-row">
-      <div class="chart-box"><canvas id="budgetChart"></canvas></div>
-      <div class="chart-box"><canvas id="transportChart"></canvas></div>
+  <!-- NEARBY FINDER -->
+  <div class="chart-container" style="background:linear-gradient(135deg,#e3f2fd,#e8eaf6);border:2px solid #42a5f5;">
+    <h3>📍 我在哪里？— 附近可以去的地方</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
+      <select id="nearbySelect" style="flex:1;min-width:200px;padding:10px 14px;border:1.5px solid #90caf9;border-radius:10px;font-size:.88em;background:#fff;font-family:inherit">
+        <option value="">— 选择你目前的位置 —</option>
+      </select>
+      <button id="nearbyGps" style="padding:10px 16px;border:none;border-radius:10px;background:linear-gradient(135deg,#4285f4,#1a73e8);color:#fff;font-weight:700;font-size:.85em;cursor:pointer;white-space:nowrap">📡 用GPS定位</button>
     </div>
+    <div id="nearbyResults" style="font-size:.85em;color:#666"></div>
   </div>
 
   <!-- FOOD FILTER -->
@@ -1935,14 +1943,114 @@
     <div class="food-grid" id="foodGrid"></div>
   </div>
 
-  <div class="checklist">
-    <h3>📊 每日交通时间对比</h3>
-    <div class="row"><span class="icon">🔴</span><div><strong>Day1 · 西门/万华</strong> — 移动 ~105min（含机场70min）<br>🟢 最轻松日，步行为主</div></div>
-    <div class="row"><span class="icon">🟠</span><div><strong>Day2 · 永康/大安</strong>（五）— 移动 ~75min<br>🟢 最高效日，同街区步行为主</div></div>
-    <div class="row"><span class="icon">🟢</span><div><strong>Day3 · 动物园/101/象山</strong>（六）— 移动 ~120min<br>🟢 捷运75min+步行45min，节奏轻松</div></div>
-    <div class="row"><span class="icon">🔵</span><div><strong>Day4 · 大稻埕/中正</strong>（日）— 移动 ~95min<br>🟢 高效U形路线，步行55min+捷运40min</div></div>
-    <div class="row"><span class="icon">🟣</span><div><strong>Day5 · 九份/松山</strong>（一）— 移动 ~240min<br>🟡 交通最重日！但周一人最少</div></div>
-    <div class="row"><span class="icon">🟢</span><div><strong>Day6 · 北投/故宫/士林</strong> — 移动 ~170min（含去机场45min）<br>🟡 最后日加了北投温泉，早起出发注意时间掌控</div></div>
+  <!-- NIGHT MARKET GUIDE -->
+  <div class="checklist" style="background:linear-gradient(135deg,#1a1a2e,#16213e);color:#eee;border:none;">
+    <h3 style="color:#ffd700;">🌙 台北夜市攻略</h3>
+    <div class="row" style="background:rgba(255,255,255,.08);border-radius:8px;"><span class="icon">🏮</span><div><strong style="color:#ffd700;">南机场夜市</strong>（Day1）— 在地人最爱，观光客少<br>必吃：山内�的鸡肉饭、臭老板现蒸臭豆腐、来来水饺<br><span style="color:#aaa">📍 中华路二段307巷 · 17:30后陆续开摊</span></div></div>
+    <div class="row" style="background:rgba(255,255,255,.08);border-radius:8px;"><span class="icon">🏮</span><div><strong style="color:#ffd700;">师大夜市</strong>（Day2）— 学生区平价美食聚集<br>必吃：灯笼卤味、师园盐酥鸡、许记生煎包<br><span style="color:#aaa">📍 师大路39巷 · 文青小店+巷弄美食</span></div></div>
+    <div class="row" style="background:rgba(255,255,255,.08);border-radius:8px;"><span class="icon">🏮</span><div><strong style="color:#ffd700;">宁夏夜市</strong>（Day4）— 米其林必比登最多的夜市<br>必吃：刘芋仔蛋黄芋饼、方家鸡肉饭、环记麻油鸡<br><span style="color:#aaa">📍 宁夏路 · 全长300m，小而精</span></div></div>
+    <div class="row" style="background:rgba(255,255,255,.08);border-radius:8px;"><span class="icon">🏮</span><div><strong style="color:#ffd700;">饶河夜市</strong>（Day5）— 台北最老夜市之一<br>必吃：福州世祖胡椒饼（排队王）、陈董药炖排骨<br><span style="color:#aaa">📍 松山站1号出口 · 入口牌楼很壮观</span></div></div>
+    <div class="row" style="background:rgba(255,255,255,.08);border-radius:8px;"><span class="icon">🏮</span><div><strong style="color:#ffd700;">士林夜市</strong>（Day6）— 台北规模最大、最知名<br>必吃：钟记原上海生煎包、好朋友凉面、地下美食区大饼包小饼<br><span style="color:#aaa">📍 剑潭站1号出口 · 建议白天去人少50%</span></div></div>
+  </div>
+
+  <!-- BREAKFAST GUIDE -->
+  <div class="checklist" style="background:linear-gradient(135deg,#fdf6ec,#fef9e7);border:2px solid #f9ca24;">
+    <h3 style="color:#b8860b;">🥞 早餐攻略</h3>
+    <div class="row"><span class="icon">🥚</span><div><strong style="color:#b8860b;">重庆豆浆炸蛋饼</strong>（Day4）— 大稻埕在地早餐<br>招牌炸蛋饼外酥内嫩，配咸豆浆一绝。排队约10-15分钟。<br><span style="color:#999">📍 大同区重庆北路二段 · 06:00-11:30 · 周一休</span></div></div>
+    <div class="row"><span class="icon">🥟</span><div><strong style="color:#b8860b;">叶家小笼包</strong>（Day5）— 九份出发前的元气早餐<br>皮薄汁多价格亲民，在地人的日常。<br><span style="color:#999">📍 松山区饶河街 · 06:30-13:00</span></div></div>
+    <div class="row"><span class="icon">🥟</span><div><strong style="color:#b8860b;">正豪季水饺</strong>（Day6）— 士林区人气水饺<br>高丽菜水饺鲜甜爆汁，搭配酸辣汤完美。<br><span style="color:#999">📍 士林区小北街 · 07:00-14:00</span></div></div>
+    <div class="row"><span class="icon">💡</span><div><strong>Tips：</strong>台北早餐店通常 06:00-11:00 营业，热门的10:00后常卖完。建议08:00前到。</div></div>
+  </div>
+
+  <!-- NOODLE GUIDE -->
+  <div class="checklist" style="background:linear-gradient(135deg,#fff5f0,#fff0e6);border:2px solid #ff6b35;">
+    <h3 style="color:#d35400;">🍜 面食攻略</h3>
+    <div class="row"><span class="icon">🥩</span><div><strong style="color:#d35400;">永康牛肉面</strong>（Day2）— 台北牛肉面天花板<br>半筋半肉是经典，红烧汤头浓郁不腻。11:00开门即到可免排队。<br><span style="color:#999">📍 大安区金华街31巷17号 · NT$250/碗 · 周日休</span></div></div>
+    <div class="row"><span class="icon">🍝</span><div><strong style="color:#d35400;">阿宗面线</strong>（Day1）— 西门町地标小吃<br>大肠面线站着吃才道地，加辣更香。大碗NT$60超值。<br><span style="color:#999">📍 万华区峨嵋街8-1号 · 无座位，站着吃</span></div></div>
+    <div class="row"><span class="icon">🍜</span><div><strong style="color:#d35400;">老山东家常面</strong>（Day1）— 眷村手工面<br>牛肉烩面、炸酱面都是招牌，面条Q弹有嚼劲。<br><span style="color:#999">📍 万华区康定路 · NT$100/碗</span></div></div>
+    <div class="row"><span class="icon">💡</span><div><strong>Tips：</strong>台北牛肉面竞争激烈，每家风格不同。永康偏红烧浓郁，林东芳偏清炖鲜甜。</div></div>
+  </div>
+
+  <!-- CAFE GUIDE -->
+  <div class="checklist" style="background:linear-gradient(135deg,#f5f0eb,#ebe0d0);border:2px solid #8d6e63;">
+    <h3 style="color:#5d4037;">☕ 咖啡攻略</h3>
+    <div class="row"><span class="icon">☕</span><div><strong style="color:#5d4037;">Bonica Café</strong>（Day2）— 永康街精品咖啡<br>自家烘焙、手冲单品出色，环境安静适合放空。<br><span style="color:#999">📍 大安区永康街 · NT$200-350 · 10:00-18:00</span></div></div>
+    <div class="row"><span class="icon">🏛</span><div><strong style="color:#5d4037;">和盛 1947</strong>（Day4）— 大稻埕老宅咖啡<br>日治时期老建筑改造，天井座位氛围一流。<br><span style="color:#999">📍 大同区迪化街一段 · NT$200 · 11:00-19:00</span></div></div>
+    <div class="row"><span class="icon">🧋</span><div><strong style="color:#5d4037;">50岚</strong>（Day4）— 台湾国民手摇饮<br>四季春+微糖少冰是经典配方。全台连锁，随处可见。<br><span style="color:#999">📍 各处均有 · NT$30-60</span></div></div>
+    <div class="row"><span class="icon">💡</span><div><strong>Tips：</strong>台北咖啡文化成熟，巷弄里藏着很多精品咖啡店。永康街、民生社区、大稻埕是三大咖啡聚集地。</div></div>
+  </div>
+
+  <!-- DESSERT GUIDE -->
+  <div class="checklist" style="background:linear-gradient(135deg,#fdf2f8,#fce4ec);border:2px solid #e91e63;">
+    <h3 style="color:#c2185b;">🍧 甜品攻略</h3>
+    <div class="row"><span class="icon">🥭</span><div><strong style="color:#c2185b;">思慕昔 芒果冰</strong>（Day2）— 永康街排队王<br>5月正值芒果季开始！新鲜爱文芒果+芒果冰淇淋+炼乳，必点。<br><span style="color:#999">📍 大安区永康街15号 · NT$200 · 观光客多但值得</span></div></div>
+    <div class="row"><span class="icon">🍠</span><div><strong style="color:#c2185b;">阿柑姨芋圆</strong>（Day5）— 九份经典甜品<br>热芋圆+地瓜圆+红豆，坐在店里看山海景色。<br><span style="color:#999">📍 九份竖崎路5号 · NT$50 · 配景色吃更有味道</span></div></div>
+    <div class="row"><span class="icon">🍦</span><div><strong style="color:#c2185b;">永富冰淇淋</strong>（Day4）— 大稻埕古早味<br>传统台式冰淇淋，口味复古（花生、芋头、红豆），一球NT$20起。<br><span style="color:#999">📍 大同区迪化街一段 · 散步时顺手买一支</span></div></div>
+    <div class="row"><span class="icon">💡</span><div><strong>Tips：</strong>5月台北已经很热，冰品是续命神器。芒果季5-9月，刚好赶上！</div></div>
+  </div>
+
+  <!-- FINE DINING GUIDE -->
+  <div class="checklist" style="background:linear-gradient(135deg,#f3e8ff,#ede7f6);border:2px solid #7c4dff;">
+    <h3 style="color:#4a148c;">🍷 餐厅攻略</h3>
+    <div class="row"><span class="icon">🍽</span><div><strong style="color:#4a148c;">Indulge Bistro</strong>（Day2）— 实验性小酒馆<br>台北餐酒馆代表，Tasting Menu 创意十足。<strong>需提前3-5天订位！</strong><br><span style="color:#999">📍 大安区仁爱路四段345巷 · NT$1,200/人 · 周日休</span></div></div>
+    <div class="row"><span class="icon">🍲</span><div><strong style="color:#4a148c;">双月食品社</strong>（Day3）— 米其林必比登<br>招牌养生鸡汤（NT$200起），药膳排骨也出色。信义区在地人饭堂。<br><span style="color:#999">📍 信义区信义路四段 · NT$200-400/人 · 不用订位</span></div></div>
+    <div class="row"><span class="icon">🏛</span><div><strong style="color:#4a148c;">故宫晶华</strong>（Day6）— 故宫旁的中式Fine Dining<br>翠玉白菜造型酥、肉形石东坡肉——把国宝变成菜！<br><span style="color:#999">📍 士林区至善路二段 · NT$600/人 · 建议提前订位</span></div></div>
+    <div class="row"><span class="icon">💡</span><div><strong>Tips：</strong>Indulge 和故宫晶华务必提前订位，特别是周末。双月平日去可免排队。</div></div>
+  </div>
+
+  <!-- SNACK GUIDE -->
+  <div class="checklist" style="background:linear-gradient(135deg,#e8f5e9,#f1f8e9);border:2px solid #43a047;">
+    <h3 style="color:#2e7d32;">🧆 小吃攻略</h3>
+    <div class="row"><span class="icon">🥟</span><div><strong style="color:#2e7d32;">杭州小笼汤包</strong>（Day2）— 永康街隐藏高手<br>比鼎泰丰便宜一半，味道不输。蟹黄小笼是亮点。<br><span style="color:#999">📍 大安区永康街 · NT$150/笼 · 排队约10min</span></div></div>
+    <div class="row"><span class="icon">🍳</span><div><strong style="color:#2e7d32;">一甲子餐饮</strong>（Day1）— 龙山寺旁60年老店<br>焢肉饭+猪脚，传统台式便当的极致。<br><span style="color:#999">📍 万华区康定路79号 · NT$80-120 · 龙山寺对面巷内</span></div></div>
+    <div class="row"><span class="icon">🧅</span><div><strong style="color:#2e7d32;">天津葱抓饼</strong>（Day4）— 宁夏夜市旁人气摊<br>现做葱抓饼，加蛋加起司是最受欢迎组合。<br><span style="color:#999">📍 大同区宁夏路 · NT$45 · 排队约5min</span></div></div>
+    <div class="row"><span class="icon">🐔</span><div><strong style="color:#2e7d32;">永乐鸡卷大王</strong>（Day4）— 大稻埕传统小吃<br>外酥内软的台式鸡卷（其实里面没鸡肉），蘸甜辣酱吃。<br><span style="color:#999">📍 大同区迪化街永乐市场 · NT$80</span></div></div>
+    <div class="row"><span class="icon">💡</span><div><strong>Tips：</strong>台北小吃通常 NT$30-150 就能吃饱，夜市是最佳狩猎场。记得留肚子！</div></div>
+  </div>
+
+  <!-- SOUVENIR / 伴手礼 GUIDE -->
+  <div class="checklist" style="background:linear-gradient(135deg,#fff3e0,#fbe9e7);border:2px solid #ff7043;">
+    <h3 style="color:#bf360c;">🎁 伴手礼攻略（按行程区域）</h3>
+
+    <div class="row" style="background:rgba(255,255,255,.6);border-radius:8px;"><span class="icon">📍</span><div><strong style="color:#bf360c;">Day1 · 西门町</strong><br>
+      <strong>松本清 / 屈臣氏</strong> — 面膜、日系美妆、台湾本土护肤品（我的美丽日记面膜、DR.WU）<br>
+      <strong>诚品武昌店</strong> — 文创小物、台湾设计师品牌、明信片、手账<br>
+      <strong>西门町街边店</strong> — 台湾凤梨酥散装、太阳饼、各种零食伴手礼<br>
+      <span style="color:#999">💡 西门町药妆店价格有竞争力，可以先比价</span></div></div>
+
+    <div class="row" style="background:rgba(255,255,255,.6);border-radius:8px;"><span class="icon">📍</span><div><strong style="color:#bf360c;">Day2 · 永康街</strong><br>
+      <strong>来好 LAI HAO</strong> — 台湾设计选物店，一站式伴手礼（茶叶、果干、手工皂、文创）<br>
+      <strong>永康15 思慕昔旁</strong> — 各种凤梨酥试吃比较，微热山丘/佳德/日出凤梨酥<br>
+      <strong>小茶栽堂</strong> — 精品台湾茶叶，包装精美适合送礼<br>
+      <span style="color:#999">💡 永康街是文青伴手礼一条街，边逛边买最轻松</span></div></div>
+
+    <div class="row" style="background:rgba(255,255,255,.6);border-radius:8px;"><span class="icon">📍</span><div><strong style="color:#bf360c;">Day4 · 大稻埕/迪化街</strong> ⭐ 伴手礼最强区域<br>
+      <strong>李日胜</strong> — 百年南北货，乌鱼子（送礼首选）、干贝、香菇<br>
+      <strong>林华泰茶行</strong> — 百年茶庄，高山茶/冻顶乌龙/东方美人，价格比观光区便宜30-50%<br>
+      <strong>永盛米糕 / 合兴壹玖肆柒</strong> — 传统糕点，绿豆糕、松糕、凤梨酥<br>
+      <strong>大春炼皂</strong> — 迪化街文创品牌，手工皂礼盒<br>
+      <strong>印花乐 inBlooom</strong> — 台湾花布设计，杯垫、手帕、环保袋<br>
+      <span style="color:#999">💡 迪化街是买茶叶和乌鱼子的最佳地点，价格实惠品质好。多家可试吃！</span></div></div>
+
+    <div class="row" style="background:rgba(255,255,255,.6);border-radius:8px;"><span class="icon">📍</span><div><strong style="color:#bf360c;">Day5 · 九份</strong><br>
+      <strong>阿兰草仔粿</strong> — 九份特色伴手礼，绿豆/芋头口味，真空包装可带走<br>
+      <strong>九份茶坊</strong> — 九份主题茶具、茶叶、手绘明信片<br>
+      <strong>基山街沿途</strong> — 各式手工木雕、陶笛、猫咪主题杂货<br>
+      <span style="color:#999">💡 九份伴手礼偏观光定价，选独特的买，凤梨酥类不如市区买</span></div></div>
+
+    <div class="row" style="background:rgba(255,255,255,.6);border-radius:8px;"><span class="icon">📍</span><div><strong style="color:#bf360c;">Day6 · 故宫/士林</strong><br>
+      <strong>故宫博物院礼品店</strong> — 翠玉白菜钥匙圈、肉形石造型物、国宝系列文创（质量高、送礼体面）<br>
+      <strong>士林夜市周边</strong> — 最后机会扫货，价格亲民<br>
+      <span style="color:#999">💡 故宫文创是品质最高的台湾伴手礼之一，预留20-30min逛礼品店</span></div></div>
+
+    <div class="row" style="background:linear-gradient(135deg,#fff8e1,#fff3e0);border-radius:8px;border:1px solid #ffb74d;"><span class="icon">🏆</span><div><strong style="color:#e65100;">必买伴手礼 TOP 5</strong><br>
+      1. <strong>凤梨酥</strong> — 佳德（排队王）/微热山丘（全凤梨馅）/日出（奶油派皮）<br>
+      2. <strong>台湾高山茶</strong> — 林华泰茶行买散茶最划算，送礼选精装<br>
+      3. <strong>面膜</strong> — 我的美丽日记/DR.WU/提提研，松本清有套装优惠<br>
+      4. <strong>乌鱼子</strong> — 迪化街李日胜/永久号，真空包装可过海关<br>
+      5. <strong>故宫文创</strong> — 翠玉白菜系列最经典，有设计感又有文化底蕴</div></div>
+
+    <div class="row"><span class="icon">💡</span><div><strong>采购策略：</strong>Day4 迪化街集中买茶叶+乌鱼子+糕点 → Day6 故宫买文创 → 最后一晚西门町补货药妆面膜。大件重物最后买，避免拎着走行程。</div></div>
   </div>
 
   <div class="checklist">
@@ -2004,15 +2112,6 @@
       ⚠️ <strong>你的行程分散 6 天</strong>，好玩卡最多 3 天有效，无法覆盖全部。<strong>如果你愿意把 101 和故宫排在同 1-2 天</strong>，2日券 NT$1,700 就回本（故宫350+101 600+动物园60+袖珍200+交通~300 = NT$1,510）。否则<strong>单独买 Klook 散票更灵活</strong>。</div></div>
   </div>
 
-  <div class="checklist">
-    <h3>🚃 交通费用总览（每人）</h3>
-    <div class="row"><span class="icon">✈️</span><div>机场↔市区来回：NT$320</div></div>
-    <div class="row"><span class="icon">🚌</span><div>九份来回1062公车：NT$202</div></div>
-    <div class="row"><span class="icon">🐼</span><div>台北动物园门票：NT$60</div></div>
-    <div class="row"><span class="icon">🚃</span><div>市区捷运6天估：NT$300</div></div>
-    <div class="row"><span class="icon">🚕</span><div>Day4计程车2趟：NT$240</div></div>
-    <div class="row"><span class="icon">📊</span><div><strong>交通总计约 NT$1,302/人</strong></div></div>
-  </div>
 </div>
 
 <script>
@@ -2103,64 +2202,12 @@ function fitMapToDay(i){
 function showDay(i){
   document.querySelectorAll('.day-panel').forEach((p,idx)=>p.classList.toggle('active',idx===i));
   document.querySelectorAll('.tabs button').forEach((b,idx)=>b.classList.toggle('active',idx===i));
-  // Update bottom nav
-  document.querySelectorAll('.bottom-nav button').forEach(b=>b.classList.remove('active'));
-  if(i<6) document.querySelector(`.bottom-nav button[data-bn="day"]`).classList.add('active');
-  else document.querySelector(`.bottom-nav button[data-bn="overview"]`).classList.add('active');
   fitMapToDay(i);
   window.scrollTo({top:document.getElementById('map').offsetTop+document.getElementById('map').offsetHeight-50,behavior:'smooth'});
 }
 fitMapToDay(0);
 
 // ============= CHARTS =============
-// Budget Doughnut
-const budgetCtx=document.getElementById('budgetChart').getContext('2d');
-new Chart(budgetCtx,{
-  type:'doughnut',
-  data:{
-    labels:['美食','交通','门票','购物','咖啡/饮品'],
-    datasets:[{
-      data:[8000,2604,1160,4000,1200],
-      backgroundColor:['#ff6b35','#38b000','#0077b6','#f4a261','#9b59b6'],
-      borderWidth:2,borderColor:'#fff'
-    }]
-  },
-  options:{
-    responsive:true,maintainAspectRatio:false,
-    plugins:{
-      legend:{position:'bottom',labels:{font:{size:11},padding:8,usePointStyle:true}},
-      title:{display:true,text:'预估预算分布（2人/NT$）',font:{size:13,weight:'bold'}}
-    }
-  }
-});
-
-// Transport Bar
-const transCtx=document.getElementById('transportChart').getContext('2d');
-new Chart(transCtx,{
-  type:'bar',
-  data:{
-    labels:['Day1','Day2','Day3','Day4','Day5','Day6'],
-    datasets:[{
-      label:'移动时间 (min)',
-      data:[105,75,140,95,240,170],
-      backgroundColor:['#e74c3c','#e67e22','#2ecc71','#3498db','#9b59b6','#1abc9c'],
-      borderRadius:6,
-      barThickness:28
-    }]
-  },
-  options:{
-    responsive:true,maintainAspectRatio:false,
-    plugins:{
-      legend:{display:false},
-      title:{display:true,text:'每日交通时间 (min)',font:{size:13,weight:'bold'}}
-    },
-    scales:{
-      y:{beginAtZero:true,grid:{color:'#f0f0f0'}},
-      x:{grid:{display:false}}
-    }
-  }
-});
-
 // ============= FOOD FILTER =============
 const foodData=[
   {name:"重庆豆浆炸蛋饼",cat:"breakfast",day:4,cost:"NT$80",lat:25.0530,lng:121.5100},
@@ -2192,7 +2239,7 @@ const foodData=[
 const dayBg={1:'#e74c3c',2:'#e67e22',3:'#2ecc71',4:'#3498db',5:'#9b59b6',6:'#1abc9c'};
 function renderFoodGrid(cat){
   const grid=document.getElementById('foodGrid');
-  const items=cat==='all'?foodData:foodData.filter(f=>f.cat===cat);
+  const items=(cat==='all'?foodData:foodData.filter(f=>f.cat===cat)).sort((a,b)=>a.day-b.day);
   grid.innerHTML=items.map(f=>`
     <div class="food-card">
       <div class="fc-left">
@@ -2216,28 +2263,7 @@ document.querySelectorAll('#foodFilter button').forEach(btn=>{
 renderFoodGrid('all');
 
 // ============= BOTTOM NAV =============
-function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'})}
-function goToMap(){
-  document.getElementById('map').scrollIntoView({behavior:'smooth'});
-}
 </script>
-
-<!-- BOTTOM NAVIGATION -->
-<nav class="bottom-nav">
-  <button class="active" data-bn="day" onclick="showDay(currentDay>=0&&currentDay<6?currentDay:0)">
-    <span class="bn-icon">📅</span>行程
-  </button>
-  <button data-bn="map" onclick="goToMap()">
-    <span class="bn-icon">🗺</span>地图
-  </button>
-  <button data-bn="overview" onclick="showDay(6)">
-    <span class="bn-icon">📊</span>总览
-  </button>
-  <button data-bn="top" onclick="scrollToTop()">
-    <span class="bn-icon">⬆️</span>顶部
-  </button>
-</nav>
-
 
 <script>
 /* Inject badges: 🎯目标 for user-requested, 📋口袋名单 for Claude-recommended */
@@ -2273,9 +2299,140 @@ function injectBadgeLegend(){
   });
 }
 
+/* Make travel-connectors expandable with step-by-step view */
+function initTravelConnectors(){
+  document.querySelectorAll('.travel-connector').forEach(tc=>{
+    if(tc.dataset.init)return;
+    tc.dataset.init='1';
+    const pill=tc.querySelector('.tc-pill');
+    /* Add "点击展开" hint */
+    if(pill&&!tc.querySelector('.tc-hint')){
+      const hint=document.createElement('span');
+      hint.className='tc-hint';
+      hint.textContent='点击查看详情';
+      pill.insertAdjacentElement('afterend',hint);
+    }
+    /* Add toggle arrow */
+    if(!tc.querySelector('.tc-toggle')){
+      const arrow=document.createElement('span');
+      arrow.className='tc-toggle';
+      arrow.textContent='▼';
+      tc.appendChild(arrow);
+    }
+    /* Wrap tc-label, tc-route, uber-alt into tc-detail */
+    const label=tc.querySelector('.tc-label');
+    const route=tc.querySelector('.tc-route');
+    const uber=tc.querySelector('.uber-alt');
+    if(label){
+      const detail=document.createElement('div');
+      detail.className='tc-detail';
+      /* Convert → text to step list */
+      const raw=label.innerHTML;
+      const parts=raw.split(/\s*→\s*/).filter(s=>s.trim());
+      if(parts.length>1){
+        const ol=document.createElement('ol');
+        ol.className='tc-steps';
+        parts.forEach(p=>{
+          const li=document.createElement('li');
+          li.innerHTML=p.trim();
+          ol.appendChild(li);
+        });
+        detail.appendChild(ol);
+      }else{
+        const p=document.createElement('div');
+        p.className='tc-label';
+        p.innerHTML=raw;
+        detail.appendChild(p);
+      }
+      if(route){detail.appendChild(route)}
+      if(uber){detail.appendChild(uber)}
+      label.remove();
+      tc.appendChild(detail);
+    }
+    tc.addEventListener('click',function(e){
+      if(e.target.closest('a'))return;
+      this.classList.toggle('expanded');
+    });
+  });
+}
+
+/* ── Nearby Places Finder ── */
+function initNearbyFinder(){
+  const sel=document.getElementById('nearbySelect');
+  if(!sel)return;
+  /* Build unique area list from locations */
+  const areas=[
+    {name:'N Hotel（西门町）',lat:25.0425,lng:121.5080},
+    {name:'永康街/东门',lat:25.0335,lng:121.5285},
+    {name:'台北101/信义区',lat:25.0340,lng:121.5645},
+    {name:'大稻埕/迪化街',lat:25.0555,lng:121.5095},
+    {name:'中正纪念堂',lat:25.0345,lng:121.5220},
+    {name:'九份老街',lat:25.1092,lng:121.8445},
+    {name:'饶河夜市/松山',lat:25.0510,lng:121.5770},
+    {name:'北投温泉',lat:25.1370,lng:121.5070},
+    {name:'故宫博物院',lat:25.1024,lng:121.5485},
+    {name:'士林夜市',lat:25.0880,lng:121.5245},
+    {name:'台北动物园',lat:24.9982,lng:121.5810},
+    {name:'象山步道',lat:25.0270,lng:121.5720},
+    {name:'龙山寺/万华',lat:25.0372,lng:121.4998},
+    {name:'台北车站',lat:25.0478,lng:121.5170}
+  ];
+  areas.forEach(a=>{
+    const opt=document.createElement('option');
+    opt.value=a.lat+','+a.lng;
+    opt.textContent=a.name;
+    sel.appendChild(opt);
+  });
+  sel.addEventListener('change',function(){
+    if(!this.value)return;
+    const[lat,lng]=this.value.split(',').map(Number);
+    showNearby(lat,lng);
+  });
+  /* GPS button */
+  document.getElementById('nearbyGps').addEventListener('click',function(){
+    if(!navigator.geolocation){alert('浏览器不支持GPS定位');return}
+    this.textContent='定位中...';
+    navigator.geolocation.getCurrentPosition(pos=>{
+      this.textContent='📡 用GPS定位';
+      showNearby(pos.coords.latitude,pos.coords.longitude);
+    },()=>{
+      this.textContent='📡 用GPS定位';
+      alert('无法获取位置，请选择手动定位');
+    },{timeout:8000});
+  });
+}
+function haversine(lat1,lng1,lat2,lng2){
+  const R=6371000;
+  const rad=Math.PI/180;
+  const dLat=(lat2-lat1)*rad;
+  const dLng=(lng2-lng1)*rad;
+  const a=Math.sin(dLat/2)**2+Math.cos(lat1*rad)*Math.cos(lat2*rad)*Math.sin(dLng/2)**2;
+  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+function showNearby(lat,lng){
+  const typeIcon={food:'🍜',see:'🏛',hotel:'🏨',local:'🔥'};
+  const all=locations.map(l=>({...l,dist:haversine(lat,lng,l.lat,l.lng)})).sort((a,b)=>a.dist-b.dist);
+  const near=all.filter(p=>p.dist<=3000).slice(0,10);
+  const box=document.getElementById('nearbyResults');
+  if(!near.length){box.innerHTML='<div style="padding:12px;text-align:center;color:#999">附近3km内没有行程地点</div>';return}
+  box.innerHTML='<div style="font-weight:700;margin-bottom:8px;color:#1a73e8">📍 附近 '+near.length+' 个行程地点（3km内）</div>'
+    +near.map(p=>{
+      const dist=p.dist<1000?Math.round(p.dist)+'m':(p.dist/1000).toFixed(1)+'km';
+      const walk=Math.round(p.dist/80);
+      const icon=typeIcon[p.type]||'📍';
+      return '<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;margin:4px 0;background:#fff;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.06)">'
+        +'<span style="font-size:1.2em">'+icon+'</span>'
+        +'<div style="flex:1"><strong>'+p.name+'</strong><br><span style="color:#888;font-size:.85em">Day'+p.day+' · '+dist+' · 步行约'+walk+'min</span></div>'
+        +'<a href="https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(p.name+' 台北')+'&travelmode=walking" target="_blank" style="padding:6px 10px;background:linear-gradient(135deg,#4285f4,#34a853);color:#fff;border-radius:8px;font-size:.72em;font-weight:600;text-decoration:none;white-space:nowrap">导航</a>'
+        +'</div>';
+    }).join('');
+}
+
 /* render on load */
 injectItineraryBadges();
 injectBadgeLegend();
+initTravelConnectors();
+initNearbyFinder();
 </script>
 
 </body>
