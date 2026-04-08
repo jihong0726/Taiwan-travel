@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -47,6 +48,7 @@
   .tabs button[data-day="5"].active{color:var(--day5);border-bottom-color:var(--day5)}
   .tabs button[data-day="6"].active{color:var(--day6);border-bottom-color:var(--day6)}
   .tabs button[data-day="7"].active{color:#0070c0;border-bottom-color:#0070c0}
+  .tabs button[data-day="9"].active{color:#e74c3c;border-bottom-color:#e74c3c}
 
 
   .day-panel{display:none;padding:16px;max-width:700px;margin:0 auto;opacity:0;transform:translateY(12px)}
@@ -464,6 +466,57 @@
     .editor-toolbar{flex-direction:column;align-items:stretch}
   }
 
+  /* ===== CHECK-OFF FEATURE ===== */
+  .check-btn{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;border:2px solid #d0d0d0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.9em;transition:all .2s;z-index:3;flex-shrink:0}
+  .check-btn:hover{border-color:#27ae60;background:#e8fce8}
+  .check-btn.checked{background:#27ae60;border-color:#27ae60;color:#fff}
+  .item.done{opacity:.55;transition:opacity .3s}
+  .item.done .name{text-decoration:line-through;color:#aaa}
+  .item.done .desc{color:#bbb}
+  .item{padding-right:48px} /* make room for check button */
+
+  /* ===== DAY PROGRESS BAR ===== */
+  .day-progress{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#fff;border-radius:10px;margin-bottom:12px;box-shadow:var(--shadow);font-size:.8em}
+  .dp-label{color:var(--muted);white-space:nowrap}
+  .dp-track{flex:1;height:8px;background:#f0f0f0;border-radius:4px;overflow:hidden}
+  .dp-fill{height:100%;background:linear-gradient(90deg,#27ae60,#2ecc71);border-radius:4px;transition:width .4s ease}
+  .dp-count{font-weight:700;color:#27ae60;white-space:nowrap;min-width:40px;text-align:right}
+  body.dark .day-progress{background:#1e1e2e}
+  body.dark .dp-track{background:#333}
+
+  /* ===== BACKUP BOX COLLAPSE ===== */
+  .backup-box{cursor:pointer;user-select:none}
+  .backup-box .backup-title{display:flex;align-items:center;justify-content:space-between}
+  .backup-box .backup-chevron{font-size:.8em;transition:transform .25s;color:#e74c3c;flex-shrink:0;margin-left:4px}
+  .backup-box.open .backup-chevron{transform:rotate(90deg)}
+  .backup-box .backup-body{display:none;margin-top:6px}
+  .backup-box.open .backup-body{display:block}
+
+  /* ===== TICKET PAGE ===== */
+  .ticket-page{padding:16px;max-width:700px;margin:0 auto}
+  .ticket-card{background:#fff;border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow);border-left:4px solid #e74c3c;position:relative}
+  .ticket-card.used{opacity:.6;border-left-color:#aaa}
+  .ticket-card .tc-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px}
+  .ticket-card .tc-title{font-weight:800;font-size:1.05em;color:#1a1a2e}
+  .ticket-card .tc-day-badge{font-size:.72em;font-weight:700;padding:3px 10px;border-radius:12px;color:#fff;flex-shrink:0;white-space:nowrap}
+  .ticket-card .tc-row{display:flex;align-items:baseline;gap:6px;margin:5px 0;font-size:.84em;line-height:1.5}
+  .ticket-card .tc-row .tc-key{color:#888;width:64px;flex-shrink:0}
+  .ticket-card .tc-row .tc-val{color:#1a1a2e;font-weight:600}
+  .ticket-card .tc-row .tc-val.order-num{font-family:monospace;background:#f0f4ff;padding:2px 8px;border-radius:6px;color:#1565c0;font-size:.9em;letter-spacing:.3px}
+  .ticket-card .tc-warning{margin-top:10px;padding:8px 12px;background:#fef9e7;border-radius:8px;font-size:.8em;color:#8b6914;border-left:3px solid #f1c40f;line-height:1.55}
+  .ticket-card .tc-status{position:absolute;top:14px;right:14px;font-size:.72em;font-weight:700;padding:3px 10px;border-radius:10px}
+  .ticket-card .tc-status.confirmed{background:#e8fce8;color:#27ae60}
+  .ticket-card .tc-status.pending{background:#fef9e7;color:#f39c12}
+  .ticket-summary{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+  .ticket-summary .ts-chip{background:#fff;border-radius:10px;padding:10px 14px;box-shadow:var(--shadow);font-size:.82em;flex:1;min-width:80px;text-align:center}
+  .ticket-summary .ts-num{font-size:1.6em;font-weight:800;color:#e74c3c}
+  .ticket-summary .ts-label{color:#888;font-size:.85em}
+  body.dark .ticket-card{background:#1e1e2e;color:#eee}
+  body.dark .ticket-card .tc-title{color:#eee}
+  body.dark .ticket-card .tc-row .tc-val{color:#eee}
+  body.dark .ticket-card .tc-warning{background:#2a2200;color:#f1c40f}
+  body.dark .ticket-summary .ts-chip{background:#1e1e2e}
+
   /* ===== PRINT STYLES ===== */
   @media print{
     body{background:#fff!important;color:#000!important;padding:0!important}
@@ -505,6 +558,7 @@
   <button data-day="0" onclick="showDay(6)">🗺️总览</button>
   <button data-day="7" onclick="showDay(7)">🚇路线</button>
   <button data-day="8" onclick="showDay(8)">✏️编辑</button>
+  <button data-day="9" onclick="showDay(9)">🎫票券</button>
 </div>
 
 
@@ -2823,6 +2877,79 @@
   </div>
 </div>
 
+<!-- ===================== TICKETS TAB ===================== -->
+<div class="day-panel" id="day9">
+  <div class="ticket-page">
+    <div class="day-header">
+      <h2>🎫 票券 &amp; 订单管理</h2>
+      <div class="theme">所有已预订票券一览，无需翻找</div>
+    </div>
+
+    <div class="ticket-summary">
+      <div class="ts-chip"><div class="ts-num">3</div><div class="ts-label">张票券</div></div>
+      <div class="ts-chip"><div class="ts-num">2</div><div class="ts-label">需现场换票</div></div>
+      <div class="ts-chip"><div class="ts-num">1</div><div class="ts-label">直接出示手机</div></div>
+    </div>
+
+    <!-- TICKET 1: Klook 一日游 -->
+    <div class="ticket-card">
+      <span class="tc-status confirmed">✅ 已确认</span>
+      <div class="tc-header">
+        <div class="tc-title">🚐 野柳 · 九份 · 十分 一日游</div>
+        <span class="tc-day-badge" style="background:#e67e22">Day 2 · 5/8</span>
+      </div>
+      <div class="tc-row"><span class="tc-key">平台</span><span class="tc-val">Klook 拼车团（中文导游）</span></div>
+      <div class="tc-row"><span class="tc-key">订单号</span><span class="tc-val order-num">NPX360029</span></div>
+      <div class="tc-row"><span class="tc-key">凭证号</span><span class="tc-val order-num">KLK5994417900</span></div>
+      <div class="tc-row"><span class="tc-key">人数</span><span class="tc-val">2人</span></div>
+      <div class="tc-row"><span class="tc-key">集合点</span><span class="tc-val">台北车站 1F 东三门 (East Gate 3)</span></div>
+      <div class="tc-row"><span class="tc-key">集合时间</span><span class="tc-val" style="color:#e74c3c">⏰ 08:00（提前30min！建议07:30到）</span></div>
+      <div class="tc-row"><span class="tc-key">使用方式</span><span class="tc-val">🤳 出示手机 Klook App 凭证给导游扫码</span></div>
+      <div class="tc-warning">⚠️ <strong>不含项目：</strong>野柳地质公园门票（现场购买约NT$80/人）· 天灯体验费（NT$150-200/人）· 餐食 · 九份到十分接驳巴士（NT$25/人）</div>
+    </div>
+
+    <!-- TICKET 2: Klook 动物园 -->
+    <div class="ticket-card">
+      <span class="tc-status confirmed">✅ 已确认</span>
+      <div class="tc-header">
+        <div class="tc-title">🐼 台北市立动物园 门票</div>
+        <span class="tc-day-badge" style="background:#2ecc71">Day 3 · 5/9</span>
+      </div>
+      <div class="tc-row"><span class="tc-key">平台</span><span class="tc-val">Klook 折扣票</span></div>
+      <div class="tc-row"><span class="tc-key">订单号</span><span class="tc-val order-num">ZBG535891</span></div>
+      <div class="tc-row"><span class="tc-key">人数</span><span class="tc-val">2张</span></div>
+      <div class="tc-row"><span class="tc-key">有效日期</span><span class="tc-val">2026年5月9日（周六）</span></div>
+      <div class="tc-row"><span class="tc-key">使用方式</span><span class="tc-val">🎟️ 入口服务台或自助售票机扫 QR 码换实体票</span></div>
+      <div class="tc-row"><span class="tc-key">开放时间</span><span class="tc-val">09:00 – 17:00（建议09:00准时入场）</span></div>
+      <div class="tc-warning">💡 先冲大猫熊馆（右转，免费区），再走企鹅馆 → 非洲区。园内接驳车NT$5/趟。</div>
+    </div>
+
+    <!-- TICKET 3: Klook 台北101 -->
+    <div class="ticket-card">
+      <span class="tc-status confirmed">✅ 已确认</span>
+      <div class="tc-header">
+        <div class="tc-title">🏛 台北 101 观景台</div>
+        <span class="tc-day-badge" style="background:#2ecc71">Day 3 · 5/9</span>
+      </div>
+      <div class="tc-row"><span class="tc-key">平台</span><span class="tc-val">Klook 预购票</span></div>
+      <div class="tc-row"><span class="tc-key">订单号</span><span class="tc-val order-num">EQG716511</span></div>
+      <div class="tc-row"><span class="tc-key">人数</span><span class="tc-val">2人</span></div>
+      <div class="tc-row"><span class="tc-key">场次</span><span class="tc-val" style="color:#e74c3c">⏰ <strong>14:30</strong>（固定场次，不可改期）</span></div>
+      <div class="tc-row"><span class="tc-key">入场地点</span><span class="tc-val">5楼 Sky Entrance（非大门，别走错）</span></div>
+      <div class="tc-row"><span class="tc-key">使用方式</span><span class="tc-val">🤳 直接在5楼出示 Klook 手机凭证扫码入场，免排队购票</span></div>
+      <div class="tc-warning">⚠️ <strong>动物园 → 101 交通约50分钟</strong>。建议动物园13:00前出发，留出缓冲。晴天推荐，雨天视野差建议提前查天气。</div>
+    </div>
+
+    <!-- Additional notes -->
+    <div class="tip blue" style="margin-top:4px">
+      💡 <strong>取票备忘：</strong>以上票券均已付款，出发前在 Klook App 下载凭证至「已购买」列表，建议截图备份。台湾网路通畅无需担心，但万一没网路时截图能救急。
+    </div>
+    <div class="tip">
+      🏪 <strong>便利店取票（非必须）：</strong>7-11 ibon 机台 / 全家 FamiPort 输入凭证号可将 Klook 票券打印成纸本，但以上订单出示手机即可，无需打印。
+    </div>
+  </div>
+</div>
+
 <script>
 const locations = [
   {day:1,name:"N Hotel",lat:25.0425,lng:121.5080,type:"hotel"},
@@ -2873,7 +3000,7 @@ const locations = [
   {day:6,name:"士林夜市",lat:25.0880,lng:121.5245,type:"food"},
 ];
 /* Tab index → hash mapping */
-const TAB_HASH=['day1','day2','day3','day4','day5','day6','overview','mrt','edit'];
+const TAB_HASH=['day1','day2','day3','day4','day5','day6','overview','mrt','edit','tickets'];
 function showDay(i){
   document.querySelectorAll('.day-panel').forEach((p,idx)=>p.classList.toggle('active',idx===i));
   document.querySelectorAll('.tabs button').forEach((b,idx)=>b.classList.toggle('active',idx===i));
@@ -3984,6 +4111,74 @@ function initBudgetSummary(){
   if(idx>0)showDay(idx); /* 0 = day1 = default, skip if no hash */
 })();
 
+/* ===== CHECK-OFF + PROGRESS BAR ===== */
+function initCheckOff(){
+  const PANELS=['day0','day1','day2','day3','day4','day5']; /* only Day1-6 */
+  PANELS.forEach(function(panelId){
+    const panel=document.getElementById(panelId);
+    if(!panel)return;
+    const items=panel.querySelectorAll('.item');
+    /* Build progress bar */
+    const prog=document.createElement('div');
+    prog.className='day-progress';
+    prog.innerHTML='<span class="dp-label">今日进度</span><div class="dp-track"><div class="dp-fill" style="width:0%"></div></div><span class="dp-count">0/'+items.length+'</span>';
+    const summary=panel.querySelector('.day-travel-summary');
+    if(summary)summary.insertAdjacentElement('afterend',prog);
+    else panel.insertAdjacentElement('afterbegin',prog);
+    function updateProgress(){
+      const done=panel.querySelectorAll('.item.done').length;
+      const total=items.length;
+      const pct=total?Math.round(done/total*100):0;
+      prog.querySelector('.dp-fill').style.width=pct+'%';
+      prog.querySelector('.dp-count').textContent=done+'/'+total;
+    }
+    /* Add check button to each item */
+    items.forEach(function(item,idx){
+      const key='chk-'+panelId+'-'+idx;
+      const btn=document.createElement('button');
+      btn.className='check-btn';
+      btn.title='标记为已完成';
+      btn.innerHTML='✓';
+      /* Restore saved state */
+      try{if(localStorage.getItem(key)==='1'){item.classList.add('done');btn.classList.add('checked')}}catch(e){}
+      btn.addEventListener('click',function(e){
+        e.stopPropagation();
+        const isDone=item.classList.toggle('done');
+        btn.classList.toggle('checked',isDone);
+        try{localStorage.setItem(key,isDone?'1':'0')}catch(e){}
+        updateProgress();
+      });
+      item.appendChild(btn);
+      item.style.position='relative'; /* ensure absolute positioning works */
+    });
+    updateProgress();
+  });
+}
+
+/* ===== BACKUP BOX COLLAPSE ===== */
+function initBackupCollapse(){
+  document.querySelectorAll('.backup-box').forEach(function(box){
+    /* Wrap all content after .backup-title in .backup-body */
+    const title=box.querySelector('.backup-title');
+    if(!title)return;
+    const body=document.createElement('div');
+    body.className='backup-body';
+    /* Move all sibling nodes after title into body */
+    while(title.nextSibling){body.appendChild(title.nextSibling);}
+    box.appendChild(body);
+    /* Add chevron */
+    const chev=document.createElement('span');
+    chev.className='backup-chevron';
+    chev.textContent='▶';
+    title.appendChild(chev);
+    /* Toggle on click */
+    box.addEventListener('click',function(e){
+      e.stopPropagation();
+      box.classList.toggle('open');
+    });
+  });
+}
+
 /* render on load */
 initTimeMarkers();
 initPlaceActions();
@@ -3999,6 +4194,8 @@ enhanceNearbyFinder();
 initDarkMode();
 initCountdown();
 initBudgetSummary();
+initCheckOff();
+initBackupCollapse();
 </script>
 
 <!-- PWA Service Worker Registration -->
