@@ -242,10 +242,19 @@
     .dts-stat{flex-wrap:wrap;gap:8px}
   }
 
-  /* MRT ROUTE MAP */
+  /* MRT ROUTE MAP
+   * 设计坐标系（相对 .mrt-route 左边缘）：
+   *   竖线中心   = left:22px（线宽4px，left:20px，中心=22px）
+   *   普通圆中心 = 22px，半径8px → 左边=14px，右边=30px
+   *   转乘圆中心 = 22px，半径10px → 左边=12px，右边=32px + box-shadow 8px = 40px
+   *   文字起点   = padding-left:64px → 文字与转乘圆视觉右边缘间距=24px ✓
+   *
+   *   .mrt-station::before left = 圆左边 - padding-left = 14 - 64 = -50px
+   *   .mrt-station.transfer::before left = 12 - 64 = -52px
+   */
   .mrt-line{position:relative;padding:0 16px 16px;max-width:700px;margin:0 auto}
-  .mrt-route{position:relative;padding-left:44px}
-  .mrt-route::before{content:'';position:absolute;left:18px;top:0;bottom:0;width:4px;border-radius:2px}
+  .mrt-route{position:relative;padding-left:64px}
+  .mrt-route::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:4px;border-radius:2px}
   .mrt-route.line-blue::before{background:#0070c0}
   .mrt-route.line-red::before{background:#e3002c}
   .mrt-route.line-green::before{background:#008659}
@@ -253,18 +262,40 @@
   .mrt-route.line-yellow::before{background:#ffdb00}
   .mrt-route.line-orange::before{background:#f8b500}
   .mrt-station{position:relative;padding:12px 0}
-  .mrt-station::before{content:'';position:absolute;left:-30px;top:18px;width:16px;height:16px;border-radius:50%;background:#fff;border:3.5px solid #666;z-index:1}
+  /* 普通圆：16px，center=22px → left=14px，相对station: 14-64=-50px */
+  .mrt-station::before{content:'';position:absolute;left:-50px;top:18px;width:16px;height:16px;border-radius:50%;background:#fff;border:3.5px solid #666;z-index:1}
   .mrt-route.line-blue .mrt-station::before{border-color:#0070c0}
   .mrt-route.line-red .mrt-station::before{border-color:#e3002c}
   .mrt-route.line-green .mrt-station::before{border-color:#008659}
   .mrt-route.line-brown .mrt-station::before{border-color:#c48c31}
   .mrt-route.line-yellow .mrt-station::before{border-color:#ffdb00}
   .mrt-route.line-orange .mrt-station::before{border-color:#f8b500}
-  .mrt-station.transfer::before{width:18px;height:18px;left:-31px;top:17px;border-width:4px;box-shadow:0 0 0 2px #fff,0 0 0 4px #666}
+  /* 转乘圆：20px，center=22px → left=12px，相对station: 12-64=-52px；box-shadow 8px，视觉右=40px，间距=24px */
+  .mrt-station.transfer::before{width:20px;height:20px;left:-52px;top:16px;border-width:4px;box-shadow:0 0 0 3px #fff,0 0 0 5px #888}
   .mrt-station.active::before{background:#e74c3c;border-color:#e74c3c}
+  /* 可点击站点样式 */
+  .mrt-station[data-goto]{cursor:pointer}
+  .mrt-station[data-goto]:hover .mrt-stn-name{color:#0070c0;text-decoration:underline}
+  .mrt-stn-goto{display:inline-flex;align-items:center;gap:3px;font-size:.7em;color:#0070c0;font-weight:600;margin-top:3px;opacity:.55;transition:opacity .2s;pointer-events:none}
+  .mrt-station[data-goto]:hover .mrt-stn-goto{opacity:1}
+  .mrt-station[data-goto]:active .mrt-stn-goto{opacity:1}
   .mrt-stn-name{font-weight:700;font-size:1em;color:#222}
   .mrt-stn-name .mrt-en{font-weight:400;font-size:.75em;color:#999;margin-left:4px}
   .mrt-stn-sub{font-size:.78em;color:#888;margin-top:2px}
+
+  /* ── TRANSFER LINE CHIPS (KL-style colored circles) ── */
+  .mrt-xfer{display:flex;align-items:center;gap:5px;margin-top:5px;flex-wrap:wrap}
+  .mrt-xfer-label{font-size:.7em;color:#999;letter-spacing:.3px;margin-right:1px}
+  .mrt-xfer-chip{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;font-size:.6em;font-weight:800;color:#fff;letter-spacing:0;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.18);border:2px solid rgba(255,255,255,.5)}
+  .mrt-xfer-chip.xc-bl{background:#0070c0}
+  .mrt-xfer-chip.xc-r{background:#e3002c}
+  .mrt-xfer-chip.xc-br{background:#c48c31}
+  .mrt-xfer-chip.xc-g{background:#008659}
+  .mrt-xfer-chip.xc-o{background:#e07b00}
+  .mrt-xfer-chip.xc-a{background:#8b3eb8} /* 机捷紫 */
+  .mrt-xfer-chip.xc-y{background:#c9a800;color:#fff} /* 环状黄 */
+  .mrt-xfer-name{font-size:.7em;color:#555;font-weight:600}
+  body.dark .mrt-xfer-name{color:#aaa}
   .mrt-stn-pois{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
   .mrt-poi{display:inline-flex;align-items:center;gap:3px;padding:4px 10px;border-radius:8px;font-size:.74em;font-weight:600;text-decoration:none;transition:all .15s;border:1px solid #e8e8e8;background:#fff;color:#333}
   .mrt-poi:hover{transform:translateY(-1px);box-shadow:0 2px 8px rgba(0,0,0,.1)}
@@ -2349,8 +2380,9 @@
         </div>
       </div>
 
-      <div class="mrt-station active">
+      <div class="mrt-station transfer active">
         <div class="mrt-stn-name">西门 <span class="mrt-en">Ximen · BL11 / G12</span></div>
+        <div class="mrt-xfer"><span class="mrt-xfer-label">换乘</span><span class="mrt-xfer-chip xc-g" title="松山新店线（绿）">G</span><span class="mrt-xfer-name">松山新店线</span></div>
         <div class="mrt-stn-sub">🏨 N Hotel 所在站 · 住宿 6 晚</div>
         <div class="mrt-stn-pois">
           <a class="mrt-poi poi-see" href="https://www.google.com/maps/search/?api=1&query=西门町商圈+台北" target="_blank">🏛 西门町商圈</a>
@@ -2362,6 +2394,7 @@
 
       <div class="mrt-station transfer">
         <div class="mrt-stn-name">台北车站 <span class="mrt-en">Taipei Main · BL12 / R10</span></div>
+        <div class="mrt-xfer"><span class="mrt-xfer-label">换乘</span><span class="mrt-xfer-chip xc-r" title="淡水信义线（红）">R</span><span class="mrt-xfer-name">淡水信义线</span><span style="margin:0 3px;color:#ccc">·</span><span class="mrt-xfer-chip xc-a" title="桃园机场捷运（紫）">A</span><span class="mrt-xfer-name">机场捷运</span></div>
         <div class="mrt-stn-sub">Day 1 机场抵达转乘 · 换红线/机捷</div>
         <div class="mrt-stn-pois">
           <a class="mrt-poi poi-see" href="https://www.google.com/maps/search/?api=1&query=国立台湾博物馆+台北" target="_blank">🏛 台湾博物馆</a>
@@ -2380,8 +2413,9 @@
         </div>
       </div>
 
-      <div class="mrt-station">
+      <div class="mrt-station transfer">
         <div class="mrt-stn-name">忠孝新生 <span class="mrt-en">Zhongxiao Xinsheng · BL14 / O07</span></div>
+        <div class="mrt-xfer"><span class="mrt-xfer-label">换乘</span><span class="mrt-xfer-chip xc-o" title="中和新芦线（橘）">O</span><span class="mrt-xfer-name">中和新芦线</span></div>
         <div class="mrt-stn-sub">Day 2 · 华山文创园区</div>
         <div class="mrt-stn-pois">
           <a class="mrt-poi poi-see" href="https://www.google.com/maps/search/?api=1&query=华山1914文创园+台北" target="_blank">🏛 华山1914</a>
@@ -2392,6 +2426,7 @@
 
       <div class="mrt-station transfer">
         <div class="mrt-stn-name">忠孝復興 <span class="mrt-en">Zhongxiao Fuxing · BL15 / BR10</span></div>
+        <div class="mrt-xfer"><span class="mrt-xfer-label">换乘</span><span class="mrt-xfer-chip xc-br" title="文湖线（棕）">BR</span><span class="mrt-xfer-name">文湖线 → 动物园</span></div>
         <div class="mrt-stn-sub">换文湖线（棕线）往动物园</div>
         <div class="mrt-stn-pois">
           <a class="mrt-poi poi-see" href="https://www.google.com/maps/search/?api=1&query=SOGO忠孝+台北" target="_blank">🛍 SOGO 百货</a>
@@ -2439,8 +2474,9 @@
         </div>
       </div>
 
-      <div class="mrt-station">
+      <div class="mrt-station transfer">
         <div class="mrt-stn-name">南港 <span class="mrt-en">Nangang · BL22 / BR24</span></div>
+        <div class="mrt-xfer"><span class="mrt-xfer-label">换乘</span><span class="mrt-xfer-chip xc-br" title="文湖线（棕）">BR</span><span class="mrt-xfer-name">文湖线</span></div>
         <div class="mrt-stn-sub">南港车站 · CITYLINK 商场</div>
         <div class="mrt-stn-pois">
           <a class="mrt-poi poi-shop" href="https://www.google.com/maps/search/?api=1&query=CITYLINK南港+台北" target="_blank">🛍 CITYLINK</a>
@@ -2479,7 +2515,8 @@
 
       <div class="mrt-station transfer">
         <div class="mrt-stn-name">台北车站 <span class="mrt-en">Taipei Main · R10 / BL12</span></div>
-        <div class="mrt-stn-sub">从蓝线换乘红线 · 南北双向</div>
+        <div class="mrt-xfer"><span class="mrt-xfer-label">换乘</span><span class="mrt-xfer-chip xc-bl" title="板南线（蓝）">BL</span><span class="mrt-xfer-name">板南线</span><span style="margin:0 3px;color:#ccc">·</span><span class="mrt-xfer-chip xc-a" title="桃园机场捷运（紫）">A</span><span class="mrt-xfer-name">机场捷运</span></div>
+        <div class="mrt-stn-sub">Day 1 · 从蓝线换乘红线 · 南北双向</div>
       </div>
 
       <div class="mrt-station">
@@ -2493,6 +2530,7 @@
 
       <div class="mrt-station transfer">
         <div class="mrt-stn-name">中正纪念堂 <span class="mrt-en">CKS Memorial · R08 / G10</span></div>
+        <div class="mrt-xfer"><span class="mrt-xfer-label">换乘</span><span class="mrt-xfer-chip xc-g" title="松山新店线（绿）">G</span><span class="mrt-xfer-name">松山新店线</span></div>
         <div class="mrt-stn-sub">Day 4 · 可换绿线</div>
         <div class="mrt-stn-pois">
           <a class="mrt-poi poi-see" href="https://www.google.com/maps/search/?api=1&query=中正纪念堂+台北" target="_blank">🏛 中正纪念堂</a>
@@ -2503,6 +2541,7 @@
 
       <div class="mrt-station transfer">
         <div class="mrt-stn-name">东门 <span class="mrt-en">Dongmen · R07 / O06</span></div>
+        <div class="mrt-xfer"><span class="mrt-xfer-label">换乘</span><span class="mrt-xfer-chip xc-o" title="中和新芦线（橘）">O</span><span class="mrt-xfer-name">中和新芦线</span></div>
         <div class="mrt-stn-sub">Day 2 · 永康街商圈 · 可换橘线</div>
         <div class="mrt-stn-pois">
           <a class="mrt-poi poi-food" href="https://www.google.com/maps/search/?api=1&query=永康牛肉面+台北" target="_blank">🍜 永康牛肉面</a>
@@ -2531,8 +2570,9 @@
         </div>
       </div>
 
-      <div class="mrt-station">
+      <div class="mrt-station transfer">
         <div class="mrt-stn-name">中山 <span class="mrt-en">Zhongshan · R11 / G14</span></div>
+        <div class="mrt-xfer"><span class="mrt-xfer-label">换乘</span><span class="mrt-xfer-chip xc-g" title="松山新店线（绿）">G</span><span class="mrt-xfer-name">松山新店线</span></div>
         <div class="mrt-stn-sub">中山站地下书街 · 文青地标</div>
         <div class="mrt-stn-pois">
           <a class="mrt-poi poi-see" href="https://www.google.com/maps/search/?api=1&query=中山地下书街+台北" target="_blank">📚 中山地下书街</a>
@@ -2553,6 +2593,7 @@
 
       <div class="mrt-station transfer">
         <div class="mrt-stn-name">民权西路 <span class="mrt-en">Minquan W. · R13 / O11</span></div>
+        <div class="mrt-xfer"><span class="mrt-xfer-label">换乘</span><span class="mrt-xfer-chip xc-o" title="中和新芦线（橘）">O</span><span class="mrt-xfer-name">中和新芦线</span></div>
         <div class="mrt-stn-sub">Day 4 · 大稻埕步行可达 · 可换橘线</div>
         <div class="mrt-stn-pois">
           <a class="mrt-poi poi-see" href="https://www.google.com/maps/search/?api=1&query=大稻埕迪化街+台北" target="_blank">🏛 大稻埕/迪化街</a>
@@ -4197,6 +4238,36 @@ function initBackupCollapse(){
   });
 }
 
+/* ===== MRT STATION GOTO (click to jump to day) ===== */
+function initMrtGoto(){
+  /* Day label → panel index (showDay arg) */
+  const dayMap={'Day 1':0,'Day 2':1,'Day 3':2,'Day 4':3,'Day 5':4,'Day 6':5};
+  document.querySelectorAll('#day7 .mrt-station').forEach(function(station){
+    const sub=station.querySelector('.mrt-stn-sub');
+    if(!sub)return;
+    const m=sub.textContent.match(/Day\s*([1-6])/);
+    if(!m)return;
+    const panelIdx=dayMap['Day '+m[1]];
+    if(panelIdx===undefined)return;
+    station.setAttribute('data-goto',panelIdx);
+    /* Inject goto hint below station name */
+    const name=station.querySelector('.mrt-stn-name');
+    if(name){
+      const hint=document.createElement('div');
+      hint.className='mrt-stn-goto';
+      hint.innerHTML='↗ 跳转到 Day '+m[1]+' 行程';
+      name.insertAdjacentElement('afterend',hint);
+    }
+    /* Click handler */
+    station.addEventListener('click',function(e){
+      if(e.target.closest('a'))return; /* let POI links work normally */
+      showDay(panelIdx);
+      /* Scroll to top after a tick (showDay also scrolls) */
+      setTimeout(function(){window.scrollTo({top:0,behavior:'smooth'})},50);
+    });
+  });
+}
+
 /* render on load */
 initTimeMarkers();
 initPlaceActions();
@@ -4214,6 +4285,7 @@ initCountdown();
 initBudgetSummary();
 initCheckOff();
 initBackupCollapse();
+initMrtGoto();
 </script>
 
 <!-- PWA Service Worker Registration -->
