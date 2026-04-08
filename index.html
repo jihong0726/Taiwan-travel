@@ -1,10 +1,20 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>台湾 台北六日游 · 5/7 – 5/12</title>
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#e74c3c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="台北六日游">
+<!-- SEO / Social -->
+<meta name="description" content="台湾台北六日游行程 · 5/7–5/12，含逐日景点、交通、美食与备选">
+<meta property="og:title" content="台湾 台北六日游 · 5/7 – 5/12">
+<meta property="og:description" content="六天五夜行程规划，含捷运路线、美食地图与预算">
+<meta property="og:type" content="website">
 <style>
   :root {
     --bg:#faf9f7;--card:#fff;--text:#1a1a2e;--muted:#7f8c8d;
@@ -404,18 +414,76 @@
   body.dark .uber-alt{background:linear-gradient(135deg,#0d1117,#1e2d40)}
   body.dark .day-header .theme{color:#999}
 
+  /* ===== EDITOR STYLES ===== */
+  .editor-toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px 16px;background:#f8f9fa;border-radius:12px;margin-bottom:12px}
+  .editor-toolbar label{font-weight:600;color:#555;font-size:.9rem}
+  .editor-toolbar select{padding:6px 12px;border:1px solid #ddd;border-radius:8px;font-size:.9rem;background:#fff}
+  .ed-btn{padding:8px 16px;border:none;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s}
+  .ed-btn-primary{background:var(--day1);color:#fff}
+  .ed-btn-primary:hover{opacity:.85}
+  .ed-btn-accent{background:#2ecc71;color:#fff}
+  .ed-btn-accent:hover{background:#27ae60}
+  .ed-btn-danger{background:#e74c3c;color:#fff;padding:4px 10px;font-size:.8rem}
+  .ed-btn-danger:hover{background:#c0392b}
+  .editor-tips{padding:10px 14px;background:#e8f4fd;border-radius:8px;font-size:.85rem;color:#2c3e50;margin-bottom:16px;line-height:1.5}
+  .editor-list{min-height:100px}
+  .editor-empty{padding:40px;text-align:center;color:#999;font-size:1rem}
+  .editor-item{display:flex;align-items:center;gap:10px;padding:12px 14px;margin-bottom:8px;background:#fff;border:1px solid #e0e0e0;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.06);transition:box-shadow .2s,transform .15s}
+  .editor-item:hover{box-shadow:0 2px 8px rgba(0,0,0,.1)}
+  .editor-item.dragging{opacity:.5;transform:scale(.97);box-shadow:0 4px 16px rgba(0,0,0,.15)}
+  .editor-item .drag-handle{cursor:grab;font-size:1.2rem;color:#aaa;user-select:none;padding:0 4px}
+  .editor-item .drag-handle:active{cursor:grabbing}
+  .editor-item .ei-num{width:24px;height:24px;border-radius:50%;background:var(--day1);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0}
+  .editor-item .ei-cat{font-size:1.1rem;flex-shrink:0}
+  .editor-item .ei-info{flex:1;min-width:0}
+  .editor-item .ei-name{font-weight:600;font-size:.95rem;color:#2c3e50}
+  .editor-item .ei-time{font-size:.8rem;color:#888;margin-top:2px}
+  .editor-item .ei-addr{font-size:.78rem;color:#aaa;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .editor-route{display:flex;align-items:center;gap:8px;padding:8px 14px 8px 42px;margin-bottom:8px;font-size:.82rem;color:#666;background:linear-gradient(90deg,#f8f9fa,transparent);border-radius:8px;border:1px dashed #e0e0e0}
+  .editor-route .er-line{flex:0 0 1px;width:1px;align-self:stretch;background:#ddd}
+  .editor-route a{color:#1565c0;text-decoration:none;font-weight:600;white-space:nowrap;flex-shrink:0}
+  .editor-route a:hover{text-decoration:underline}
+  .editor-add-section{padding:16px;background:#f8f9fa;border-radius:12px;margin-top:16px}
+  .editor-add-section h4{margin:0 0 10px;font-size:.95rem;color:#555}
+  .editor-add-form{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .editor-add-form input,.editor-add-form select{padding:8px 12px;border:1px solid #ddd;border-radius:8px;font-size:.85rem}
+  .editor-add-form input[type="text"]{flex:1;min-width:140px}
+  .editor-preview{margin-top:16px;padding:16px;background:#f0fff0;border-radius:12px;border:1px solid #c8e6c9}
+  .editor-preview h4{margin:0 0 8px;color:#2e7d32}
+  .editor-preview .timeline{padding-left:0}
+  body.dark .editor-route{background:linear-gradient(90deg,#2a2a2a,transparent);border-color:#444;color:#aaa}
+  body.dark .editor-route a{color:#64b5f6}
+  body.dark .editor-toolbar,body.dark .editor-add-section{background:#2a2a2a}
+  body.dark .editor-item{background:#1e1e1e;border-color:#333}
+  body.dark .editor-item .ei-name{color:#eee}
+  body.dark .editor-tips{background:#1a3a4a;color:#b0c4de}
+  body.dark .editor-preview{background:#1a3a2a;border-color:#2e5e3e}
+  @media(max-width:600px){
+    .editor-add-form{flex-direction:column}
+    .editor-add-form input[type="text"],.editor-add-form select{width:100%}
+    .editor-toolbar{flex-direction:column;align-items:stretch}
+  }
+
   /* ===== PRINT STYLES ===== */
   @media print{
     body{background:#fff!important;color:#000!important;padding:0!important}
-    .tabs,.dark-toggle,.countdown-banner,.budget-bar,.travel-connector .tc-toggle,.travel-connector .tc-hint{display:none!important}
+    /* Hide all UI chrome when printing */
+    .tabs,.dark-toggle,.countdown-banner,.budget-bar,
+    .travel-connector .tc-toggle,.travel-connector .tc-hint,
+    .share-btn,.place-actions,.food-filter,.mrt-filters{display:none!important}
+    /* Expand ALL day panels so full itinerary prints */
     .day-panel{display:block!important;opacity:1!important;transform:none!important;page-break-after:always}
     .item{box-shadow:none!important;border:1px solid #ddd;break-inside:avoid}
     .hero{background:#e74c3c!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
     .hero::after{display:none}
+    /* Show full route details in print */
     .travel-connector{border:none;background:none!important}
     .travel-connector .tc-detail{display:block!important}
+    .tc-route{display:none!important} /* hide map links; URLs don't work on paper */
     .nearby-alts,.backup-box{break-inside:avoid}
     .checklist,.chart-container{break-inside:avoid;box-shadow:none!important;border:1px solid #ddd}
+    /* Add day title before each section for printed pages */
+    .day-header{border-bottom:2px solid #ddd;margin-bottom:12px}
   }
 
 </style>
@@ -436,6 +504,7 @@
   <button data-day="6" onclick="showDay(5)">Day6<br><small>5/12二</small></button>
   <button data-day="0" onclick="showDay(6)">🗺️总览</button>
   <button data-day="7" onclick="showDay(7)">🚇路线</button>
+  <button data-day="8" onclick="showDay(8)">✏️编辑</button>
 </div>
 
 
@@ -2701,6 +2770,59 @@
 
 </div>
 
+<!-- ===================== EDITOR TAB ===================== -->
+<div class="day-panel" id="day8">
+  <div class="day-header">
+    <h2>✏️ 行程编辑器</h2>
+    <div class="theme">手动添加/删除景点，自动生成交通路线</div>
+  </div>
+
+  <div class="editor-toolbar">
+    <label>选择编辑日：</label>
+    <select id="editorDaySelect">
+      <option value="1">Day 1 · 5/7 四</option>
+      <option value="2">Day 2 · 5/8 五</option>
+      <option value="3">Day 3 · 5/9 六</option>
+      <option value="4">Day 4 · 5/10 日</option>
+      <option value="5">Day 5 · 5/11 一</option>
+      <option value="6">Day 6 · 5/12 二</option>
+    </select>
+    <button class="ed-btn ed-btn-primary" onclick="edLoadDay()">📥 载入当日行程</button>
+    <button class="ed-btn ed-btn-accent" onclick="edGenRoutes()">🗺️ 生成交通路线</button>
+  </div>
+
+  <div class="editor-tips">
+    <strong>使用方法：</strong> ① 选择日期 → 载入行程 → ② 拖动排序 / 添加新景点 / 删除 → ③ 点击「自动生成交通路线」，系统将根据台北捷运路网自动计算每段交通方式和换乘步骤 → ④ 预览完整行程（与正式行程相同样式）
+  </div>
+
+  <div id="editorList" class="editor-list">
+    <div class="editor-empty">👆 选择一天并点击「载入当日行程」开始编辑</div>
+  </div>
+
+  <div class="editor-add-section">
+    <h4>➕ 添加新景点</h4>
+    <div class="editor-add-form">
+      <input type="text" id="edNewName" placeholder="景点名称（如：台北101）" />
+      <input type="text" id="edNewAddr" placeholder="Google Maps 搜索词（如：台北101 台北）" />
+      <input type="text" id="edNewTime" placeholder="时间（如：14:30 – 16:00）" />
+      <select id="edNewCat">
+        <option value="see">🏛 景点</option>
+        <option value="food">🍜 美食</option>
+        <option value="shop">🛍 购物</option>
+        <option value="transport">🚐 交通</option>
+        <option value="local">📍 在地</option>
+      </select>
+      <button class="ed-btn ed-btn-primary" onclick="edAddStop()">添加</button>
+    </div>
+  </div>
+
+  <div id="editorPreview" class="editor-preview" style="display:none">
+    <h4>🗺️ 生成的完整行程预览</h4>
+    <p style="font-size:.85rem;color:#666;margin:0 0 12px">以下预览使用与正式行程相同的样式。每段交通路线可编辑——点击文字即可修改。</p>
+    <div id="editorPreviewContent" class="timeline"></div>
+  </div>
+</div>
+
 <script>
 const locations = [
   {day:1,name:"N Hotel",lat:25.0425,lng:121.5080,type:"hotel"},
@@ -2750,9 +2872,13 @@ const locations = [
   {day:6,name:"至善区（故宫）",lat:25.1024,lng:121.5485,type:"see"},
   {day:6,name:"士林夜市",lat:25.0880,lng:121.5245,type:"food"},
 ];
+/* Tab index → hash mapping */
+const TAB_HASH=['day1','day2','day3','day4','day5','day6','overview','mrt','edit'];
 function showDay(i){
   document.querySelectorAll('.day-panel').forEach((p,idx)=>p.classList.toggle('active',idx===i));
   document.querySelectorAll('.tabs button').forEach((b,idx)=>b.classList.toggle('active',idx===i));
+  /* Persist active tab to URL hash (no page reload) */
+  try{history.replaceState(null,'','#'+(TAB_HASH[i]||'day1'))}catch(e){}
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -2808,6 +2934,592 @@ document.querySelectorAll('#foodFilter button').forEach(btn=>{
   });
 });
 renderFoodGrid('all');
+
+// ============= TAIPEI MRT ROUTING ENGINE =============
+// Station graph: each line is an ordered array of station objects
+// Lines: R=淡水信义线(红), BL=板南线(蓝), G=松山新店线(绿), O=中和新芦线(橘), BR=文湖线(棕)
+const mrtLines = {
+  R: {name:'淡水信义线',color:'红线',emoji:'🔴',stations:[
+    {id:'R28',name:'淡水'},{id:'R27',name:'红树林'},{id:'R26',name:'竹围'},{id:'R25',name:'关渡'},
+    {id:'R24',name:'忠义'},{id:'R23',name:'复兴岗'},{id:'R22',name:'北投'},
+    {id:'R22A',name:'新北投'}, // 支线 handled separately
+    {id:'R21',name:'奇岩'},{id:'R20',name:'唭哩岸'},{id:'R19',name:'石牌'},
+    {id:'R18',name:'明德'},{id:'R17',name:'芝山'},{id:'R16',name:'士林'},
+    {id:'R15',name:'剑潭'},{id:'R14',name:'圆山'},{id:'R13',name:'民权西路'},
+    {id:'R12',name:'双连'},{id:'R11',name:'中山'},{id:'R10',name:'台北车站'},
+    {id:'R09',name:'台大医院'},{id:'R08',name:'中正纪念堂'},{id:'R07',name:'东门'},
+    {id:'R06',name:'大安森林公园'},{id:'R05',name:'大安'},{id:'R04',name:'信义安和'},
+    {id:'R03',name:'台北101/世贸'},{id:'R02',name:'象山'}
+  ]},
+  BL: {name:'板南线',color:'蓝线',emoji:'🔵',stations:[
+    {id:'BL23',name:'顶埔'},{id:'BL22',name:'永宁'},{id:'BL21',name:'土城'},
+    {id:'BL20',name:'海山'},{id:'BL19',name:'亚东医院'},{id:'BL18',name:'府中'},
+    {id:'BL17',name:'板桥'},{id:'BL16',name:'新埔'},{id:'BL15',name:'江子翠'},
+    {id:'BL14',name:'龙山寺'},{id:'BL13',name:'西门'},{id:'BL12',name:'台北车站'},
+    {id:'BL11',name:'善导寺'},{id:'BL10',name:'忠孝新生'},{id:'BL09',name:'忠孝复兴'},
+    {id:'BL08',name:'忠孝敦化'},{id:'BL07',name:'国父纪念馆'},{id:'BL06',name:'市政府'},
+    {id:'BL05',name:'永春'},{id:'BL04',name:'后山埤'},{id:'BL03',name:'昆阳'},
+    {id:'BL02',name:'南港'},{id:'BL01',name:'南港展览馆'}
+  ]},
+  G: {name:'松山新店线',color:'绿线',emoji:'🟢',stations:[
+    {id:'G19',name:'松山'},{id:'G18',name:'南京三民'},{id:'G17',name:'台北小巨蛋'},
+    {id:'G16',name:'南京复兴'},{id:'G15',name:'松江南京'},{id:'G14',name:'中山'},
+    {id:'G13',name:'北门'},{id:'G12',name:'西门'},{id:'G11',name:'小南门'},
+    {id:'G10',name:'中正纪念堂'},{id:'G09',name:'古亭'},{id:'G08',name:'台电大楼'},
+    {id:'G07',name:'公馆'},{id:'G06',name:'万隆'},{id:'G05',name:'景美'},
+    {id:'G04',name:'大坪林'},{id:'G03',name:'七张'},{id:'G02',name:'新店区公所'},
+    {id:'G01',name:'新店'}
+  ]},
+  O: {name:'中和新芦线',color:'橘线',emoji:'🟠',stations:[
+    {id:'O21',name:'回龙'},{id:'O20',name:'丹凤'},{id:'O19',name:'辅大'},
+    {id:'O18',name:'新庄'},{id:'O17',name:'头前庄'},{id:'O16',name:'先啬宫'},
+    {id:'O15',name:'三重'},{id:'O14',name:'菜寮'},{id:'O13',name:'台北桥'},
+    {id:'O12',name:'大桥头'},{id:'O11',name:'民权西路'},{id:'O10',name:'中山国小'},
+    {id:'O09',name:'松江南京'},{id:'O08',name:'南京复兴'},{id:'O07',name:'忠孝复兴'},
+    {id:'O06',name:'大安'},{id:'O05',name:'古亭'},{id:'O04',name:'东门'},
+    {id:'O03',name:'忠孝新生'},
+    // 南势角支线
+    {id:'O02',name:'头前庄'}, // handled via transfer
+    // Actually O line splits at 古亭: one branch to 南势角
+    // Let's model 古亭→南势角 separately
+  ]},
+  // 中和线 (from 古亭)
+  OA: {name:'中和线',color:'橘线',emoji:'🟠',stations:[
+    {id:'O05',name:'古亭'},{id:'O01',name:'顶溪'},{id:'O02A',name:'永安市场'},
+    {id:'O03A',name:'景安'},{id:'O04A',name:'南势角'}
+  ]},
+  BR: {name:'文湖线',color:'棕线',emoji:'🟤',stations:[
+    {id:'BR01',name:'动物园'},{id:'BR02',name:'木栅'},{id:'BR03',name:'万芳社区'},
+    {id:'BR04',name:'万芳医院'},{id:'BR05',name:'辛亥'},{id:'BR06',name:'麟光'},
+    {id:'BR07',name:'六张犁'},{id:'BR08',name:'科技大楼'},{id:'BR09',name:'大安'},
+    {id:'BR10',name:'忠孝复兴'},{id:'BR11',name:'南京复兴'},{id:'BR12',name:'中山国中'},
+    {id:'BR13',name:'松山机场'},{id:'BR14',name:'大直'},{id:'BR15',name:'剑南路'},
+    {id:'BR16',name:'西湖'},{id:'BR17',name:'港墘'},{id:'BR18',name:'文德'},
+    {id:'BR19',name:'内湖'},{id:'BR20',name:'大湖公园'},{id:'BR21',name:'葫洲'},
+    {id:'BR22',name:'东湖'},{id:'BR23',name:'南港软体园区'},{id:'BR24',name:'南港展览馆'}
+  ]},
+  // 新北投支线
+  RA: {name:'新北投支线',color:'红线',emoji:'🔴',stations:[
+    {id:'R22',name:'北投'},{id:'R22A',name:'新北投'}
+  ]}
+};
+
+// Build adjacency graph + station metadata
+const mrtGraph = {}; // stationName -> [{neighbor, line, direction}]
+const stationLines = {}; // stationName -> [line ids]
+
+function buildMrtGraph(){
+  // Helper to add edge
+  function addEdge(fromName, toName, lineId, lineName, lineColor){
+    if(!mrtGraph[fromName]) mrtGraph[fromName] = [];
+    if(!mrtGraph[toName]) mrtGraph[toName] = [];
+    // Avoid duplicates
+    if(!mrtGraph[fromName].find(e => e.neighbor === toName && e.line === lineId)){
+      mrtGraph[fromName].push({neighbor:toName, line:lineId, lineName, lineColor});
+    }
+    if(!mrtGraph[toName].find(e => e.neighbor === fromName && e.line === lineId)){
+      mrtGraph[toName].push({neighbor:fromName, line:lineId, lineName, lineColor});
+    }
+    if(!stationLines[fromName]) stationLines[fromName] = new Set();
+    if(!stationLines[toName]) stationLines[toName] = new Set();
+    stationLines[fromName].add(lineId);
+    stationLines[toName].add(lineId);
+  }
+
+  for(const [lineId, lineData] of Object.entries(mrtLines)){
+    const ss = lineData.stations;
+    for(let i = 0; i < ss.length - 1; i++){
+      addEdge(ss[i].name, ss[i+1].name, lineId, lineData.name, lineData.color);
+    }
+  }
+  // Handle shared stations (same name = transfer)
+  // 台北车站: R10+BL12, 西门: BL13+G12, 中正纪念堂: R08+G10,
+  // 东门: R07+O04, 古亭: G09+O05, 忠孝新生: BL10+O03,
+  // 忠孝复兴: BL09+O07+BR10, 南京复兴: G16+O08+BR11,
+  // 松江南京: G15+O09, 民权西路: R13+O11,
+  // 大安: R05+O06+BR09, 中山: R11+G14, 南港展览馆: BL01+BR24
+  // These are already handled because they share the same station name
+}
+buildMrtGraph();
+
+// BFS: find shortest path between two station names
+// Uses a two-pass approach: first finds shortest distance, then among all
+// shortest paths picks the one with fewest transfers
+function mrtFindPath(fromStation, toStation){
+  if(fromStation === toStation) return null;
+  if(!mrtGraph[fromStation] || !mrtGraph[toStation]) return null;
+
+  // BFS to find ALL shortest paths, then pick best (fewest transfers)
+  const queue = [{station:fromStation, path:[{station:fromStation, line:null, lineColor:null, lineName:null}], transfers:0}];
+  const dist = {[fromStation]:0};
+  let bestPath = null;
+  let bestLen = Infinity;
+  let bestTransfers = Infinity;
+
+  while(queue.length > 0){
+    const {station, path, transfers} = queue.shift();
+    if(path.length > bestLen) continue; // prune
+
+    for(const edge of (mrtGraph[station]||[])){
+      const newLen = path.length + 1;
+      const prevLine = path[path.length-1].line;
+      const newTransfers = transfers + (prevLine && prevLine !== edge.line ? 1 : 0);
+      const newPath = [...path, {station:edge.neighbor, line:edge.line, lineName:edge.lineName, lineColor:edge.lineColor}];
+
+      if(edge.neighbor === toStation){
+        if(newLen < bestLen || (newLen === bestLen && newTransfers < bestTransfers)){
+          bestPath = newPath; bestLen = newLen; bestTransfers = newTransfers;
+        }
+        continue;
+      }
+
+      // Allow revisiting if same distance but fewer transfers
+      const key = edge.neighbor;
+      if(dist[key] === undefined || newLen < dist[key] || (newLen === dist[key] && newTransfers < (dist[key+'_t']||Infinity))){
+        dist[key] = newLen;
+        dist[key+'_t'] = newTransfers;
+        queue.push({station:edge.neighbor, path:newPath, transfers:newTransfers});
+      }
+    }
+  }
+  return bestPath;
+}
+
+// Convert a path into step-by-step Chinese instructions
+function mrtPathToInstructions(path){
+  if(!path || path.length < 2) return '';
+  const steps = [];
+  let currentLine = null;
+  let boardStation = null;
+
+  for(let i = 1; i < path.length; i++){
+    const seg = path[i];
+    if(seg.line !== currentLine){
+      // Line change
+      if(currentLine !== null){
+        // We were on a line, now transferring
+        steps.push(`在「${path[i-1].station}」站下车，转乘${seg.lineColor}(${seg.lineName})`);
+      } else {
+        // First boarding
+        steps.push(`${path[0].station}站进站 → 搭${seg.lineColor}(${seg.lineName})`);
+      }
+      currentLine = seg.line;
+      boardStation = path[i-1].station;
+    }
+  }
+  // Final: arrive at destination
+  const lastStation = path[path.length - 1].station;
+  steps.push(`在「${lastStation}」站下车`);
+  return steps.join(' → ');
+}
+
+// ============= LOCATION-TO-STATION MAPPING =============
+// Known location → nearest MRT station + suggested exit
+const locationStationMap = {
+  // Day 1 - Ximen area
+  'N Hotel': {station:'西门',exit:'6号出口',walkMin:3},
+  '西门町': {station:'西门',exit:'6号出口',walkMin:1},
+  '西门町商圈': {station:'西门',exit:'6号出口',walkMin:1},
+  '西门红楼': {station:'西门',exit:'1号出口',walkMin:2},
+  '阿宗面线': {station:'西门',exit:'6号出口',walkMin:2},
+  '一甲子餐饮': {station:'龙山寺',exit:'1号出口',walkMin:5},
+  '老山东家常面': {station:'龙山寺',exit:'1号出口',walkMin:8},
+  '南机场夜市': {station:'龙山寺',exit:'1号出口',walkMin:15},
+  '龙山寺': {station:'龙山寺',exit:'1号出口',walkMin:1},
+  '鸭肉扁': {station:'西门',exit:'6号出口',walkMin:3},
+
+  // Day 3 - Zoo / 101
+  '台北市立动物园': {station:'动物园',exit:'1号出口',walkMin:3},
+  '台北动物园': {station:'动物园',exit:'1号出口',walkMin:3},
+  '动物园': {station:'动物园',exit:'1号出口',walkMin:3},
+  'LaLaport': {station:'南港展览馆',exit:'BL出口',walkMin:5},
+  '乐扣乐扣 LaLaport': {station:'南港展览馆',exit:'BL出口',walkMin:5},
+  '台北101': {station:'台北101/世贸',exit:'4号出口',walkMin:1},
+  '台北101/世贸': {station:'台北101/世贸',exit:'4号出口',walkMin:1},
+  '象山步道': {station:'象山',exit:'2号出口',walkMin:5},
+  '象山': {station:'象山',exit:'2号出口',walkMin:5},
+  '双月食品社': {station:'六张犁',exit:'',walkMin:6},
+
+  // Day 4 - Dadaocheng / CKS
+  '重庆豆浆炸蛋饼': {station:'大桥头',exit:'1号出口',walkMin:6},
+  '大稻埕': {station:'大桥头',exit:'1号出口',walkMin:8},
+  '大稻埕码头': {station:'大桥头',exit:'1号出口',walkMin:10},
+  '永乐鸡卷大王': {station:'大桥头',exit:'1号出口',walkMin:8},
+  '和盛 1947': {station:'大桥头',exit:'1号出口',walkMin:9},
+  '永富冰淇淋': {station:'大桥头',exit:'1号出口',walkMin:8},
+  '林华泰茶行': {station:'大桥头',exit:'1号出口',walkMin:10},
+  '中正纪念堂': {station:'中正纪念堂',exit:'5号出口',walkMin:2},
+  '国立台湾博物馆': {station:'台大医院',exit:'4号出口',walkMin:3},
+  '宁夏夜市': {station:'双连',exit:'1号出口',walkMin:5},
+  '天津葱抓饼': {station:'双连',exit:'1号出口',walkMin:5},
+  '合兴壹玖肆柒': {station:'大桥头',exit:'1号出口',walkMin:9},
+
+  // Day 5 - Huashan / Yongkang
+  '叶家小笼包': {station:'善导寺',exit:'5号出口',walkMin:3},
+  '华山1914': {station:'忠孝新生',exit:'1号出口',walkMin:5},
+  '华山1914文创园区': {station:'忠孝新生',exit:'1号出口',walkMin:5},
+  '永康街': {station:'东门',exit:'5号出口',walkMin:2},
+  '永康街商圈': {station:'东门',exit:'5号出口',walkMin:2},
+  '永康牛肉面': {station:'东门',exit:'5号出口',walkMin:3},
+  '思慕昔': {station:'东门',exit:'5号出口',walkMin:2},
+  '青田七六': {station:'东门',exit:'5号出口',walkMin:8},
+  '大安森林公园': {station:'大安森林公园',exit:'5号出口',walkMin:1},
+  '饶河夜市': {station:'松山',exit:'5号出口',walkMin:3},
+  '松山慈祐宫': {station:'松山',exit:'5号出口',walkMin:3},
+
+  // Day 6 - Beitou / NPM
+  '北投温泉': {station:'新北投',exit:'出口',walkMin:5},
+  '新北投': {station:'新北投',exit:'出口',walkMin:1},
+  '至善区（故宫）': {station:'士林',exit:'1号出口',walkMin:0,note:'转乘公车红30到故宫(约15min)'},
+  '故宫': {station:'士林',exit:'1号出口',walkMin:0,note:'转乘公车红30到故宫(约15min)'},
+  '正豪季水饺': {station:'士林',exit:'1号出口',walkMin:5},
+  '士林夜市': {station:'剑潭',exit:'1号出口',walkMin:3},
+
+  // Common
+  '台北车站': {station:'台北车站',exit:'',walkMin:0},
+  '西门': {station:'西门',exit:'6号出口',walkMin:0},
+};
+
+// Lat/lng based fallback: find nearest MRT station by coordinates
+const stationCoords = {
+  '动物园':{lat:24.9982,lng:121.5764}, '木栅':{lat:24.9985,lng:121.5730},
+  '万芳社区':{lat:24.9993,lng:121.5577}, '万芳医院':{lat:25.0000,lng:121.5577},
+  '辛亥':{lat:25.0055,lng:121.5403}, '麟光':{lat:25.0123,lng:121.5444},
+  '六张犁':{lat:25.0235,lng:121.5530}, '科技大楼':{lat:25.0262,lng:121.5435},
+  '大安':{lat:25.0330,lng:121.5438}, '忠孝复兴':{lat:25.0417,lng:121.5440},
+  '南京复兴':{lat:25.0520,lng:121.5441}, '中山国中':{lat:25.0600,lng:121.5440},
+  '松山机场':{lat:25.0630,lng:121.5510}, '大直':{lat:25.0835,lng:121.5460},
+  '剑南路':{lat:25.0850,lng:121.5565}, '西湖':{lat:25.0820,lng:121.5670},
+  '港墘':{lat:25.0800,lng:121.5745}, '文德':{lat:25.0788,lng:121.5835},
+  '内湖':{lat:25.0838,lng:121.5940}, '大湖公园':{lat:25.0835,lng:121.6023},
+  '葫洲':{lat:25.0720,lng:121.6115}, '东湖':{lat:25.0670,lng:121.6182},
+  '南港软体园区':{lat:25.0590,lng:121.6165}, '南港展览馆':{lat:25.0555,lng:121.6175},
+  '台北101/世贸':{lat:25.0330,lng:121.5635}, '象山':{lat:25.0270,lng:121.5710},
+  '信义安和':{lat:25.0335,lng:121.5530}, '大安森林公园':{lat:25.0330,lng:121.5350},
+  '东门':{lat:25.0335,lng:121.5290}, '中正纪念堂':{lat:25.0325,lng:121.5185},
+  '台大医院':{lat:25.0408,lng:121.5150}, '台北车站':{lat:25.0478,lng:121.5170},
+  '中山':{lat:25.0530,lng:121.5208}, '双连':{lat:25.0580,lng:121.5215},
+  '民权西路':{lat:25.0630,lng:121.5200}, '圆山':{lat:25.0715,lng:121.5205},
+  '剑潭':{lat:25.0785,lng:121.5258}, '士林':{lat:25.0880,lng:121.5260},
+  '芝山':{lat:25.0960,lng:121.5225}, '明德':{lat:25.1030,lng:121.5190},
+  '石牌':{lat:25.1120,lng:121.5155}, '唭哩岸':{lat:25.1180,lng:121.5065},
+  '奇岩':{lat:25.1238,lng:121.5015}, '北投':{lat:25.1318,lng:121.4990},
+  '新北投':{lat:25.1370,lng:121.5020}, '复兴岗':{lat:25.1370,lng:121.4920},
+  '忠义':{lat:25.1310,lng:121.4760}, '关渡':{lat:25.1252,lng:121.4670},
+  '竹围':{lat:25.1365,lng:121.4590}, '红树林':{lat:25.1540,lng:121.4575},
+  '淡水':{lat:25.1680,lng:121.4510},
+  '西门':{lat:25.0420,lng:121.5080}, '龙山寺':{lat:25.0370,lng:121.5000},
+  '江子翠':{lat:25.0320,lng:121.4710}, '新埔':{lat:25.0240,lng:121.4685},
+  '板桥':{lat:25.0150,lng:121.4625}, '府中':{lat:25.0085,lng:121.4590},
+  '善导寺':{lat:25.0445,lng:121.5230}, '忠孝新生':{lat:25.0425,lng:121.5330},
+  '忠孝敦化':{lat:25.0415,lng:121.5520}, '国父纪念馆':{lat:25.0410,lng:121.5580},
+  '市政府':{lat:25.0410,lng:121.5660}, '永春':{lat:25.0410,lng:121.5735},
+  '后山埤':{lat:25.0450,lng:121.5825}, '昆阳':{lat:25.0500,lng:121.5850},
+  '南港':{lat:25.0530,lng:121.6065},
+  '松山':{lat:25.0497,lng:121.5775}, '南京三民':{lat:25.0515,lng:121.5630},
+  '台北小巨蛋':{lat:25.0510,lng:121.5515}, '松江南京':{lat:25.0530,lng:121.5310},
+  '北门':{lat:25.0480,lng:121.5115}, '小南门':{lat:25.0365,lng:121.5140},
+  '古亭':{lat:25.0265,lng:121.5230}, '台电大楼':{lat:25.0215,lng:121.5285},
+  '公馆':{lat:25.0150,lng:121.5340},
+  '大桥头':{lat:25.0635,lng:121.5115}, '台北桥':{lat:25.0590,lng:121.5005},
+  '菜寮':{lat:25.0595,lng:121.4925}, '三重':{lat:25.0565,lng:121.4845},
+  '中山国小':{lat:25.0585,lng:121.5265}
+};
+
+function findNearestStation(lat, lng){
+  let best = null, bestDist = Infinity;
+  for(const [name, coord] of Object.entries(stationCoords)){
+    const d = Math.sqrt(Math.pow(lat-coord.lat,2) + Math.pow(lng-coord.lng,2));
+    if(d < bestDist){ bestDist = d; best = name; }
+  }
+  // Approx: 0.001 degree ≈ 111m, walkable if < 0.01 (~1.1km)
+  const walkMin = Math.round(bestDist * 111000 / 80); // 80m/min walk speed
+  return {station:best, walkMin, dist:bestDist};
+}
+
+// Main auto-routing function: given two location names, generate transit instructions
+function autoRoute(fromName, toName){
+  const fromInfo = locationStationMap[fromName];
+  const toInfo = locationStationMap[toName];
+
+  // Try to find lat/lng from locations array
+  let fromLoc = locations.find(l => l.name.replace(/ 🔥/,'') === fromName);
+  let toLoc = locations.find(l => l.name.replace(/ 🔥/,'') === toName);
+
+  let fromStation, toStation, fromWalk=0, toWalk=0, fromExit='', toExit='', fromNote='', toNote='';
+
+  if(fromInfo){
+    fromStation=fromInfo.station; fromWalk=fromInfo.walkMin; fromExit=fromInfo.exit||''; fromNote=fromInfo.note||'';
+  } else if(fromLoc){
+    const near = findNearestStation(fromLoc.lat, fromLoc.lng);
+    fromStation=near.station; fromWalk=near.walkMin;
+  }
+
+  if(toInfo){
+    toStation=toInfo.station; toWalk=toInfo.walkMin; toExit=toInfo.exit||''; toNote=toInfo.note||'';
+  } else if(toLoc){
+    const near = findNearestStation(toLoc.lat, toLoc.lng);
+    toStation=near.station; toWalk=near.walkMin;
+  }
+
+  if(!fromStation || !toStation) return {mode:'🚶',time:'?',desc:`${fromName} → ${toName}（无法自动计算，请参考 Google Maps）`};
+
+  // Same station = walking distance
+  if(fromStation === toStation){
+    const walkTime = Math.max(fromWalk, toWalk, 3);
+    let desc = `步行前往（${fromName} 和 ${toName} 都在${fromStation}站附近）`;
+    if(toExit) desc = `步行前往 · ${toName}在${toStation}站${toExit}附近`;
+    return {mode:'🚶',time:walkTime,desc};
+  }
+
+  // Special: if either has a bus note (like 故宫)
+  if(fromNote || toNote){
+    const path = mrtFindPath(fromStation, toStation);
+    let desc = '';
+    if(path){
+      desc = mrtPathToInstructions(path);
+      if(toNote) desc += ' → ' + toNote;
+      if(fromNote) desc = fromNote + ' → ' + desc;
+    } else {
+      desc = `${fromStation} → ${toStation}`;
+      if(toNote) desc += ' → ' + toNote;
+    }
+    const mrtTime = path ? (path.length - 1) * 2.5 : 15; // ~2.5 min per station
+    const totalTime = Math.round(fromWalk + mrtTime + toWalk + (toNote?15:0) + (fromNote?15:0));
+    return {mode:'🚃',time:totalTime,desc};
+  }
+
+  // Find MRT path
+  const path = mrtFindPath(fromStation, toStation);
+  if(!path){
+    return {mode:'🚕',time:'?',desc:`${fromName} → ${toName}（捷运无直达路线，建议 Uber/出租车）`};
+  }
+
+  const mrtTime = Math.round((path.length - 1) * 2.5); // ~2.5 min per station avg
+  const totalTime = Math.round(fromWalk + mrtTime + toWalk);
+
+  // Generate detailed instructions
+  let steps = [];
+  if(fromWalk > 0 && fromExit){
+    steps.push(`从${fromName}步行${fromWalk}分钟到${fromStation}站${fromExit}`);
+  } else if(fromWalk > 2){
+    steps.push(`从${fromName}步行${fromWalk}分钟到${fromStation}站`);
+  }
+
+  // MRT instructions
+  let currentLine = null;
+  let segStart = null;
+  for(let i = 1; i < path.length; i++){
+    const seg = path[i];
+    if(seg.line !== currentLine){
+      if(currentLine !== null){
+        // Transfer
+        steps.push(`在「${path[i-1].station}」站转乘${seg.lineColor}`);
+      } else {
+        steps.push(`${fromStation}站进站 → 搭${seg.lineColor}`);
+      }
+      currentLine = seg.line;
+    }
+  }
+  steps.push(`在「${toStation}」站下车`);
+
+  if(toWalk > 0 && toExit){
+    steps.push(`${toExit}出站 → 步行${toWalk}分钟到${toName}`);
+  } else if(toWalk > 2){
+    steps.push(`出站步行${toWalk}分钟到${toName}`);
+  }
+
+  return {mode:'🚃',time:totalTime,desc:steps.join(' → ')};
+}
+
+// ============= ITINERARY EDITOR (with auto-routing) =============
+const catIcons = {see:'🏛',food:'🍜',shop:'🛍',transport:'🚐',local:'📍',hotel:'🏨',cafe:'☕',bar:'🍷'};
+const dayColors = {1:'var(--day1)',2:'var(--day2)',3:'var(--day3)',4:'var(--day4)',5:'var(--day5)',6:'var(--day6)'};
+let editorStops = [];
+let editorCurrentDay = 1;
+let dragSrcIdx = null;
+let editorRoutes = {};
+
+function edLoadDay(){
+  editorCurrentDay = parseInt(document.getElementById('editorDaySelect').value);
+  const panelIdx = editorCurrentDay - 1;
+  const panel = document.querySelectorAll('.day-panel')[panelIdx];
+  if(!panel){editorStops=[];edRender();return;}
+
+  editorStops = [];
+  const items = panel.querySelectorAll('.timeline .item, .timeline .item.transport');
+  items.forEach(item => {
+    const nameEl = item.querySelector('.name');
+    const timeEl = item.querySelector('.time');
+    const gmapLink = item.querySelector('a.gmap');
+    let name = nameEl ? nameEl.textContent.replace('📍','').replace(/必[去看逛玩吃]/g,'').trim() : '';
+    if(!name && nameEl) name = nameEl.textContent.trim();
+    const time = timeEl ? timeEl.textContent.trim() : '';
+    let addr = '';
+    if(gmapLink){
+      const url = gmapLink.href;
+      const m = url.match(/query=([^&]+)/);
+      if(m) addr = decodeURIComponent(m[1].replace(/\+/g,' '));
+    }
+    let cat = 'see';
+    if(item.classList.contains('food')) cat = 'food';
+    else if(item.classList.contains('shop')) cat = 'shop';
+    else if(item.classList.contains('transport')) cat = 'transport';
+    else if(item.classList.contains('local')) cat = 'local';
+
+    if(name) editorStops.push({name, addr: addr||name, time, cat});
+  });
+
+  // Auto-generate routes immediately
+  editorRoutes = {};
+  autoFillRoutes();
+  document.getElementById('editorPreview').style.display = 'none';
+  edRender();
+}
+
+function autoFillRoutes(){
+  for(let i = 0; i < editorStops.length - 1; i++){
+    const from = editorStops[i];
+    const to = editorStops[i+1];
+    const rid = `route_${i}`;
+    const result = autoRoute(from.name, to.name);
+    editorRoutes[rid] = {
+      mode: result.mode,
+      time: String(result.time),
+      desc: result.desc
+    };
+  }
+}
+
+function edRender(){
+  const list = document.getElementById('editorList');
+  if(editorStops.length === 0){
+    list.innerHTML = '<div class="editor-empty">此日暂无景点，请添加新景点或载入其他日期</div>';
+    return;
+  }
+  const color = dayColors[editorCurrentDay] || 'var(--day1)';
+  let html = '';
+  for(let i = 0; i < editorStops.length; i++){
+    const s = editorStops[i];
+    html += `<div class="editor-item" draggable="true" data-idx="${i}"
+         ondragstart="edDragStart(event,${i})" ondragover="edDragOver(event)"
+         ondrop="edDrop(event,${i})" ondragend="edDragEnd(event)">
+      <span class="drag-handle" title="拖动排序">⠿</span>
+      <span class="ei-num" style="background:${color}">${i+1}</span>
+      <span class="ei-cat">${catIcons[s.cat]||'📍'}</span>
+      <div class="ei-info">
+        <div class="ei-name">${s.name}</div>
+        ${s.time ? `<div class="ei-time">🕐 ${s.time}</div>` : ''}
+        <div class="ei-addr">📍 ${s.addr}</div>
+      </div>
+      <button class="ed-btn ed-btn-danger" onclick="edRemove(${i})" title="删除">✕</button>
+    </div>`;
+
+    // Show auto-generated route between stops
+    if(i < editorStops.length - 1){
+      const next = editorStops[i+1];
+      const rid = `route_${i}`;
+      const route = editorRoutes[rid] || {};
+      const gmapUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(s.addr)}&destination=${encodeURIComponent(next.addr)}&travelmode=transit`;
+      html += `<div class="editor-route">
+        <span>${route.mode||'🚃'}</span>
+        <span style="font-weight:600;color:#333">${route.time||'?'} min</span>
+        <span class="er-line"></span>
+        <span style="font-size:.78rem;color:#555;flex:2;line-height:1.4">${route.desc||''}</span>
+        <a href="${gmapUrl}" target="_blank">🗺️ Maps</a>
+      </div>`;
+    }
+  }
+  list.innerHTML = html;
+}
+
+function edDragStart(e, idx){
+  dragSrcIdx = idx;
+  e.currentTarget.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+}
+function edDragOver(e){e.preventDefault();e.dataTransfer.dropEffect='move';}
+function edDrop(e, targetIdx){
+  e.preventDefault();
+  if(dragSrcIdx === null || dragSrcIdx === targetIdx) return;
+  const moved = editorStops.splice(dragSrcIdx, 1)[0];
+  editorStops.splice(targetIdx, 0, moved);
+  dragSrcIdx = null;
+  autoFillRoutes(); // Re-compute routes after reorder
+  edRender();
+}
+function edDragEnd(e){
+  e.currentTarget.classList.remove('dragging');
+  dragSrcIdx = null;
+}
+
+function edRemove(idx){
+  editorStops.splice(idx, 1);
+  autoFillRoutes();
+  edRender();
+  document.getElementById('editorPreview').style.display = 'none';
+}
+
+function edAddStop(){
+  const name = document.getElementById('edNewName').value.trim();
+  const addr = document.getElementById('edNewAddr').value.trim();
+  const time = document.getElementById('edNewTime').value.trim();
+  const cat = document.getElementById('edNewCat').value;
+  if(!name){alert('请输入景点名称');return;}
+  editorStops.push({name, addr: addr||name, time, cat});
+  document.getElementById('edNewName').value = '';
+  document.getElementById('edNewAddr').value = '';
+  document.getElementById('edNewTime').value = '';
+  autoFillRoutes(); // Re-compute routes after adding
+  edRender();
+}
+
+function edGenRoutes(){
+  if(editorStops.length < 2){alert('至少需要2个景点才能生成路线');return;}
+
+  // Re-compute all routes
+  autoFillRoutes();
+
+  const preview = document.getElementById('editorPreview');
+  const content = document.getElementById('editorPreviewContent');
+  let html = '';
+
+  for(let i = 0; i < editorStops.length; i++){
+    const s = editorStops[i];
+
+    // Render travel-connector before this item
+    if(i > 0){
+      const rid = `route_${i-1}`;
+      const route = editorRoutes[rid] || {};
+      const prev = editorStops[i-1];
+      const mode = route.mode || '🚃';
+      const time = route.time || '?';
+      const desc = route.desc || `${prev.name} → ${s.name}`;
+      const gmapUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(prev.addr)}&destination=${encodeURIComponent(s.addr)}&travelmode=transit`;
+
+      html += `<div class="travel-connector">
+      <span class="tc-icon">${mode}</span>
+      <span class="tc-pill">${time} min</span>
+      <a class="tc-route" href="${gmapUrl}" target="_blank"><span class="route-icon">🗺️</span> 查看路线</a>
+      <span class="tc-label">${desc.replace(/\n/g,'<br>')}</span>
+    </div>`;
+    }
+
+    // Render the item card
+    const catClass = s.cat || 'see';
+    const gmapQuery = encodeURIComponent(s.addr);
+    html += `<div class="item ${catClass}">
+      <div class="top-row">
+        ${s.time ? `<span class="time">${s.time}</span>` : ''}
+      </div>
+      <div class="name"><a class="gmap" href="https://www.google.com/maps/search/?api=1&query=${gmapQuery}" target="_blank">${s.name}<span class="gmap-icon">📍</span></a></div>
+    </div>`;
+  }
+
+  content.innerHTML = html;
+  preview.style.display = 'block';
+  preview.scrollIntoView({behavior:'smooth',block:'start'});
+}
 
 </script>
 
@@ -3046,13 +3758,14 @@ function initDarkMode(){
   btn.innerHTML='🌙';
   btn.title='切换深色模式';
   btn.setAttribute('aria-label','切换深色模式');
-  const saved=sessionStorage.getItem('dark-mode');
+  /* Use localStorage so dark mode persists across browser sessions */
+  const saved=localStorage.getItem('dark-mode');
   if(saved==='1'){document.body.classList.add('dark');btn.innerHTML='☀️'}
   btn.addEventListener('click',function(){
     document.body.classList.toggle('dark');
     const isDark=document.body.classList.contains('dark');
     btn.innerHTML=isDark?'☀️':'🌙';
-    try{sessionStorage.setItem('dark-mode',isDark?'1':'0')}catch(e){}
+    try{localStorage.setItem('dark-mode',isDark?'1':'0')}catch(e){}
   });
   document.body.appendChild(btn);
 }
@@ -3246,7 +3959,6 @@ function initBudgetSummary(){
 
 /* ===== IMPROVED TAB SWITCHING WITH ANIMATION ===== */
 (function upgradeShowDay(){
-  const origShowDay=window.showDay;
   window.showDay=function(i){
     const panels=document.querySelectorAll('.day-panel');
     const btns=document.querySelectorAll('.tabs button');
@@ -3256,13 +3968,20 @@ function initBudgetSummary(){
         requestAnimationFrame(()=>{p.classList.add('active')});
       }else{
         p.classList.remove('active');
-        /* Wait for transition then hide */
         setTimeout(()=>{if(!p.classList.contains('active'))p.style.display='none'},350);
       }
     });
     btns.forEach((b,idx)=>b.classList.toggle('active',idx===i));
+    try{history.replaceState(null,'','#'+(TAB_HASH[i]||'day1'))}catch(e){}
     window.scrollTo({top:0,behavior:'smooth'});
   };
+})();
+
+/* ===== RESTORE TAB FROM URL HASH ON LOAD ===== */
+(function restoreTabFromHash(){
+  const hash=(location.hash||'').replace('#','');
+  const idx=TAB_HASH.indexOf(hash);
+  if(idx>0)showDay(idx); /* 0 = day1 = default, skip if no hash */
 })();
 
 /* render on load */
@@ -3280,6 +3999,17 @@ enhanceNearbyFinder();
 initDarkMode();
 initCountdown();
 initBudgetSummary();
+</script>
+
+<!-- PWA Service Worker Registration -->
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('sw.js')
+      .then(function(reg){console.log('[SW] Registered:',reg.scope)})
+      .catch(function(err){console.log('[SW] Registration failed:',err)});
+  });
+}
 </script>
 
 </body>
