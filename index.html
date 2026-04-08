@@ -494,28 +494,43 @@
 
   /* ===== TICKET PAGE ===== */
   .ticket-page{padding:16px;max-width:700px;margin:0 auto}
-  .ticket-card{background:#fff;border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow);border-left:4px solid #e74c3c;position:relative}
+  /* Card shell */
+  .ticket-card{background:#fff;border-radius:16px;padding:16px 18px;margin-bottom:14px;box-shadow:var(--shadow);border-left:4px solid #e74c3c}
   .ticket-card.used{opacity:.6;border-left-color:#aaa}
-  .ticket-card .tc-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px}
-  .ticket-card .tc-title{font-weight:800;font-size:1.05em;color:#1a1a2e}
-  .ticket-card .tc-day-badge{font-size:.72em;font-weight:700;padding:3px 10px;border-radius:12px;color:#fff;flex-shrink:0;white-space:nowrap}
-  .ticket-card .tc-row{display:flex;align-items:baseline;gap:6px;margin:5px 0;font-size:.84em;line-height:1.5}
-  .ticket-card .tc-row .tc-key{color:#888;width:64px;flex-shrink:0}
-  .ticket-card .tc-row .tc-val{color:#1a1a2e;font-weight:600}
-  .ticket-card .tc-row .tc-val.order-num{font-family:monospace;background:#f0f4ff;padding:2px 8px;border-radius:6px;color:#1565c0;font-size:.9em;letter-spacing:.3px}
-  .ticket-card .tc-warning{margin-top:10px;padding:8px 12px;background:#fef9e7;border-radius:8px;font-size:.8em;color:#8b6914;border-left:3px solid #f1c40f;line-height:1.55}
-  .ticket-card .tc-status{position:absolute;top:14px;right:14px;font-size:.72em;font-weight:700;padding:3px 10px;border-radius:10px}
-  .ticket-card .tc-status.confirmed{background:#e8fce8;color:#27ae60}
-  .ticket-card .tc-status.pending{background:#fef9e7;color:#f39c12}
-  .ticket-summary{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-  .ticket-summary .ts-chip{background:#fff;border-radius:10px;padding:10px 14px;box-shadow:var(--shadow);font-size:.82em;flex:1;min-width:80px;text-align:center}
+  /* Top meta row: day badge LEFT, status badge RIGHT — no overlap */
+  .ticket-card .tc-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:8px}
+  .ticket-card .tc-day-badge{font-size:.72em;font-weight:700;padding:3px 12px;border-radius:20px;color:#fff;white-space:nowrap;letter-spacing:.3px}
+  .ticket-card .tc-status{font-size:.72em;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
+  .ticket-card .tc-status.confirmed{background:#e8fce8;color:#27ae60;border:1px solid #b7efc5}
+  .ticket-card .tc-status.pending{background:#fef9e7;color:#f39c12;border:1px solid #ffe083}
+  /* Title */
+  .ticket-card .tc-title{font-weight:800;font-size:1.08em;color:#1a1a2e;margin-bottom:10px;line-height:1.3}
+  /* Divider */
+  .ticket-card .tc-divider{height:1px;background:#f0f0f0;margin:8px 0}
+  /* Info rows */
+  .ticket-card .tc-row{display:flex;align-items:baseline;gap:8px;padding:4px 0;font-size:.84em;line-height:1.5;border-bottom:1px solid #f8f8f8}
+  .ticket-card .tc-row:last-of-type{border-bottom:none}
+  .ticket-card .tc-row .tc-key{color:#999;width:60px;flex-shrink:0;font-size:.92em}
+  .ticket-card .tc-row .tc-val{color:#1a1a2e;font-weight:600;flex:1}
+  .ticket-card .tc-row .tc-val .order-num,
+  .ticket-card .tc-row .tc-val.order-num{font-family:'SF Mono',Menlo,monospace;background:#eef3ff;padding:3px 10px;border-radius:8px;color:#1565c0;font-size:.88em;letter-spacing:.5px;display:inline-block}
+  /* Warning box */
+  .ticket-card .tc-warning{margin-top:10px;padding:9px 12px;background:#fffbea;border-radius:10px;font-size:.8em;color:#7d5f00;border:1px solid #ffe89a;line-height:1.6}
+  /* Summary chips row */
+  .ticket-summary{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+  .ticket-summary .ts-chip{background:#fff;border-radius:12px;padding:12px 14px;box-shadow:var(--shadow);font-size:.82em;flex:1;min-width:80px;text-align:center}
   .ticket-summary .ts-num{font-size:1.6em;font-weight:800;color:#e74c3c}
-  .ticket-summary .ts-label{color:#888;font-size:.85em}
-  body.dark .ticket-card{background:#1e1e2e;color:#eee}
+  .ticket-summary .ts-label{color:#999;font-size:.85em;margin-top:2px}
+  /* Dark mode */
+  body.dark .ticket-card{background:#1e1e2e}
   body.dark .ticket-card .tc-title{color:#eee}
+  body.dark .ticket-card .tc-divider{background:#333}
+  body.dark .ticket-card .tc-row{border-bottom-color:#2a2a3a}
   body.dark .ticket-card .tc-row .tc-val{color:#eee}
-  body.dark .ticket-card .tc-warning{background:#2a2200;color:#f1c40f}
+  body.dark .ticket-card .tc-row .tc-val.order-num{background:#1a2a4a;color:#90caf9}
+  body.dark .ticket-card .tc-warning{background:#2a2200;color:#f1c40f;border-color:#5a4400}
   body.dark .ticket-summary .ts-chip{background:#1e1e2e}
+  body.dark .ticket-card .tc-status.confirmed{background:#0d2e1a;color:#4caf50;border-color:#1b5e20}
 
   /* ===== PRINT STYLES ===== */
   @media print{
@@ -2893,51 +2908,54 @@
 
     <!-- TICKET 1: Klook 一日游 -->
     <div class="ticket-card">
-      <span class="tc-status confirmed">✅ 已确认</span>
-      <div class="tc-header">
-        <div class="tc-title">🚐 野柳 · 九份 · 十分 一日游</div>
-        <span class="tc-day-badge" style="background:#e67e22">Day 2 · 5/8</span>
+      <div class="tc-meta">
+        <span class="tc-day-badge" style="background:#e67e22">Day 2 · 5/8 五</span>
+        <span class="tc-status confirmed">✅ 已确认</span>
       </div>
+      <div class="tc-title">🚐 野柳 · 九份 · 十分 一日游</div>
+      <div class="tc-divider"></div>
       <div class="tc-row"><span class="tc-key">平台</span><span class="tc-val">Klook 拼车团（中文导游）</span></div>
-      <div class="tc-row"><span class="tc-key">订单号</span><span class="tc-val order-num">NPX360029</span></div>
-      <div class="tc-row"><span class="tc-key">凭证号</span><span class="tc-val order-num">KLK5994417900</span></div>
+      <div class="tc-row"><span class="tc-key">订单号</span><span class="tc-val"><span class="order-num">NPX360029</span></span></div>
+      <div class="tc-row"><span class="tc-key">凭证号</span><span class="tc-val"><span class="order-num">KLK5994417900</span></span></div>
       <div class="tc-row"><span class="tc-key">人数</span><span class="tc-val">2人</span></div>
       <div class="tc-row"><span class="tc-key">集合点</span><span class="tc-val">台北车站 1F 东三门 (East Gate 3)</span></div>
-      <div class="tc-row"><span class="tc-key">集合时间</span><span class="tc-val" style="color:#e74c3c">⏰ 08:00（提前30min！建议07:30到）</span></div>
+      <div class="tc-row"><span class="tc-key">集合时间</span><span class="tc-val" style="color:#e74c3c;font-weight:700">⏰ 08:00（建议07:30到！）</span></div>
       <div class="tc-row"><span class="tc-key">使用方式</span><span class="tc-val">🤳 出示手机 Klook App 凭证给导游扫码</span></div>
-      <div class="tc-warning">⚠️ <strong>不含项目：</strong>野柳地质公园门票（现场购买约NT$80/人）· 天灯体验费（NT$150-200/人）· 餐食 · 九份到十分接驳巴士（NT$25/人）</div>
+      <div class="tc-warning">⚠️ <strong>不含：</strong>野柳门票（NT$80/人）· 天灯费（NT$150-200/人）· 餐食 · 九份→十分巴士（NT$25/人）</div>
     </div>
 
     <!-- TICKET 2: Klook 动物园 -->
-    <div class="ticket-card">
-      <span class="tc-status confirmed">✅ 已确认</span>
-      <div class="tc-header">
-        <div class="tc-title">🐼 台北市立动物园 门票</div>
-        <span class="tc-day-badge" style="background:#2ecc71">Day 3 · 5/9</span>
+    <div class="ticket-card" style="border-left-color:#2ecc71">
+      <div class="tc-meta">
+        <span class="tc-day-badge" style="background:#2ecc71">Day 3 · 5/9 六</span>
+        <span class="tc-status confirmed">✅ 已确认</span>
       </div>
+      <div class="tc-title">🐼 台北市立动物园 门票</div>
+      <div class="tc-divider"></div>
       <div class="tc-row"><span class="tc-key">平台</span><span class="tc-val">Klook 折扣票</span></div>
-      <div class="tc-row"><span class="tc-key">订单号</span><span class="tc-val order-num">ZBG535891</span></div>
+      <div class="tc-row"><span class="tc-key">订单号</span><span class="tc-val"><span class="order-num">ZBG535891</span></span></div>
       <div class="tc-row"><span class="tc-key">人数</span><span class="tc-val">2张</span></div>
       <div class="tc-row"><span class="tc-key">有效日期</span><span class="tc-val">2026年5月9日（周六）</span></div>
-      <div class="tc-row"><span class="tc-key">使用方式</span><span class="tc-val">🎟️ 入口服务台或自助售票机扫 QR 码换实体票</span></div>
-      <div class="tc-row"><span class="tc-key">开放时间</span><span class="tc-val">09:00 – 17:00（建议09:00准时入场）</span></div>
-      <div class="tc-warning">💡 先冲大猫熊馆（右转，免费区），再走企鹅馆 → 非洲区。园内接驳车NT$5/趟。</div>
+      <div class="tc-row"><span class="tc-key">入场</span><span class="tc-val">🎟️ 大门服务台或自助机扫 QR 码换实体票</span></div>
+      <div class="tc-row"><span class="tc-key">开放时间</span><span class="tc-val">09:00 – 17:00（建议09:00准时冲猫熊馆）</span></div>
+      <div class="tc-warning">💡 先冲大猫熊馆（入口右转，免费区），再走企鹅馆 → 非洲区。园内接驳车 NT$5/趟。</div>
     </div>
 
     <!-- TICKET 3: Klook 台北101 -->
-    <div class="ticket-card">
-      <span class="tc-status confirmed">✅ 已确认</span>
-      <div class="tc-header">
-        <div class="tc-title">🏛 台北 101 观景台</div>
-        <span class="tc-day-badge" style="background:#2ecc71">Day 3 · 5/9</span>
+    <div class="ticket-card" style="border-left-color:#3498db">
+      <div class="tc-meta">
+        <span class="tc-day-badge" style="background:#3498db">Day 3 · 5/9 六</span>
+        <span class="tc-status confirmed">✅ 已确认</span>
       </div>
+      <div class="tc-title">🏛 台北 101 观景台</div>
+      <div class="tc-divider"></div>
       <div class="tc-row"><span class="tc-key">平台</span><span class="tc-val">Klook 预购票</span></div>
-      <div class="tc-row"><span class="tc-key">订单号</span><span class="tc-val order-num">EQG716511</span></div>
+      <div class="tc-row"><span class="tc-key">订单号</span><span class="tc-val"><span class="order-num">EQG716511</span></span></div>
       <div class="tc-row"><span class="tc-key">人数</span><span class="tc-val">2人</span></div>
-      <div class="tc-row"><span class="tc-key">场次</span><span class="tc-val" style="color:#e74c3c">⏰ <strong>14:30</strong>（固定场次，不可改期）</span></div>
-      <div class="tc-row"><span class="tc-key">入场地点</span><span class="tc-val">5楼 Sky Entrance（非大门，别走错）</span></div>
-      <div class="tc-row"><span class="tc-key">使用方式</span><span class="tc-val">🤳 直接在5楼出示 Klook 手机凭证扫码入场，免排队购票</span></div>
-      <div class="tc-warning">⚠️ <strong>动物园 → 101 交通约50分钟</strong>。建议动物园13:00前出发，留出缓冲。晴天推荐，雨天视野差建议提前查天气。</div>
+      <div class="tc-row"><span class="tc-key">场次</span><span class="tc-val" style="color:#e74c3c;font-weight:700">⏰ <strong>14:30</strong>（固定场次，不可改期）</span></div>
+      <div class="tc-row"><span class="tc-key">入场地点</span><span class="tc-val">🚪 5楼 Sky Entrance（<strong>非大门</strong>，别走错！）</span></div>
+      <div class="tc-row"><span class="tc-key">入场方式</span><span class="tc-val">🤳 5楼出示 Klook 凭证扫码，免排队</span></div>
+      <div class="tc-warning">⚠️ 动物园→101 约50分钟车程。<strong>13:00前出动物园</strong>留出缓冲。晴天视野最佳，雨天酌情考虑。</div>
     </div>
 
     <!-- Additional notes -->
