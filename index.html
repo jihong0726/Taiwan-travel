@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -56,6 +57,23 @@
   .day-header h2{font-size:1.35em;font-weight:700}
   .day-header .theme{color:var(--muted);font-size:.85em;margin-top:2px}
   .day-header .route-tag{display:inline-block;font-size:.72em;padding:2px 10px;border-radius:12px;font-weight:600;margin-top:6px}
+  /* Weather badge */
+  .weather-badge{display:inline-flex;align-items:center;gap:5px;font-size:.78em;padding:4px 11px;border-radius:20px;margin-top:7px;background:rgba(52,152,219,.08);border:1px solid rgba(52,152,219,.22);color:#2c3e50;line-height:1.4}
+  .weather-badge.wb-loading{color:#aaa;background:#f5f5f5;border-color:#e8e8e8}
+  .weather-badge.wb-est{background:rgba(243,156,18,.07);border-color:rgba(243,156,18,.28)}
+  .wb-est-tag{font-size:.82em;color:#e67e22;opacity:.85}
+  body.dark .weather-badge{background:rgba(52,152,219,.12);border-color:rgba(52,152,219,.25);color:#ccc}
+  body.dark .weather-badge.wb-est{background:rgba(243,156,18,.1);border-color:rgba(243,156,18,.3)}
+  /* Clothing hint */
+  .clothing-hint{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+  .clothing-chip{display:inline-flex;align-items:center;gap:3px;font-size:.74em;padding:2px 9px;border-radius:12px;background:#f4f4f4;color:#444;border:1px solid #e4e4e4}
+  .clothing-chip.cc-warn{background:#fff8e6;color:#b7710a;border-color:#f5d88a}
+  .clothing-chip.cc-rain{background:#eaf4ff;color:#1a6fa8;border-color:#b3d8f7}
+  .clothing-chip.cc-sun{background:#fff9e6;color:#a07000;border-color:#f5e08a}
+  body.dark .clothing-chip{background:#2a2a2a;color:#bbb;border-color:#3a3a3a}
+  body.dark .clothing-chip.cc-warn{background:#2d2300;color:#e6aa40;border-color:#5a4500}
+  body.dark .clothing-chip.cc-rain{background:#001d30;color:#6db8f0;border-color:#1a4a70}
+  body.dark .clothing-chip.cc-sun{background:#2d2600;color:#d4a820;border-color:#5a4e00}
 
   /* UBER ALTERNATIVE */
   .uber-alt{display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px;margin-top:6px;padding:7px 12px;background:linear-gradient(135deg,#1a1a2e,#2c3e50);border-radius:8px;font-size:.78em;color:#fff;line-height:1.6}
@@ -4288,6 +4306,110 @@ function initMrtGoto(){
   });
 }
 
+/* ===== WEATHER FORECAST ===== */
+function wmoEmoji(c){
+  if(c===0)return'☀️';
+  if(c===1)return'🌤️';
+  if(c===2)return'⛅';
+  if(c===3)return'☁️';
+  if(c<=48)return'🌫️';
+  if(c<=55)return'🌦️';
+  if(c<=65)return'🌧️';
+  if(c<=77)return'❄️';
+  if(c<=82)return'🌦️';
+  return'⛈️';
+}
+function getClothingChips(hi,lo,rain,code){
+  var chips=[];
+  /* 上衣层次 */
+  if(hi>=30) chips.push({cls:'',text:'👕 短袖为主，轻薄面料'});
+  else if(hi>=26) chips.push({cls:'',text:'👕 短袖 + 薄外套备用'});
+  else chips.push({cls:'',text:'🧥 薄长袖 / 轻外套'});
+  /* 鞋子 */
+  if(rain>=50||code>=80) chips.push({cls:'cc-rain',text:'👟 防水/防滑鞋'});
+  else chips.push({cls:'',text:'👟 舒适步行鞋'});
+  /* 雨具 */
+  if(rain>=60||code>=80) chips.push({cls:'cc-rain',text:'🌂 必带雨伞/雨衣'});
+  else if(rain>=30) chips.push({cls:'cc-rain',text:'☂️ 建议备折叠伞'});
+  /* 防晒 */
+  if(hi>=28&&rain<50) chips.push({cls:'cc-sun',text:'🕶️ 防晒霜 + 墨镜'});
+  /* 特殊天气 */
+  if(code>=95) chips.push({cls:'cc-warn',text:'⚠️ 注意雷阵雨，下午少户外'});
+  else if(lo<=18) chips.push({cls:'cc-warn',text:'🌙 早晚偏凉，备外套'});
+  return chips;
+}
+function initWeather(){
+  var panels=['day0','day1','day2','day3','day4','day5']; /* day0=Day1, day1=Day2 … day5=Day6 */
+  /* 台北五月季节均值（降级备用）*/
+  var est=[
+    {lo:22,hi:27,rain:45,code:63},
+    {lo:22,hi:28,rain:35,code:2},
+    {lo:23,hi:28,rain:50,code:80},
+    {lo:22,hi:29,rain:30,code:1},
+    {lo:23,hi:28,rain:55,code:61},
+    {lo:22,hi:27,rain:40,code:63}
+  ];
+  /* 注入 loading badge */
+  panels.forEach(function(id){
+    var hdr=document.querySelector('#'+id+' .day-header');
+    if(!hdr)return;
+    var el=document.createElement('div');
+    el.id='wb-'+id;
+    el.className='weather-badge wb-loading';
+    el.textContent='🌡 天气加载中…';
+    hdr.appendChild(el);
+  });
+  var url='https://api.open-meteo.com/v1/forecast?latitude=25.04&longitude=121.51'
+    +'&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weathercode'
+    +'&timezone=Asia%2FTaipei&start_date=2026-05-07&end_date=2026-05-12';
+  function renderBadge(id,i,data,isLive){
+    var el=document.getElementById('wb-'+id);
+    if(!el)return;
+    var lo=Math.round(data.lo),hi=Math.round(data.hi),rain=data.rain,code=data.code;
+    el.className='weather-badge'+(isLive?'':' wb-est');
+    el.innerHTML=wmoEmoji(code)
+      +' <strong>'+lo+'~'+hi+'°C</strong>'
+      +' · 🌧 '+rain+'%'
+      +(isLive?'':' <span class="wb-est-tag">季节均值</span>');
+    /* 穿搭建议 chips */
+    var oldClothing=document.getElementById('cl-'+id);
+    if(oldClothing)oldClothing.remove();
+    var chips=getClothingChips(hi,lo,rain,code);
+    if(!chips.length)return;
+    var clDiv=document.createElement('div');
+    clDiv.className='clothing-hint';
+    clDiv.id='cl-'+id;
+    chips.forEach(function(c){
+      var span=document.createElement('span');
+      span.className='clothing-chip'+(c.cls?' '+c.cls:'');
+      span.textContent=c.text;
+      clDiv.appendChild(span);
+    });
+    el.insertAdjacentElement('afterend',clDiv);
+  }
+  fetch(url)
+    .then(function(r){return r.json()})
+    .then(function(d){
+      var daily=d&&d.daily;
+      var ok=daily&&daily.temperature_2m_max&&daily.temperature_2m_max.length>=6;
+      panels.forEach(function(id,i){
+        if(ok){
+          renderBadge(id,i,{
+            lo:daily.temperature_2m_min[i],
+            hi:daily.temperature_2m_max[i],
+            rain:daily.precipitation_probability_max[i]||0,
+            code:daily.weathercode[i]
+          },true);
+        }else{
+          renderBadge(id,i,est[i],false);
+        }
+      });
+    })
+    .catch(function(){
+      panels.forEach(function(id,i){renderBadge(id,i,est[i],false);});
+    });
+}
+
 /* ===== MRT TRANSFER CHIP GOTO (click chip → scroll to that line section) ===== */
 function initChipGoto(){
   var lineMap={'xc-bl':'blue','xc-r':'red','xc-br':'brown','xc-g':'green'};
@@ -4332,6 +4454,7 @@ initCheckOff();
 initBackupCollapse();
 initMrtGoto();
 initChipGoto();
+initWeather();
 </script>
 
 <!-- PWA Service Worker Registration -->
