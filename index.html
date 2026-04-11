@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -623,6 +624,224 @@
     .day-header{border-bottom:2px solid #ddd;margin-bottom:12px}
   }
 
+
+  .tabs button[data-day="10"].active{color:#10b981;border-bottom-color:#10b981}
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:1001;
+  background:var(--card);border-top:1px solid var(--border);
+  box-shadow:0 -2px 16px rgba(0,0,0,.08);
+  display:flex;padding-bottom:env(safe-area-inset-bottom,0);
+}
+.bottom-nav button{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;padding:9px 2px 10px;border:none;background:none;
+  font-size:.65em;font-weight:600;color:var(--muted);cursor:pointer;
+  transition:color .2s;position:relative;
+}
+.bottom-nav button .bn-icon{font-size:1.55em;line-height:1;display:block}
+.bottom-nav button.active{color:var(--accent)}
+.bottom-nav button.active.bn-mrt{color:var(--day4)}
+.bottom-nav button.active.bn-edit{color:var(--day3)}
+.bottom-nav button.active.bn-ticket{color:var(--day5)}
+.bottom-nav button.active.bn-finance{color:#10b981}
+body{padding-bottom:calc(60px + env(safe-area-inset-bottom,0))}
+body.dark .bottom-nav{background:#16213e;border-top-color:#2d3561;box-shadow:0 -2px 16px rgba(0,0,0,.35)}
+
+/* ===== FINANCE MODULE — Native Style ===== */
+:root {
+  --ff-green: #27ae60; --ff-blue: #3498db; --ff-orange: #e67e22;
+}
+
+/* Header action buttons */
+.ff-header-btns { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.ff-header-btns button {
+  padding: 6px 14px; border-radius: 20px; border: 1.5px solid var(--border);
+  background: var(--card); font-size: .78em; font-weight: 600; cursor: pointer;
+  color: var(--text); display: inline-flex; align-items: center; gap: 4px; transition: all .2s;
+}
+.ff-header-btns button:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Summary bar */
+.ff-summary-bar {
+  background: linear-gradient(90deg,#e8fce8,#f0f7ff);
+  border-radius: 12px; padding: 14px 16px; margin-bottom: 14px;
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+}
+body.dark .ff-summary-bar { background: linear-gradient(90deg,#0d2e1a,#0d253e); }
+.ff-summary-cell { text-align: center; }
+.ff-summary-cell + .ff-summary-cell { border-left: 1px solid var(--border); }
+.ff-summary-num { font-size: 1.35em; font-weight: 800; line-height: 1.1; }
+.ff-summary-label { font-size: .68em; color: var(--muted); margin-top: 3px; font-weight: 600; }
+
+/* Quick action buttons */
+.ff-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.ff-action-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 14px; border-radius: 12px; border: none; cursor: pointer;
+  font-size: .9em; font-weight: 700; transition: transform .15s;
+}
+.ff-action-btn:active { transform: scale(.96); }
+.ff-action-btn.ff-in { background: linear-gradient(135deg,#e8fce8,#d5f5e3); color: var(--ff-green); border: 1.5px solid #a9dfbf; }
+.ff-action-btn.ff-out { background: linear-gradient(135deg,#fde8e8,#fad7d7); color: var(--accent); border: 1.5px solid #f1948a; }
+body.dark .ff-action-btn.ff-in { background: linear-gradient(135deg,#0d2e1a,#0d3a22); border-color: #1e5c38; }
+body.dark .ff-action-btn.ff-out { background: linear-gradient(135deg,#3e0d0d,#4a1010); border-color: #7b1010; }
+
+/* Section head */
+.ff-section-head {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: .78em; font-weight: 700; color: var(--muted);
+  letter-spacing: .4px; padding: 4px 0 8px;
+  border-bottom: 1px solid var(--border); margin: 16px 0 10px;
+}
+.ff-section-head .ff-section-extra { font-weight: 600; color: var(--ff-green); }
+
+/* Wallet cards */
+.ff-wallet-card {
+  display: flex; justify-content: space-between; align-items: center;
+  background: var(--card); border-radius: 12px; padding: 13px 15px;
+  margin-bottom: 7px; box-shadow: var(--shadow); cursor: pointer;
+  border-left: 3px solid transparent; transition: transform .15s;
+}
+.ff-wallet-card:active { transform: scale(.98); }
+.ff-wallet-card.ff-active { border-left-color: var(--ff-green); }
+.ff-wallet-card .ff-wc-left { display: flex; align-items: center; gap: 10px; }
+.ff-wallet-card .ff-wc-flag { font-size: 1.5em; line-height: 1; }
+.ff-wallet-card .ff-wc-name { font-weight: 800; font-size: .95em; }
+.ff-wallet-card .ff-wc-sub { font-size: .7em; color: var(--muted); margin-top: 2px; }
+.ff-wallet-card .ff-wc-right { text-align: right; }
+.ff-wallet-card .ff-wc-bal { font-size: 1.1em; font-weight: 800; }
+.ff-wallet-card .ff-wc-bal.ff-pos { color: var(--ff-green); }
+.ff-wallet-card .ff-wc-bal.ff-neg { color: var(--accent); }
+.ff-wallet-card .ff-wc-est { font-size: .7em; color: var(--muted); margin-top: 2px; }
+
+/* Record items */
+.ff-record-item {
+  background: var(--card); border-radius: 12px; padding: 11px 14px;
+  margin-bottom: 6px; box-shadow: var(--shadow);
+  display: flex; align-items: center; gap: 11px; cursor: pointer;
+  border-left: 3px solid transparent; transition: transform .15s;
+}
+.ff-record-item:active { transform: scale(.98); }
+.ff-record-item.ff-in { border-left-color: var(--ff-green); }
+.ff-record-item.ff-out { border-left-color: var(--accent); }
+.ff-record-icon { width: 36px; height: 36px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 1.2em; flex-shrink: 0; }
+.ff-record-item.ff-in .ff-record-icon { background: #e8fce8; }
+.ff-record-item.ff-out .ff-record-icon { background: #fde8e8; }
+.ff-record-body { flex: 1; min-width: 0; }
+.ff-record-title { font-weight: 700; font-size: .88em; }
+.ff-record-sub { font-size: .72em; color: var(--muted); margin-top: 2px; }
+.ff-record-amount { text-align: right; flex-shrink: 0; }
+.ff-record-amount .ff-ra-val { font-weight: 800; font-size: .95em; }
+.ff-record-amount .ff-ra-ccy { font-size: .68em; color: var(--muted); }
+
+/* Empty state */
+.ff-empty { text-align: center; padding: 24px; color: var(--muted); font-size: .82em; background: var(--card); border-radius: 12px; border: 1.5px dashed var(--border); }
+
+/* Toast */
+#ff-toast {
+  position: fixed; top: 64px; left: 50%; transform: translateX(-50%) translateY(-16px);
+  background: rgba(26,26,46,.92); color: #fff; padding: 9px 18px; border-radius: 20px;
+  font-size: .82em; font-weight: 700; opacity: 0; pointer-events: none;
+  transition: all .3s cubic-bezier(.18,.89,.32,1.28); z-index: 9500;
+  white-space: nowrap; box-shadow: 0 4px 20px rgba(0,0,0,.2);
+}
+#ff-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* Overlays */
+.ff-sheet-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 9090;
+  opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.ff-sheet-overlay.show { opacity: 1; pointer-events: auto; }
+
+/* Calculator sheet */
+.ff-calc-sheet {
+  position: fixed; left: 0; right: 0; bottom: 0; margin: 0 auto; width: 100%; max-width: 700px;
+  background: var(--card); border-top-left-radius: 24px; border-top-right-radius: 24px;
+  z-index: 9100; transform: translateY(100%); transition: transform .3s cubic-bezier(.16,1,.3,1);
+  max-height: 92vh; display: flex; flex-direction: column;
+  box-shadow: 0 -8px 40px rgba(0,0,0,.15);
+}
+.ff-calc-sheet.show { transform: translateY(0); }
+.ff-sheet-handle { width: 36px; height: 4px; border-radius: 2px; background: var(--border); margin: 10px auto 0; flex-shrink: 0; }
+.ff-calc-sheet-head { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px 6px; flex-shrink: 0; }
+.ff-calc-sheet-title { font-weight: 800; font-size: .95em; }
+.ff-calc-sheet-close { width: 26px; height: 26px; border-radius: 50%; background: var(--border); border: none; cursor: pointer; color: var(--muted); font-weight: bold; display: flex; align-items: center; justify-content: center; font-size: .8em; }
+.ff-calc-display { padding: 4px 20px 12px; flex-shrink: 0; }
+.ff-calc-expr-row { font-size: .8em; color: var(--muted); height: 20px; text-align: right; font-family: monospace; }
+.ff-calc-val-row { display: flex; align-items: baseline; justify-content: flex-end; gap: 6px; }
+.ff-calc-num { font-size: 3em; font-weight: 800; line-height: 1.1; color: var(--text); letter-spacing: -1.5px; word-break: break-all; }
+.ff-calc-ccy-label { font-size: 1em; font-weight: 700; color: var(--muted); }
+.ff-calc-result { text-align: right; margin-top: 6px; padding: 8px 14px; background: var(--bg); border-radius: 10px; display: flex; justify-content: space-between; align-items: center; }
+.ff-calc-result-val { font-size: .95em; font-weight: 800; color: var(--ff-green); }
+.ff-calc-result-rate { font-size: .7em; color: var(--muted); }
+.ff-calc-save-btn { display: flex; align-items: center; gap: 8px; justify-content: center; width: calc(100% - 40px); margin: 8px 20px 0; padding: 11px; border: none; border-radius: 12px; background: var(--ff-green); color: #fff; font-weight: 800; font-size: .9em; cursor: pointer; transition: opacity .15s; }
+.ff-calc-save-btn:active { opacity: .8; }
+.ff-calc-hist-row { max-height: 120px; overflow-y: auto; padding: 0 20px 6px; flex-shrink: 0; }
+.ff-hist-item { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: .8em; }
+.ff-hist-item:last-child { border-bottom: none; }
+.ff-hist-val { font-weight: 700; color: var(--text); }
+.ff-hist-rm { color: var(--ff-green); font-weight: 700; }
+.ff-hist-del { width: 22px; height: 22px; border-radius: 5px; background: #fde8e8; color: #e74c3c; border: none; cursor: pointer; font-size: .7em; margin-left: 6px; }
+.ff-calc-keyboard { padding: 8px 16px 24px; flex-shrink: 0; }
+.ff-keys-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+.ff-key { border: none; border-radius: 12px; height: 58px; background: var(--bg); color: var(--text); font-size: 1.25em; font-weight: 600; box-shadow: 0 2px 0 rgba(0,0,0,.06); cursor: pointer; transition: all .1s; display: flex; align-items: center; justify-content: center; }
+.ff-key:active { transform: translateY(2px); box-shadow: none; }
+.ff-key.ff-op { color: var(--ff-blue); background: #e8f4fd; }
+.ff-key.ff-ac { color: var(--accent); background: #fde8e8; }
+.ff-key.ff-eq { background: var(--ff-green); color: #fff; box-shadow: 0 2px 0 rgba(39,174,96,.3); }
+body.dark .ff-key { background: #1e2d40; }
+body.dark .ff-key.ff-op { background: #0d253e; }
+body.dark .ff-key.ff-ac { background: #3e0d0d; }
+
+/* Modals — slide up from bottom */
+.ff-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); backdrop-filter: blur(3px); z-index: 9200; display: none; align-items: flex-end; justify-content: center; }
+.ff-modal-overlay.open { display: flex; }
+.ff-modal { background: var(--card); width: 100%; max-width: 700px; border-top-left-radius: 24px; border-top-right-radius: 24px; padding: 0 20px 36px; max-height: 92vh; overflow-y: auto; animation: ffUp .22s ease-out; }
+@keyframes ffUp { from { transform: translateY(15%); opacity: .5; } to { transform: none; opacity: 1; } }
+.ff-modal-handle { width: 36px; height: 4px; border-radius: 2px; background: var(--border); margin: 10px auto 0; }
+.ff-modal-head { display: flex; justify-content: space-between; align-items: center; padding: 14px 0 10px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+.ff-modal-title { font-size: 1em; font-weight: 800; }
+.ff-modal-close { width: 26px; height: 26px; border-radius: 50%; background: var(--bg); border: none; cursor: pointer; color: var(--muted); font-weight: bold; font-size: .82em; display: flex; align-items: center; justify-content: center; }
+.ff-rate-box { background: var(--bg); border-radius: 10px; padding: 11px 13px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.ff-rate-label { font-size: .76em; font-weight: 700; color: var(--muted); }
+.ff-rate-input { width: 76px; background: var(--card); border: 1.5px solid var(--border); border-radius: 8px; padding: 5px 9px; font-weight: 700; text-align: center; font-size: 1.05em; color: var(--text); outline: none; }
+.ff-amount-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.ff-amount-input { flex: 1; border: 2px solid var(--border); border-radius: 12px; padding: 11px 13px; font-size: 1.5em; font-weight: 800; color: var(--text); background: var(--card); outline: none; min-width: 0; }
+.ff-amount-input:focus { border-color: var(--ff-green); }
+.ff-amount-ccy { font-size: .9em; font-weight: 800; color: var(--muted); flex-shrink: 0; }
+.ff-toggle-mode { padding: 7px 13px; border-radius: 18px; border: 1.5px solid var(--ff-blue); background: #e8f4fd; color: var(--ff-blue); font-size: .76em; font-weight: 700; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+.ff-toggle-mode.ff-orange { border-color: var(--ff-orange); background: #fef3e2; color: var(--ff-orange); }
+.ff-preview-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 2px; margin-bottom: 12px; }
+.ff-preview-label { font-size: .78em; color: var(--muted); }
+.ff-preview-val { font-size: 1.25em; font-weight: 800; color: var(--ff-orange); }
+.ff-submit-btn { width: 100%; border: none; padding: 13px; border-radius: 12px; background: var(--text); color: var(--card); font-weight: 800; font-size: .95em; cursor: pointer; transition: opacity .15s; }
+.ff-submit-btn:active { opacity: .8; }
+.ff-cats { display: grid; grid-template-columns: repeat(5,1fr); gap: 7px; margin-bottom: 14px; }
+.ff-cat { padding: 8px 4px; border: 1.5px solid var(--border); border-radius: 11px; display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; background: var(--card); transition: all .12s; }
+.ff-cat:active { transform: scale(.9); }
+.ff-cat.ff-cat-active { background: #e8f4fd; border-color: var(--ff-blue); }
+.ff-cat .ff-cat-icon { font-size: 1.3em; }
+.ff-cat .ff-cat-name { font-size: .6em; font-weight: 700; color: var(--muted); }
+.ff-cat.ff-cat-active .ff-cat-name { color: var(--ff-blue); }
+.ff-detail-hero { text-align: center; padding: 14px 0 18px; }
+.ff-detail-amount { font-size: 2.8em; font-weight: 900; line-height: 1; }
+.ff-detail-ccy-label { font-size: .85em; font-weight: 700; color: var(--muted); margin-top: 5px; }
+.ff-detail-table { background: var(--bg); border-radius: 11px; padding: 2px 13px; margin-bottom: 14px; }
+.ff-detail-row { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: .84em; }
+.ff-detail-row:last-child { border-bottom: none; }
+.ff-detail-label { color: var(--muted); font-weight: 600; }
+.ff-detail-val { font-weight: 700; color: var(--text); }
+.ff-action-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.ff-del-btn { border: none; padding: 11px; border-radius: 11px; background: #fde8e8; color: var(--accent); font-weight: 700; font-size: .88em; cursor: pointer; }
+.ff-edit-btn { border: none; padding: 11px; border-radius: 11px; background: #e8f4fd; color: var(--ff-blue); font-weight: 700; font-size: .88em; cursor: pointer; }
+.ff-field-label { font-size: .74em; font-weight: 700; color: var(--muted); margin-bottom: 5px; }
+.ff-field-input { width: 100%; border: 1.5px solid var(--border); border-radius: 10px; padding: 9px 12px; font-size: .95em; font-weight: 600; color: var(--text); background: var(--card); outline: none; margin-bottom: 10px; box-sizing: border-box; }
+.ff-field-input:focus { border-color: var(--ff-green); }
+.ff-field-select { width: 100%; border: 1.5px solid var(--border); border-radius: 10px; padding: 9px 12px; font-size: .88em; font-weight: 600; color: var(--text); background: var(--card); outline: none; appearance: none; margin-bottom: 14px; cursor: pointer; }
+
 </style>
 </head>
 <body>
@@ -639,10 +858,6 @@
   <button data-day="4" onclick="showDay(3)">Day4<br><small>5/10日</small></button>
   <button data-day="5" onclick="showDay(4)">Day5<br><small>5/11一</small></button>
   <button data-day="6" onclick="showDay(5)">Day6<br><small>5/12二</small></button>
-  <button data-day="0" onclick="showDay(6)">🗺️总览</button>
-  <button data-day="7" onclick="showDay(7)">🚇路线</button>
-  <button data-day="8" onclick="showDay(8)">✏️编辑</button>
-  <button data-day="9" onclick="showDay(9)">🎫票券</button>
 </div>
 
 
@@ -3046,6 +3261,56 @@
     </div>
   </div>
 </div>
+<div class="day-panel" id="day10">
+  <div class="day-header">
+    <h2>💰 旅行金库</h2>
+    <div class="theme">资产追踪 · 换汇记录 · 消费管理</div>
+    <div class="ff-header-btns" style="margin-top:10px">
+      <button onclick="ffApp.openCalcSheet()">🧮 换算器</button>
+      <button onclick="ffApp.openSettings()">⚙️ 切换旅程</button>
+    </div>
+  </div>
+
+  <!-- Summary bar -->
+  <div class="ff-summary-bar">
+    <div class="ff-summary-cell">
+      <div class="ff-summary-num" id="ffSumBalance" style="color:var(--ff-green)">0</div>
+      <div class="ff-summary-label">余额 (<span class="ff-dyn-target-ccy">TWD</span>)</div>
+    </div>
+    <div class="ff-summary-cell">
+      <div class="ff-summary-num" id="ffSumSpent" style="color:var(--accent)">0</div>
+      <div class="ff-summary-label">已花费</div>
+    </div>
+    <div class="ff-summary-cell">
+      <div class="ff-summary-num" id="ffSumTotal" style="color:var(--ff-blue)">0</div>
+      <div class="ff-summary-label">总存入</div>
+    </div>
+  </div>
+
+  <!-- Quick actions -->
+  <div class="ff-actions">
+    <button class="ff-action-btn ff-in" onclick="ffApp.openExchange()">
+      💱 存入 <span class="ff-dyn-target-ccy">TWD</span>
+    </button>
+    <button class="ff-action-btn ff-out" onclick="ffApp.openExpense()">
+      💸 记账消费
+    </button>
+  </div>
+
+  <!-- Wallets -->
+  <div class="ff-section-head">
+    <span>💳 我的钱包</span>
+    <span class="ff-section-extra">≈ <span id="ffTotalEstMYR">0.00</span> <span class="ff-dyn-base-ccy">MYR</span></span>
+  </div>
+  <div id="ffMultiAssetsList"></div>
+
+  <!-- Records -->
+  <div class="ff-section-head">
+    <span>📋 消费记录</span>
+  </div>
+  <div id="ffRecordsList" style="padding-bottom:20px"></div>
+</div><!-- end day10 -->
+
 
 <script>
 const locations = [
@@ -3097,10 +3362,13 @@ const locations = [
   {day:6,name:"士林夜市",lat:25.0880,lng:121.5245,type:"food"},
 ];
 /* Tab index → hash mapping */
-const TAB_HASH=['day1','day2','day3','day4','day5','day6','overview','mrt','edit','tickets'];
+const TAB_HASH=['day1','day2','day3','day4','day5','day6','overview','mrt','edit','tickets','finance'];
 function showDay(i){
   document.querySelectorAll('.day-panel').forEach((p,idx)=>p.classList.toggle('active',idx===i));
+  /* Top tabs: Day1–Day6 only (indices 0–5) */
   document.querySelectorAll('.tabs button').forEach((b,idx)=>b.classList.toggle('active',idx===i));
+  /* Bottom nav: match by data-panel attribute */
+  document.querySelectorAll('#bottomNav button').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.panel)===i));
   /* Persist active tab to URL hash (no page reload) */
   try{history.replaceState(null,'','#'+(TAB_HASH[i]||'day1'))}catch(e){}
   window.scrollTo({top:0,behavior:'smooth'});
@@ -3746,6 +4014,409 @@ function edGenRoutes(){
 }
 
 </script>
+<script>
+
+window.ffApp = {
+  data: {
+    history: [], records: [],
+    rate: 12.58, calcIn: '0', exMode: 'BASE', expCat: 0,
+    targetName: '台湾', targetCcy: 'TWD', baseCcy: 'MYR'
+  },
+  presets: {
+    'JPY':{rate:2.535,mult:100},'THB':{rate:12.60,mult:100},
+    'TWD':{rate:12.58,mult:100},'KRW':{rate:2.715,mult:1000},
+    'CNY':{rate:65.50,mult:100},'HKD':{rate:60.50,mult:100},
+    'SGD':{rate:350.00,mult:100},'USD':{rate:470.00,mult:100},
+    'EUR':{rate:510.00,mult:100},'GBP':{rate:600.00,mult:100}
+  },
+  cats:[
+    {n:'饮食',i:'🍔'},{n:'交通',i:'🚗'},{n:'购物',i:'🛍️'},{n:'娱乐',i:'🎮'},{n:'住宿',i:'🏨'},
+    {n:'零食',i:'🍦'},{n:'礼物',i:'🎁'},{n:'医疗',i:'💊'},{n:'生活',i:'💡'},{n:'其他',i:'📦'}
+  ],
+  flags:{'TWD':'🇹🇼','KRW':'🇰🇷','JPY':'🇯🇵','THB':'🇹🇭','CNY':'🇨🇳','HKD':'🇭🇰','SGD':'🇸🇬','USD':'🇺🇸','EUR':'🇪🇺','GBP':'🇬🇧','MYR':'🇲🇾'},
+  currentRecordId:null, editModeId:null,
+
+  init(){
+    const s=localStorage.getItem('ustrip_v24_2_final');
+    if(s){try{this.data={...this.data,...JSON.parse(s)};}catch(e){}}
+    if(!Array.isArray(this.data.history))this.data.history=[];
+    if(!Array.isArray(this.data.records))this.data.records=[];
+    this.data.records.forEach(r=>{if(!r.ccy)r.ccy='TWD';});
+    this.updateDynUI();
+    this.renderAll();
+    this.bindEvents();
+  },
+
+  getMult(ccy){return this.presets[ccy]?this.presets[ccy].mult:100;},
+
+  updateDynUI(){
+    document.querySelectorAll('.ff-dyn-target-ccy').forEach(el=>el.innerText=this.data.targetCcy);
+    document.querySelectorAll('.ff-dyn-base-ccy').forEach(el=>el.innerText=this.data.baseCcy);
+    const mult=this.getMult(this.data.targetCcy);
+    document.querySelectorAll('.ff-dyn-multiplier').forEach(el=>el.innerText=mult);
+  },
+
+  save(){localStorage.setItem('ustrip_v24_2_final',JSON.stringify(this.data));},
+
+  showToast(msg){
+    const t=document.getElementById('ff-toast');
+    t.textContent=msg; t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),1600);
+  },
+
+  /* ── Calc Sheet ── */
+  openCalcSheet(){
+    document.getElementById('ffCalcSheet').classList.add('show');
+    document.getElementById('ffOverlay').classList.add('show');
+    this.renderCalc();
+    this.renderHistList();
+  },
+  closeCalcSheet(){
+    document.getElementById('ffCalcSheet').classList.remove('show');
+    document.getElementById('ffOverlay').classList.remove('show');
+  },
+  closeOverlay(){
+    this.closeCalcSheet();
+    this.closeModal();
+  },
+
+  renderCalc(){
+    const rate=this.getAssetRate(this.data.targetCcy);
+    const mult=this.getMult(this.data.targetCcy);
+    const el=document.getElementById('ffCalcRateDisplay');
+    if(el)el.innerText=rate;
+    document.getElementById('ffCalcInput').innerText=this.data.calcIn;
+    let res=0;
+    try{const v=parseFloat(eval(this.data.calcIn.replace(/×/g,'*').replace(/÷/g,'/')));if(!isNaN(v))res=v*(rate/mult);}catch{}
+    document.getElementById('ffCalcResult').innerText=`${res.toFixed(2)} ${this.data.baseCcy}`;
+    const ei=document.getElementById('ffCalcExpr');
+    if(ei)ei.innerText=this.data.calcExpr||'';
+  },
+
+  renderHistList(){
+    const hist=this.data.history.filter(h=>!h.ccy||h.ccy===this.data.targetCcy);
+    const row=document.getElementById('ffCalcHistRow');
+    const list=document.getElementById('ffHistList');
+    if(!hist.length){row.style.display='none';return;}
+    row.style.display='block';
+    list.innerHTML=hist.map(h=>{
+      const ri=this.data.history.findIndex(x=>x.id===h.id);
+      return `<div class="ff-hist-item"><span class="ff-hist-val">${h.twd} ${h.ccy||'TWD'}</span><span style="flex:1;color:var(--muted);font-size:.72em;padding:0 6px">${h.date}</span><span class="ff-hist-rm">${h.rm} ${this.data.baseCcy}</span><button class="ff-hist-del" onclick="ffApp.delHist(${ri})">✕</button></div>`;
+    }).join('');
+  },
+
+  onKey(k){
+    let s=this.data.calcIn;
+    if(k==='AC'){s='0';this.data.calcExpr='';}
+    else if(k==='DEL'){s=s.length>1?s.slice(0,-1):'0';}
+    else if(k==='='){
+      try{const v=eval(s.replace(/×/g,'*').replace(/÷/g,'/'));s=String(parseFloat(v.toFixed(2)));this.data.calcExpr='';}catch{s='Error';}
+    }else{
+      if(['+','-','*','/','%'].includes(k)){const l=s.slice(-1);if(['+','-','*','/','%'].includes(l))s=s.slice(0,-1)+k;else s+=k;}
+      else{
+        const parts=s.split(/[\+\-\*\/\%]/);const cur=parts[parts.length-1];
+        if(k==='0'||k==='00'){if(cur==='0'){}else if(cur===''){s+='0';}else{s+=k;}}
+        else if(k==='.'){if(cur.includes('.')){}else if(cur===''){s+='0.';}else{s+='.';}}
+        else{if(cur==='0')s=s.slice(0,-1)+k;else s+=k;}
+      }
+      this.data.calcExpr=s;
+    }
+    this.data.calcIn=s;this.renderCalc();
+  },
+
+  saveCalc(){
+    try{
+      const twd=parseFloat(eval(this.data.calcIn.replace(/×/g,'*').replace(/÷/g,'/')));
+      if(!twd||twd<=0)return;
+      const rate=this.getAssetRate(this.data.targetCcy);
+      const mult=this.getMult(this.data.targetCcy);
+      const rm=twd*(rate/mult);
+      this.data.history.unshift({id:Date.now(),twd:twd.toFixed(2),rm:rm.toFixed(2),ccy:this.data.targetCcy,date:new Date().toLocaleDateString()});
+      this.data.calcIn='0';this.data.calcExpr='';
+      this.save();this.renderCalc();this.renderHistList();this.showToast('✅ 已保存到记录');
+    }catch{}
+  },
+
+  delHist(i){if(confirm('删除?')){this.data.history.splice(i,1);this.save();this.renderHistList();this.renderCalc();}},
+
+  /* ── Modals ── */
+  openModal(id){
+    document.getElementById('ffModalOverlay').classList.add('open');
+    document.querySelectorAll('.ff-modal').forEach(m=>m.style.display='none');
+    document.getElementById(id).style.display='block';
+  },
+  closeModal(){document.getElementById('ffModalOverlay').classList.remove('open');this.editModeId=null;},
+
+  openSettings(){
+    document.getElementById('ffSetTargetName').value=this.data.targetName;
+    document.getElementById('ffSetTargetCcy').value=this.data.targetCcy;
+    document.getElementById('ffPresetSelect').selectedIndex=0;
+    this.openModal('ffModalSettings');
+  },
+  handlePresetChange(sel){
+    const v=sel.value;if(!v)return;
+    const[name,ccy]=v.split(',');
+    document.getElementById('ffSetTargetName').value=name;
+    document.getElementById('ffSetTargetCcy').value=ccy;
+  },
+  saveSettings(){
+    this.data.targetName=document.getElementById('ffSetTargetName').value.trim()||'台湾';
+    this.data.targetCcy=document.getElementById('ffSetTargetCcy').value.trim().toUpperCase()||'TWD';
+    this.updateDynUI();this.save();this.renderAll();this.closeModal();
+    this.showToast(`✅ 已切换至 ${this.data.targetCcy}`);
+  },
+
+  switchWallet(ccy){
+    if(this.data.targetCcy===ccy)return;
+    this.data.targetCcy=ccy;this.data.targetName=ccy;
+    this.updateDynUI();this.save();this.renderAll();
+    this.showToast(`✅ 已激活 ${ccy} 账本`);
+  },
+
+  getAssetRate(ccy){
+    let inCcy=0,inBase=0;
+    const mult=this.getMult(ccy);
+    this.data.records.forEach(r=>{
+      if(r.type==='in'&&r.ccy===ccy){
+        const t=parseFloat(r.twd)||0;inCcy+=t;
+        inBase+=r.rm!==undefined?parseFloat(r.rm):(t*(this.data.rate/mult));
+      }
+    });
+    if(inCcy>0)return Number((inBase/inCcy*mult).toFixed(4));
+    return this.presets[ccy]?this.presets[ccy].rate:this.data.rate;
+  },
+
+  bindEvents(){
+    document.getElementById('ffExRateInput').addEventListener('input',()=>this.updateExPreview());
+    document.getElementById('ffExAmount').addEventListener('input',()=>this.updateExPreview());
+    document.getElementById('ffExAmount').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();this.submitEx();}});
+    document.getElementById('ffExpInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();this.submitExp();}});
+  },
+
+  toggleExMode(){
+    this.data.exMode=this.data.exMode==='BASE'?'TARGET':'BASE';
+    const btn=document.getElementById('ffExToggleBtn');
+    btn.className=`ff-toggle-mode${this.data.exMode==='BASE'?'':' ff-orange'}`;
+    btn.innerHTML=`<span class="${this.data.exMode==='BASE'?'ff-dyn-base-ccy':'ff-dyn-target-ccy'}">${this.data.exMode==='BASE'?this.data.baseCcy:this.data.targetCcy}</span> ⇄`;
+    document.getElementById('ffExAmount').value='';
+    this.updateExPreview();
+  },
+
+  updateExPreview(){
+    const val=parseFloat(document.getElementById('ffExAmount').value)||0;
+    const rate=parseFloat(document.getElementById('ffExRateInput').value)||this.getAssetRate(this.data.targetCcy);
+    const mult=this.getMult(this.data.targetCcy);
+    let res,unit;
+    if(this.data.exMode==='BASE'){res=Math.round(val*(mult/rate));unit=this.data.targetCcy;}
+    else{res=(val*(rate/mult)).toFixed(2);unit=this.data.baseCcy;}
+    document.getElementById('ffExPreviewVal').innerText=`${res} ${unit}`;
+  },
+
+  openExchange(){
+    this.editModeId=null;
+    document.getElementById('ffExModalTitle').innerText='💱 存入资金';
+    document.getElementById('ffExSubmitBtn').innerText='确认存入';
+    this.data.exMode='BASE';
+    const btn=document.getElementById('ffExToggleBtn');
+    btn.className='ff-toggle-mode';
+    btn.innerHTML=`<span class="ff-dyn-base-ccy">${this.data.baseCcy}</span> ⇄`;
+    document.getElementById('ffExAmount').value='';
+    document.getElementById('ffExRateInput').value=this.getAssetRate(this.data.targetCcy);
+    this.updateExPreview();
+    this.openModal('ffModalExchange');
+    setTimeout(()=>document.getElementById('ffExAmount').focus(),50);
+  },
+
+  submitEx(){
+    const val=parseFloat(document.getElementById('ffExAmount').value);if(!val)return;
+    const rate=parseFloat(document.getElementById('ffExRateInput').value)||this.data.rate;
+    const mult=this.getMult(this.data.targetCcy);
+    let twd,rm;
+    if(this.data.exMode==='BASE'){rm=val;twd=val*(mult/rate);}
+    else{twd=val;rm=val*(rate/mult);}
+    const detail=`${rm.toFixed(2)} ${this.data.baseCcy} → ${Math.round(twd)} ${this.data.targetCcy}`;
+    if(this.editModeId){
+      const i=this.data.records.findIndex(x=>x.id===this.editModeId);
+      if(i>-1)this.data.records[i]={...this.data.records[i],twd,rm,detail};
+      this.showToast('✅ 已修改');
+    }else{
+      this.data.records.unshift({id:Date.now(),type:'in',title:'换汇存入',twd,rm,ccy:this.data.targetCcy,detail,date:new Date().toLocaleDateString()});
+      this.data.rate=rate;this.showToast('✅ 已存入');
+    }
+    this.save();this.closeModal();this.renderAll();
+  },
+
+  openExpense(){
+    this.editModeId=null;
+    document.getElementById('ffExpModalTitle').innerText='💸 记录开销';
+    document.getElementById('ffExpSubmitBtn').innerText='确认记账';
+    document.getElementById('ffExpInput').value='';
+    this.renderCats();
+    this.openModal('ffModalExpense');
+    setTimeout(()=>document.getElementById('ffExpInput').focus(),50);
+  },
+
+  renderCats(){
+    document.getElementById('ffCatGrid').innerHTML=this.cats.map((c,i)=>
+      `<div class="ff-cat${this.data.expCat===i?' ff-cat-active':''}" onclick="ffApp.data.expCat=${i};ffApp.renderCats()">
+        <div class="ff-cat-icon">${c.i}</div>
+        <div class="ff-cat-name">${c.n}</div>
+      </div>`
+    ).join('');
+  },
+
+  submitExp(){
+    const val=parseFloat(document.getElementById('ffExpInput').value);if(!val)return;
+    const c=this.cats[this.data.expCat];
+    if(this.editModeId){
+      const i=this.data.records.findIndex(x=>x.id===this.editModeId);
+      if(i>-1)this.data.records[i]={...this.data.records[i],title:c.n,twd:val,icon:c.i};
+      this.showToast('✅ 已修改');
+    }else{
+      this.data.records.unshift({id:Date.now(),type:'out',title:c.n,twd:val,icon:c.i,ccy:this.data.targetCcy,date:new Date().toLocaleDateString()});
+      this.showToast('✅ 已记录');
+    }
+    this.save();this.closeModal();this.renderAll();
+  },
+
+  openRecordDetail(id){
+    const r=this.data.records.find(x=>x.id===id);if(!r)return;
+    this.currentRecordId=id;
+    const ccy=r.ccy||'TWD';const mult=this.getMult(ccy);
+    let html;
+    if(r.type==='in'){
+      const usedRate=Number((r.rm/r.twd*mult).toFixed(4));
+      html=`<div class="ff-detail-hero"><div class="ff-detail-amount" style="color:var(--ff-green)">+${Math.round(r.twd)}</div><div class="ff-detail-ccy-label">${ccy} · 换汇存入</div></div>
+      <div class="ff-detail-table">
+        <div class="ff-detail-row"><span class="ff-detail-label">支付</span><span class="ff-detail-val">${parseFloat(r.rm).toFixed(2)} ${this.data.baseCcy}</span></div>
+        <div class="ff-detail-row"><span class="ff-detail-label">成交汇率</span><span class="ff-detail-val">${mult} ${ccy} = ${usedRate} ${this.data.baseCcy}</span></div>
+        <div class="ff-detail-row"><span class="ff-detail-label">记录时间</span><span class="ff-detail-val">${r.date}</span></div>
+      </div>`;
+    }else{
+      html=`<div class="ff-detail-hero"><div class="ff-detail-amount" style="color:var(--accent)">-${Math.round(r.twd)}</div><div class="ff-detail-ccy-label">${ccy} · ${r.icon} ${r.title}</div></div>
+      <div class="ff-detail-table">
+        <div class="ff-detail-row"><span class="ff-detail-label">分类</span><span class="ff-detail-val">${r.icon} ${r.title}</span></div>
+        <div class="ff-detail-row"><span class="ff-detail-label">记录时间</span><span class="ff-detail-val">${r.date}</span></div>
+      </div>`;
+    }
+    document.getElementById('ffRecordDetailContent').innerHTML=html;
+    this.openModal('ffModalRecordDetail');
+  },
+
+  delCurrentRecord(){
+    if(confirm('确定删除？')){
+      this.data.records=this.data.records.filter(r=>r.id!==this.currentRecordId);
+      this.save();this.closeModal();this.renderAll();this.showToast('✅ 已删除');
+    }
+  },
+
+  editCurrentRecord(){
+    const r=this.data.records.find(x=>x.id===this.currentRecordId);if(!r)return;
+    this.editModeId=r.id;
+    const ccy=r.ccy||'TWD';
+    if(ccy!==this.data.targetCcy)this.switchWallet(ccy);
+    if(r.type==='in'){
+      document.getElementById('ffModalRecordDetail').style.display='none';
+      document.getElementById('ffModalExchange').style.display='block';
+      document.getElementById('ffExModalTitle').innerText='✏️ 编辑存入';
+      document.getElementById('ffExSubmitBtn').innerText='保存修改';
+      const mult=this.getMult(ccy);
+      document.getElementById('ffExRateInput').value=Number((r.rm/r.twd*mult).toFixed(4));
+      this.data.exMode='BASE';
+      const btn=document.getElementById('ffExToggleBtn');
+      btn.className='ff-toggle-mode';
+      btn.innerHTML=`<span class="ff-dyn-base-ccy">${this.data.baseCcy}</span> ⇄`;
+      document.getElementById('ffExAmount').value=r.rm;
+      this.updateExPreview();
+    }else{
+      document.getElementById('ffModalRecordDetail').style.display='none';
+      document.getElementById('ffModalExpense').style.display='block';
+      document.getElementById('ffExpModalTitle').innerText='✏️ 编辑开销';
+      document.getElementById('ffExpSubmitBtn').innerText='保存修改';
+      document.getElementById('ffExpInput').value=r.twd;
+      const ci=this.cats.findIndex(c=>c.n===r.title);
+      this.data.expCat=ci>-1?ci:0;this.renderCats();
+    }
+  },
+
+  renderAll(){
+    const ao={};
+    this.data.records.forEach(r=>{
+      const c=r.ccy||'TWD';
+      if(!ao[c])ao[c]={inCcy:0,inBase:0,outCcy:0};
+      if(r.type==='in'){ao[c].inCcy+=parseFloat(r.twd||0);ao[c].inBase+=parseFloat(r.rm||0);}
+      else ao[c].outCcy+=parseFloat(r.twd||0);
+    });
+
+    let totalMYR=0,totalIn=0,totalOut=0;
+    let assetsHtml='';
+    for(const c in ao){
+      const a=ao[c];const bal=a.inCcy-a.outCcy;
+      if(bal>0||c===this.data.targetCcy||a.inCcy>0){
+        const mult=this.getMult(c);
+        const avg=a.inCcy>0?(a.inBase/a.inCcy):(c===this.data.targetCcy?this.data.rate/mult:0);
+        const est=bal*avg;
+        if(bal>0)totalMYR+=est;
+        if(c===this.data.targetCcy){totalIn=a.inCcy;totalOut=a.outCcy;}
+        const flag=this.flags[c]||'💵';
+        const isActive=c===this.data.targetCcy;
+        assetsHtml+=`<div class="ff-wallet-card${isActive?' ff-active':''}" onclick="ffApp.switchWallet('${c}')">
+          <div class="ff-wc-left">
+            <div class="ff-wc-flag">${flag}</div>
+            <div><div class="ff-wc-name">${c}</div><div class="ff-wc-sub">均价: ${mult}${c}=${Number((avg*mult).toFixed(2))}${this.data.baseCcy}</div></div>
+          </div>
+          <div class="ff-wc-right">
+            <div class="ff-wc-bal ${bal>=0?'ff-pos':'ff-neg'}">${bal.toFixed(0)}</div>
+            <div class="ff-wc-est">≈${est.toFixed(2)} ${this.data.baseCcy}</div>
+          </div>
+        </div>`;
+      }
+    }
+
+    // Summary
+    const sb=document.getElementById('ffSumBalance');
+    const ss=document.getElementById('ffSumSpent');
+    const st=document.getElementById('ffSumTotal');
+    const tot=document.getElementById('ffTotalEstMYR');
+    if(sb)sb.innerText=Number(totalIn-totalOut).toFixed(0);
+    if(ss)ss.innerText=Number(totalOut).toFixed(0);
+    if(st)st.innerText=Number(totalIn).toFixed(0);
+    if(tot)tot.innerText=totalMYR.toFixed(2);
+
+    // Wallets
+    const wal=document.getElementById('ffMultiAssetsList');
+    if(wal)wal.innerHTML=assetsHtml||`<div class="ff-empty">暂无资产，点击「存入」开始记录</div>`;
+
+    // Records
+    const rec=document.getElementById('ffRecordsList');
+    if(rec){
+      rec.innerHTML=this.data.records.map(r=>`
+        <div class="ff-record-item ${r.type==='in'?'ff-in':'ff-out'}" onclick="ffApp.openRecordDetail(${r.id})">
+          <div class="ff-record-icon">${r.icon||'💸'}</div>
+          <div class="ff-record-body">
+            <div class="ff-record-title">${r.title}</div>
+            <div class="ff-record-sub">${r.detail||r.date}</div>
+          </div>
+          <div class="ff-record-amount">
+            <div class="ff-ra-val" style="color:${r.type==='in'?'var(--ff-green)':'var(--accent)'}">${r.type==='in'?'+':'-'}${Number(r.twd).toFixed(0)}</div>
+            <div class="ff-ra-ccy">${r.ccy||'TWD'}</div>
+          </div>
+        </div>`
+      ).join('')||'<div class="ff-empty">暂无记录，点击「存入」或「记账」开始</div>';
+    }
+  }
+};
+
+(function(){
+  let ffInited=false;
+  const orig=window.showDay;
+  window.showDay=function(i){
+    orig(i);
+    if(i===10&&!ffInited){ffInited=true;window.ffApp.init();}
+  };
+})();
+</script>
+
 
 <script>
 
@@ -3833,7 +4504,7 @@ function injectItineraryBadges(){
 /* Inject badge legend into each day panel */
 function injectBadgeLegend(){
   document.querySelectorAll('.day-panel').forEach(panel=>{
-    if(panel.id==='day6'||panel.id==='day7'||panel.querySelector('.badge-legend'))return;
+    if(!/^day[0-5]$/.test(panel.id)||panel.querySelector('.badge-legend'))return;
     const legend=document.createElement('div');
     legend.className='badge-legend';
     legend.innerHTML='<span style="font-weight:700;color:#444">标签说明：</span>'
@@ -4196,6 +4867,8 @@ function initBudgetSummary(){
       }
     });
     btns.forEach((b,idx)=>b.classList.toggle('active',idx===i));
+    /* Bottom nav: match by data-panel */
+    document.querySelectorAll('#bottomNav button').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.panel)===i));
     try{history.replaceState(null,'','#'+(TAB_HASH[i]||'day1'))}catch(e){}
     window.scrollTo({top:0,behavior:'smooth'});
   };
@@ -4467,6 +5140,167 @@ if('serviceWorker' in navigator){
   });
 }
 </script>
+
+
+<!-- FINANCE MODULE OVERLAYS -->
+<div id="ff-toast"></div>
+
+<!-- Overlay backdrop (shared) -->
+<div class="ff-sheet-overlay" id="ffOverlay" onclick="ffApp.closeOverlay()"></div>
+
+<!-- Calculator Sheet -->
+<div class="ff-calc-sheet" id="ffCalcSheet">
+  <div class="ff-sheet-handle"></div>
+  <div class="ff-calc-sheet-head">
+    <div class="ff-calc-sheet-title">🧮 换算器 · <span class="ff-dyn-multiplier">100</span> <span class="ff-dyn-target-ccy">TWD</span> = <span id="ffCalcRateDisplay">12.63</span> <span class="ff-dyn-base-ccy">MYR</span></div>
+    <button class="ff-calc-sheet-close" onclick="ffApp.closeCalcSheet()">✕</button>
+  </div>
+  <!-- Calc history -->
+  <div class="ff-calc-hist-row" id="ffCalcHistRow" style="display:none">
+    <div id="ffHistList"></div>
+  </div>
+  <!-- Display -->
+  <div class="ff-calc-display">
+    <div class="ff-calc-expr-row" id="ffCalcExpr"></div>
+    <div class="ff-calc-val-row">
+      <div class="ff-calc-num" id="ffCalcInput">0</div>
+      <div class="ff-calc-ccy-label ff-dyn-target-ccy">TWD</div>
+    </div>
+    <div class="ff-calc-result">
+      <div class="ff-calc-result-rate">换算结果</div>
+      <div class="ff-calc-result-val" id="ffCalcResult">0.00 MYR</div>
+    </div>
+    <button class="ff-calc-save-btn" onclick="ffApp.saveCalc()">💾 保存到记录</button>
+  </div>
+  <!-- Keyboard -->
+  <div class="ff-calc-keyboard">
+    <div class="ff-keys-grid">
+      <button class="ff-key ff-ac" onclick="ffApp.onKey('AC')">AC</button>
+      <button class="ff-key ff-ac" onclick="ffApp.onKey('DEL')">⌫</button>
+      <button class="ff-key ff-op" onclick="ffApp.onKey('%')">%</button>
+      <button class="ff-key ff-op" onclick="ffApp.onKey('/')">÷</button>
+      <button class="ff-key" onclick="ffApp.onKey('7')">7</button>
+      <button class="ff-key" onclick="ffApp.onKey('8')">8</button>
+      <button class="ff-key" onclick="ffApp.onKey('9')">9</button>
+      <button class="ff-key ff-op" onclick="ffApp.onKey('*')">×</button>
+      <button class="ff-key" onclick="ffApp.onKey('4')">4</button>
+      <button class="ff-key" onclick="ffApp.onKey('5')">5</button>
+      <button class="ff-key" onclick="ffApp.onKey('6')">6</button>
+      <button class="ff-key ff-op" onclick="ffApp.onKey('-')">-</button>
+      <button class="ff-key" onclick="ffApp.onKey('1')">1</button>
+      <button class="ff-key" onclick="ffApp.onKey('2')">2</button>
+      <button class="ff-key" onclick="ffApp.onKey('3')">3</button>
+      <button class="ff-key ff-op" onclick="ffApp.onKey('+')">+</button>
+      <button class="ff-key" onclick="ffApp.onKey('0')">0</button>
+      <button class="ff-key" onclick="ffApp.onKey('00')">00</button>
+      <button class="ff-key" onclick="ffApp.onKey('.')">.</button>
+      <button class="ff-key ff-eq" onclick="ffApp.onKey('=')">=</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Overlay (for exchange/expense/settings/detail) -->
+<div id="ffModalOverlay" class="ff-modal-overlay" onclick="if(event.target===this) ffApp.closeModal()">
+
+  <!-- Settings Modal -->
+  <div class="ff-modal" id="ffModalSettings" style="display:none">
+    <div class="ff-modal-handle"></div>
+    <div class="ff-modal-head">
+      <div class="ff-modal-title">⚙️ 切换旅程</div>
+      <button class="ff-modal-close" onclick="ffApp.closeModal()">✕</button>
+    </div>
+    <div class="ff-field-label">选择目的地（自动填入汇率）</div>
+    <select id="ffPresetSelect" class="ff-field-select" onchange="ffApp.handlePresetChange(this)">
+      <option value="">-- 请选择目的地 --</option>
+      <option value="台湾,TWD">🇹🇼 台湾 (TWD 台币)</option>
+      <option value="日本,JPY">🇯🇵 日本 (JPY 日元)</option>
+      <option value="泰国,THB">🇹🇭 泰国 (THB 泰铢)</option>
+      <option value="韩国,KRW">🇰🇷 韩国 (KRW 韩元) · 基于1000</option>
+      <option value="中国大陆,CNY">🇨🇳 中国大陆 (CNY 人民币)</option>
+      <option value="香港,HKD">🇭🇰 香港 (HKD 港币)</option>
+      <option value="新加坡,SGD">🇸🇬 新加坡 (SGD 新币)</option>
+      <option value="美国,USD">🇺🇸 美国 (USD 美元)</option>
+      <option value="欧洲,EUR">🇪🇺 欧洲 (EUR 欧元)</option>
+      <option value="英国,GBP">🇬🇧 英国 (GBP 英镑)</option>
+    </select>
+    <div class="ff-field-label">旅行地名称</div>
+    <input type="text" id="ffSetTargetName" class="ff-field-input" placeholder="如: 台湾">
+    <div class="ff-field-label">目标货币代码</div>
+    <input type="text" id="ffSetTargetCcy" class="ff-field-input" placeholder="如: TWD">
+    <button class="ff-submit-btn" onclick="ffApp.saveSettings()">保存并切换</button>
+  </div>
+
+  <!-- Exchange Modal -->
+  <div class="ff-modal" id="ffModalExchange" style="display:none">
+    <div class="ff-modal-handle"></div>
+    <div class="ff-modal-head">
+      <div class="ff-modal-title" id="ffExModalTitle">💱 存入资金</div>
+      <button class="ff-modal-close" onclick="ffApp.closeModal()">✕</button>
+    </div>
+    <div class="ff-rate-box">
+      <div class="ff-rate-label"><span class="ff-dyn-multiplier">100</span> <span class="ff-dyn-target-ccy">TWD</span> 等于</div>
+      <input class="ff-rate-input" type="number" id="ffExRateInput" value="12.63">
+      <span style="font-size:.9em;font-weight:800;color:var(--muted);margin-left:6px" class="ff-dyn-base-ccy">MYR</span>
+    </div>
+    <div class="ff-amount-wrap">
+      <input type="number" class="ff-amount-input" id="ffExAmount" placeholder="0">
+      <button class="ff-toggle-mode" id="ffExToggleBtn" onclick="ffApp.toggleExMode()"><span class="ff-dyn-base-ccy">MYR</span> ⇄</button>
+    </div>
+    <div class="ff-preview-row">
+      <span style="font-size:.78em;color:var(--muted)">自动换算</span>
+      <span class="ff-preview-val" id="ffExPreviewVal">0 TWD</span>
+    </div>
+    <button class="ff-submit-btn" id="ffExSubmitBtn" onclick="ffApp.submitEx()">确认存入</button>
+  </div>
+
+  <!-- Expense Modal -->
+  <div class="ff-modal" id="ffModalExpense" style="display:none">
+    <div class="ff-modal-handle"></div>
+    <div class="ff-modal-head">
+      <div class="ff-modal-title" id="ffExpModalTitle">💸 记录开销</div>
+      <button class="ff-modal-close" onclick="ffApp.closeModal()">✕</button>
+    </div>
+    <div class="ff-cats" id="ffCatGrid"></div>
+    <div class="ff-amount-wrap">
+      <input type="number" class="ff-amount-input" id="ffExpInput" placeholder="0">
+      <span class="ff-amount-ccy ff-dyn-target-ccy">TWD</span>
+    </div>
+    <button class="ff-submit-btn" id="ffExpSubmitBtn" onclick="ffApp.submitExp()">确认记账</button>
+  </div>
+
+  <!-- Record Detail Modal -->
+  <div class="ff-modal" id="ffModalRecordDetail" style="display:none">
+    <div class="ff-modal-handle"></div>
+    <div class="ff-modal-head">
+      <div class="ff-modal-title">📋 记录详情</div>
+      <button class="ff-modal-close" onclick="ffApp.closeModal()">✕</button>
+    </div>
+    <div id="ffRecordDetailContent"></div>
+    <div class="ff-action-pair" style="margin-top:14px">
+      <button class="ff-del-btn" onclick="ffApp.delCurrentRecord()">🗑 删除</button>
+      <button class="ff-edit-btn" onclick="ffApp.editCurrentRecord()">✏️ 编辑</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BOTTOM NAV ===== -->
+<nav class="bottom-nav" id="bottomNav">
+  <button class="bn-overview" data-panel="6" onclick="showDay(6)">
+    <span class="bn-icon">🗺️</span>总览
+  </button>
+  <button class="bn-mrt" data-panel="7" onclick="showDay(7)">
+    <span class="bn-icon">🚇</span>路线
+  </button>
+  <button class="bn-edit" data-panel="8" onclick="showDay(8)">
+    <span class="bn-icon">✏️</span>编辑
+  </button>
+  <button class="bn-ticket" data-panel="9" onclick="showDay(9)">
+    <span class="bn-icon">🎫</span>票券
+  </button>
+  <button class="bn-finance" data-panel="10" onclick="showDay(10)">
+    <span class="bn-icon">💰</span>金库
+  </button>
+</nav>
 
 </body>
 </html>
