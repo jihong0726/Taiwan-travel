@@ -408,8 +408,6 @@
   body.dark .tabs::before{background:linear-gradient(to left,transparent,#16213e)}
 
   /* ===== SHARE BUTTON ===== */
-  .share-btn{position:fixed;bottom:20px;left:20px;z-index:9999;width:44px;height:44px;border-radius:50%;border:none;background:#3498db;color:#fff;font-size:1.2em;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.2);transition:all .3s;display:flex;align-items:center;justify-content:center}
-  .share-btn:hover{transform:scale(1.1);background:#2980b9}
 
   /* ===== TRAVEL CONNECTOR TOUCH IMPROVEMENTS ===== */
   .travel-connector{min-height:44px}
@@ -4727,24 +4725,6 @@ function initTabScroll(){
 }
 
 /* ===== SHARE BUTTON ===== */
-function initShare(){
-  const btn=document.createElement('button');
-  btn.className='share-btn';
-  btn.innerHTML='📤';
-  btn.title='分享行程';
-  btn.setAttribute('aria-label','分享行程');
-  btn.addEventListener('click',async function(){
-    const shareData={title:'台湾 台北六日游',text:'台湾 台北六日游 · 5/7 – 5/12 · 含交通时间与避峰策略',url:window.location.href};
-    if(navigator.share){
-      try{await navigator.share(shareData)}catch(e){}
-    }else{
-      try{await navigator.clipboard.writeText(shareData.text+'\n'+shareData.url);
-        btn.innerHTML='✅';setTimeout(()=>{btn.innerHTML='📤'},2000);
-      }catch(e){prompt('复制以下链接分享：',shareData.url)}
-    }
-  });
-  document.body.appendChild(btn);
-}
 
 /* ===== NEARBY FINDER: AUTO-FILTER BY CURRENT DAY ===== */
 function enhanceNearbyFinder(){
@@ -5118,7 +5098,6 @@ initTravelConnectors();
 initNearbyFinder();
 initTimeHighlight();
 initTabScroll();
-initShare();
 enhanceNearbyFinder();
 initDarkMode();
 initCountdown();
